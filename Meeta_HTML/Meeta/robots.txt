@@ -1,0 +1,11 @@
+# BhaZen Clubbing - Robots.txt
+User-agent: *
+Allow: /
+Disallow: /assets/js/vendor/
+Disallow: /Documentation/
+
+# Sitemap
+Sitemap: https://www.bhazenclubbing.com/sitemap.xml
+
+# Crawl Delay
+Crawl-delay: 10

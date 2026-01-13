@@ -1,0 +1,320 @@
+/* BhaZen Clubbing Custom Theme */
+/* Based on logo colors: Purple, Orange, Cyan, Magenta */
+
+:root {
+    --bhazen-purple: #2D0A4E;
+    --bhazen-dark-purple: #1a0530;
+    --bhazen-orange: #FF8C00;
+    --bhazen-cyan: #00CED1;
+    --bhazen-magenta: #FF1493;
+    --bhazen-pink: #FF69B4;
+}
+
+/* Primary button colors */
+.btn-primary,
+.btn.btn-primary {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    border: none;
+}
+
+.btn-primary:hover,
+.btn.btn-primary:hover {
+    background: linear-gradient(135deg, var(--bhazen-magenta) 0%, var(--bhazen-cyan) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+}
+
+/* Secondary button */
+.btn-2 {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-purple) 100%);
+    border: none;
+}
+
+.btn-2:hover {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    transform: translateY(-2px);
+}
+
+/* Hero section title */
+.hero-content .title {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-cyan) 50%, var(--bhazen-magenta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Hero date styling */
+.hero-date .date {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Section titles */
+.meeta-section-title-2 .main-title {
+    color: var(--bhazen-purple);
+}
+
+.section-title-4 .main-title.text-white {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-magenta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Countdown section */
+.meeta-countdown .single-countdown .count {
+    color: var(--bhazen-orange);
+}
+
+.meeta-countdown .single-countdown .value {
+    color: var(--bhazen-cyan);
+}
+
+/* Pricing cards */
+.single-pricing.color-1 {
+    border-top: 4px solid var(--bhazen-cyan);
+}
+
+.single-pricing.color-1 .price span {
+    color: var(--bhazen-cyan);
+}
+
+.single-pricing.color-2 {
+    border-top: 4px solid var(--bhazen-orange);
+    box-shadow: 0 20px 60px rgba(255, 140, 0, 0.2);
+}
+
+.single-pricing.color-2 .price span {
+    color: var(--bhazen-orange);
+}
+
+.single-pricing:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(255, 20, 147, 0.3);
+}
+
+/* About counters */
+.single-about-counter .value {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Header styling */
+.header-sticky {
+    background: rgba(45, 10, 78, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+/* Footer background overlay */
+.meeta-footer-4 {
+    background-color: var(--bhazen-dark-purple);
+}
+
+/* Social media icons */
+.footer-widget-social a {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    border: none;
+}
+
+.footer-widget-social a:hover {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-purple) 100%);
+    transform: translateY(-3px);
+}
+
+/* Form inputs */
+.single-form input,
+.single-form textarea,
+.single-form select {
+    border: 2px solid rgba(0, 206, 209, 0.3);
+    transition: all 0.3s ease;
+}
+
+.single-form input:focus,
+.single-form textarea:focus,
+.single-form select:focus {
+    border-color: var(--bhazen-cyan);
+    box-shadow: 0 0 20px rgba(0, 206, 209, 0.3);
+    outline: none;
+}
+
+/* Gallery hover effects */
+.single-gallery:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+}
+
+/* Navigation menu */
+.main-menu > li > a:hover {
+    color: var(--bhazen-cyan);
+}
+
+.main-menu > li.active-menu > a {
+    color: var(--bhazen-orange);
+}
+
+/* Accent elements */
+.place {
+    color: var(--bhazen-cyan);
+}
+
+/* Video section play button */
+.popup-video {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    border: none;
+}
+
+.popup-video:hover {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-purple) 100%);
+    transform: scale(1.1);
+}
+
+/* Sponsor section */
+.meeta-sponsor-item-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 206, 209, 0.2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bhazen-dark-purple);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-purple) 100%);
+}
+
+/* Add glowing effect to key elements */
+.btn-primary,
+.hero-content .title {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(255, 140, 0, 0.5));
+    }
+    to {
+        filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.8));
+    }
+}
+
+/* Newsletter button */
+.footer-newsletter-form button {
+    background: linear-gradient(135deg, var(--bhazen-orange) 0%, var(--bhazen-magenta) 100%);
+}
+
+.footer-newsletter-form button:hover {
+    background: linear-gradient(135deg, var(--bhazen-cyan) 0%, var(--bhazen-purple) 100%);
+    transform: translateY(-2px);
+}
+
+/* Video Section Fix */
+.meeta-video-section-2 {
+    position: relative !important;
+    z-index: 10 !important;
+    margin: 60px 0 !important;
+    padding: 0 !important;
+}
+
+.meeta-video-section-2 .container,
+.meeta-video-section-2 .row,
+.meeta-video-section-2 .col-lg-12 {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.meeta-video-section-2 .video-img {
+    min-height: 450px !important;
+    height: auto !important;
+    margin-bottom: 0 !important;
+    padding: 100px 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.meeta-video-section-2 .video-img::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(135deg, rgba(45, 10, 78, 0.75) 0%, rgba(255, 20, 147, 0.4) 100%) !important;
+    z-index: 1 !important;
+}
+
+.meeta-video-section-2 .video-img .meeta-section-title-2,
+.meeta-video-section-2 .video-img .popup-video {
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+.meeta-video-section-2 .video-img .main-title {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.meeta-video-section-2 .popup-video {
+    width: 80px !important;
+    height: 80px !important;
+    line-height: 80px !important;
+    font-size: 24px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #fff !important;
+    margin-top: 20px !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-video-section-2 .video-img {
+        min-height: 300px !important;
+        padding: 60px 15px !important;
+    }
+}
+
+/* Fix pricing section overlap */
+.meeta-pricing-4 {
+    margin-top: 0 !important;
+    padding-top: 80px !important;
+}
+
+.meeta-pricing-4::before,
+.meeta-pricing-4::after {
+    z-index: -1 !important;
+}
+
+/* Fix about section overflow */
+.meeta-about-section-4 {
+    overflow: visible !important;
+    margin-bottom: 0 !important;
+}
+
+/* Ensure video section is always visible with fallback */
+.meeta-video-section-2 .video-img {
+    background-color: var(--bhazen-purple) !important;
+}
