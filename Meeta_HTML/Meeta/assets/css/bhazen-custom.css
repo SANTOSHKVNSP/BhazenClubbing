@@ -301,11 +301,45 @@
 .meeta-pricing-4 {
     margin-top: 0 !important;
     padding-top: 80px !important;
+    position: relative !important;
+    background: var(--bhazen-dark-purple) !important;
 }
 
-.meeta-pricing-4::before,
+.meeta-pricing-4::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-image: url(https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1920&q=80&fit=crop) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.3 !important;
+    z-index: 0 !important;
+}
+
 .meeta-pricing-4::after {
-    z-index: -1 !important;
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(135deg, rgba(45, 10, 78, 0.95) 0%, rgba(26, 5, 48, 0.9) 50%, rgba(255, 20, 147, 0.3) 100%) !important;
+    z-index: 1 !important;
+}
+
+.meeta-pricing-4 .container {
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+.meeta-pricing-4 .meeta-section-title-2,
+.meeta-pricing-4 .meeta-pricing-row {
+    position: relative !important;
+    z-index: 5 !important;
 }
 
 /* Fix about section overflow */
