@@ -352,3 +352,141 @@
 .meeta-video-section-2 .video-img {
     background-color: var(--bhazen-purple) !important;
 }
+/* ===================================
+   Background Images for Counter Circles
+   =================================== */
+
+/* Individual background images for each circle */
+.single-about-counter:nth-child(1) {
+    background-image: url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=400&q=80&fit=crop');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.single-about-counter:nth-child(2) {
+    background-image: url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=400&q=80&fit=crop');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.single-about-counter:nth-child(3) {
+    background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80&fit=crop');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Move price down and make it circular */
+.single-pricing .pricing-header {
+    position: relative;
+    text-align: center;
+    padding-top: 30px; /* pushes price down */
+}
+
+.single-pricing .price {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto 0; /* center + move down */
+    background: transparent !important;
+}
+
+/* Student circle color */
+.single-pricing.color-1 .price {
+    border: 2px solid #FFC107;
+}
+
+/* General circle color */
+.single-pricing.color-2 .price {
+    border: 2px solid #FF1493;
+}
+
+.single-pricing .price span {
+    font-size: 38px;
+    font-weight: 700;
+    background: none !important;
+}
+/* Move price circles slightly down */
+.single-pricing .price {
+    margin-top: 15px !important;   /* increase this if you want more gap */
+}
+/* Force move price circles down */
+.single-pricing .price {
+    position: relative !important;
+    top: 20px !important;   /* increase to 30px or 40px if needed */
+}
+/* Make gallery full width */
+.meeta-gallery {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+}
+
+/* Remove gaps between images */
+.meeta-gallery .row {
+    margin: 0 !important;
+}
+
+.meeta-gallery .col-xl-2,
+.meeta-gallery .col-lg-4,
+.meeta-gallery .col-sm-6 {
+    padding: 0 !important;
+}
+
+/* Add big border around entire gallery strip */
+.meeta-gallery {
+    border: 12px solid #FF1493; /* neon pink border */
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.6);
+}
+
+/* Make images fill their boxes */
+.single-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* Big heading above gallery */
+.nirvana-heading {
+    text-align: center;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 40px 0 20px 0;
+    text-transform: uppercase;
+
+    background: linear-gradient(135deg, #FF1493, #00CED1, #FF8C00);
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0 0 25px rgba(255, 20, 147, 0.6);
+}
+/* Fix input not clickable (overlay blocking) */
+.meeta-gallery,
+.meeta-gallery * {
+    pointer-events: auto;
+}
+
+.meeta-gallery {
+    position: relative;
+    z-index: 1;
+}
+
+/* Ensure footer and forms stay above */
+.meeta-footer-section,
+.footer-widget,
+.footer-newsletter,
+.footer-newsletter-form,
+.footer-newsletter-form input,
+.footer-newsletter-form button {
+    position: relative;
+    z-index: 10;
+}
+
