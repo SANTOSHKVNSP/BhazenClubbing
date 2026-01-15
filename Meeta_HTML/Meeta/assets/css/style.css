@@ -323,18 +323,25 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .meeta-section-title-2 .sub-title {
-  font-size: 18px;
+    font-size: 18px;
   font-family: "Archivo", sans-serif;
   font-weight: 600;
   color: #fc097c;
   margin-bottom: 5px;
+ font-size: 22px;
+    letter-spacing: 4px;
+    font-weight: 600;
+     font-size: 24px;
+    letter-spacing: 5px;
+    color: #ff3ec9;
 }
 
 .meeta-section-title-2 .main-title {
-  font-size: 54px;
-  line-height: 60px;
-  font-family: "Archivo", sans-serif;
-  font-weight: 700;
+  font-family: 'Big Shoulders Display', cursive;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 @media only screen and (max-width: 1199px) {
@@ -5578,7 +5585,7 @@ label {
 
 .meeta-pricing .pricing-shape-01 {
   position: absolute;
-  top: 28%;
+  top: 55%;
   right: 55px;
   z-index: -1;
   -webkit-animation: round-01 5s linear infinite;
@@ -10372,6 +10379,145 @@ label {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
+}
+.image {
+    width: 490px;
+    height: 490px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.circle-img {
+    width: 238px;
+    height: 238px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.circle-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.meeta-speakers-2 {
+    position: relative;
+    background: radial-gradient(circle at 20% 30%, #ff5cf4, transparent 40%),
+                radial-gradient(circle at 80% 20%, #7a5cff, transparent 45%),
+                radial-gradient(circle at 30% 80%, #00e5ff, transparent 40%),
+                radial-gradient(circle at 70% 70%, #ffd36a, transparent 45%),
+                linear-gradient(135deg, #2b0057, #12002b);
+    overflow: hidden;
+}
+
+.meeta-speakers-2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 0, 200, 0.35), transparent 45%),
+        radial-gradient(circle at 90% 30%, rgba(100, 100, 255, 0.35), transparent 45%),
+        radial-gradient(circle at 30% 90%, rgba(0, 255, 255, 0.25), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 215, 120, 0.3), transparent 50%);
+    filter: blur(80px);
+    animation: cloudMove 18s ease-in-out infinite alternate;
+    z-index: 0;
+}
+
+@keyframes cloudMove {
+    0% { transform: translate(-5%, -5%) scale(1); }
+    50% { transform: translate(5%, 3%) scale(1.05); }
+    100% { transform: translate(-3%, 5%) scale(1); }
+}
+
+/* Make cards glow against background */
+.single-speaker-2 {
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 60px rgba(255, 100, 255, 0.35),
+                0 0 40px rgba(0, 200, 255, 0.25);
+    backdrop-filter: blur(6px);
+}
+.meeta-counter-section-2 {
+    background: linear-gradient(135deg, #1a0033, #3a0ca3, #7209b7, #4361ee);
+    position: relative;
+    overflow: hidden;
+}
+
+
+.single-counter {
+    background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(114, 9, 183, 0.4),
+                0 0 60px rgba(67, 97, 238, 0.2);
+    transition: all 0.4s ease;
+}
+
+.single-counter:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 0 40px rgba(255, 0, 200, 0.6),
+                0 0 80px rgba(0, 200, 255, 0.4);
+}
+
+.single-counter .counter {
+    font-size: 64px;
+    background: linear-gradient(90deg, #ffbe0b, #ff006e, #8338ec, #3a86ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.single-counter .title {
+    font-size: 20px;
+    color: #ffffff;
+}
+.single-counter .description {
+    font-size: 14px;
+    color: #cccccc;
+}
+.meeta-counter-section-2 {
+    position: relative;
+    overflow: hidden;
+}
+
+.meeta-counter-section-2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../images/bg/concert-bg-1.png") center center / cover no-repeat;
+    opacity: 0.25;   /* transparency */
+    z-index: 0;
+}
+
+.meeta-counter-section-2 > * {
+    position: relative;
+    z-index: 1;
+}
+.meeta-counter-section-2 {
+    background-image: none !important;
+}
+
+
+.single-counter .counter {
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(255, 0, 200, 0.6),
+                 0 0 30px rgba(0, 150, 255, 0.4);
+}
+
+.single-counter .title,
+.single-counter .description {
+    color: #f1f1f1;
+    letter-spacing: 0.5px;
 }
 
 .logo-4 img {
