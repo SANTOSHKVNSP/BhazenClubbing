@@ -10519,3 +10519,88 @@ label {
     color: #f1f1f1;
     letter-spacing: 0.5px;
 }
+
+.logo-4 img {
+  max-height: 500px;
+  width: auto;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+
+.header-logo img {
+    width: 40%;  
+    height: auto;
+    object-fit: contain;
+}
+@media only screen and (max-width: 768px) {
+  .header-logo {
+    height : 85px;
+  
+  }
+}
+.header-logo {
+    padding-top: 15px;
+}
+.footer-top {
+  display: flex;
+  align-items: center;   /* 👈 vertical alignment */
+}
+.footer-logo img {
+  width: 150px;      /* adjust if needed */
+  height: auto;
+}
+.footer-top .row {
+  display: flex;
+  align-items: center; /* aligns logo with email bar */
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+}
+.footer-logo img {
+  transform: translateY(-4px);
+}
+
+/* Hero title image (Nirvana Station) */
+art-fest-title {
+  max-width: 61%;
+  height: 50%;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 400px%; /* 👈 BETTER than 50% */
+}
+/* ===== Header Logo Fix ===== */
+.header-logo img {
+    max-height: 150px;   /* control logo height */
+    width: auto;        /* keep aspect ratio */
+}
+/* Footer Logo Size */
+.footer-logo img {
+  width: 130px;     /* smaller than header */
+  height: auto;
+}
+<div class="hero-title-image">
+    <img 
+        src="assets/images/nirvana-title.png"
+        alt="Nirvana Station Live"
+        class="nirvana-title"
+    >
+</div>
+img.nirvana-title {
+    margin-top: 40px;      /* moves image DOWN */
+    max-width: 120px;      /* controls size */
+    width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
