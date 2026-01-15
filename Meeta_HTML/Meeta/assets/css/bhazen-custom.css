@@ -10,6 +10,87 @@
     --bhazen-pink: #FF69B4;
 }
 
+/* Hero Section - BhaZen Brand Gradient Background */
+.meeta-hero-section-2 {
+    background: linear-gradient(135deg,
+        var(--bhazen-dark-purple) 0%,
+        var(--bhazen-purple) 25%,
+        #4a1a6b 50%,
+        var(--bhazen-purple) 75%,
+        var(--bhazen-dark-purple) 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.meeta-hero-section-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 80%, rgba(255, 140, 0, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(0, 206, 209, 0.3) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.2) 0%, transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.meeta-hero-section-2::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(ellipse at center, transparent 0%, var(--bhazen-dark-purple) 70%);
+    animation: pulse-bg 8s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes pulse-bg {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.meeta-hero-section-2 .container,
+.meeta-hero-section-2 .meeta-hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+.meeta-hero-section-2 .shape-1,
+.meeta-hero-section-2 .shape-2,
+.meeta-hero-section-2 .shape-3 {
+    z-index: 5;
+    opacity: 0.6;
+}
+
+/* Hero Title Gradient matching logo */
+.meeta-hero-section-2 .meeta-hero-content .title {
+    background: linear-gradient(135deg,
+        var(--bhazen-orange) 0%,
+        var(--bhazen-magenta) 50%,
+        var(--bhazen-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-weight: 800;
+}
+
+/* Animated gradient border effect */
+.meeta-hero-section-2 .meeta-hero-content {
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(45, 10, 78, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+}
+
 /* Primary button colors */
 .btn-primary,
 .btn.btn-primary {
