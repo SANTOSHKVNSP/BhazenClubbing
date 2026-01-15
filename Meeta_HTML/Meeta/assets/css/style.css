@@ -10373,3 +10373,30 @@ label {
   visibility: visible;
   transform: translateX(0);
 }
+
+.logo-4 img {
+  max-height: 500px;
+  width: auto;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+
+.header-logo img {
+    width: 40%;  
+    height: auto;
+    object-fit: contain;
+}
+@media only screen and (max-width: 575px) {
+  .header logo {
+    height : 60px;
+  
+  }
+}
+.header-logo {
+    padding-top: 15px;
+}
+
