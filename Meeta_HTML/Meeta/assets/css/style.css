@@ -10565,17 +10565,6 @@ label {
   transform: translateY(-4px);
 }
 
-/* Hero title image (Nirvana Station) */
-art-fest-title {
-  max-width: 61%;
-  height: 50%;
-
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-
-  margin-top: 400px%; /* 👈 BETTER than 50% */
-}
 /* ===== Header Logo Fix ===== */
 .header-logo img {
     max-height: 150px;   /* control logo height */
@@ -10586,21 +10575,13 @@ art-fest-title {
   width: 130px;     /* smaller than header */
   height: auto;
 }
-<div class="hero-title-image">
-    <img 
-        src="assets/images/nirvana-title.png"
-        alt="Nirvana Station Live"
-        class="nirvana-title"
-    >
-</div>
+
 img.nirvana-title {
-    margin-top: 40px;      /* moves image DOWN */
-    max-width: 120px;      /* controls size */
-    width: 80%;
+    margin-top: 360px;      /* moves image DOWN */
+    /* max-width: 120px;      controls size */
+    width: auto;
     height: auto;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
-
