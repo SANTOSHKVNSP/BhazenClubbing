@@ -10390,13 +10390,32 @@ label {
     height: auto;
     object-fit: contain;
 }
-@media only screen and (max-width: 575px) {
-  .header logo {
-    height : 60px;
+@media only screen and (max-width: 768px) {
+  .header-logo {
+    height : 85px;
   
   }
 }
 .header-logo {
     padding-top: 15px;
+}
+.footer-top {
+  display: flex;
+  align-items: center;   /* 👈 vertical alignment */
+}
+.footer-logo img {
+  width: 150px;      /* adjust if needed */
+  height: auto;
+}
+.footer-top .row {
+  display: flex;
+  align-items: center; /* aligns logo with email bar */
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+}
+.footer-logo img {
+  transform: translateY(-4px);
 }
 
