@@ -10373,3 +10373,31 @@ label {
   visibility: visible;
   transform: translateX(0);
 }
+/* ===== Header Logo Fix ===== */
+.header-logo img {
+    max-height: 150px;   /* control logo height */
+    width: auto;        /* keep aspect ratio */
+}
+/* Footer Logo Size */
+.footer-logo img {
+  width: 130px;     /* smaller than header */
+  height: auto;
+}
+<div class="hero-title-image">
+    <img 
+        src="assets/images/nirvana-title.png"
+        alt="Nirvana Station Live"
+        class="nirvana-title"
+    >
+</div>
+img.nirvana-title {
+    margin-top: 40px;      /* moves image DOWN */
+    max-width: 120px;      /* controls size */
+    width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
