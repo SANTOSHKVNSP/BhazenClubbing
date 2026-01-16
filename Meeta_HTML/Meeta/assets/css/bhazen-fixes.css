@@ -1,0 +1,628 @@
+/* BhaZen Clubbing - Custom Fixes */
+
+/* ===================================
+   1. FIX HERO SECTION - Nirvana title image and countdown
+   =================================== */
+
+/* Center and make Nirvana title image responsive */
+.meeta-hero-section-2 .meeta-hero-content .hero-title-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .hero-title-image img.nirvana-title {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    max-height: 300px;
+}
+
+@media only screen and (max-width: 991px) {
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image img.nirvana-title {
+        max-height: 250px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image {
+        margin-bottom: 20px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image img.nirvana-title {
+        max-height: 200px;
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image img.nirvana-title {
+        max-height: 150px;
+        max-width: 85%;
+    }
+}
+
+/* ===================================
+   COUNTDOWN TIMER ARCS - Make them responsive and properly aligned
+   =================================== */
+
+/* Desktop - Fix arc alignment */
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    min-width: 130px;
+    width: 130px;
+    height: 130px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    position: relative;
+}
+
+/* Fix the arc positioning */
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown::before {
+    content: "";
+    position: absolute;
+    width: 165px;
+    height: 93px;
+    border: 10px solid #f9d464;
+    border-bottom: 0;
+    border-top-left-radius: 125px;
+    border-top-right-radius: 125px;
+    left: -5px;
+    top: 43px;
+    transform: rotate(150deg);
+    z-index: -1;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown.countdown-2::before {
+    border-color: #00acee;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown.countdown-3::before {
+    border-color: #fc097c;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown.countdown-4::before {
+    border-color: #554bb9;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .count {
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .value {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Tablet responsive */
+@media only screen and (max-width: 991px) {
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
+        gap: 15px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown {
+        min-width: 100px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown::before {
+        width: 126px;
+        height: 72px;
+        border-width: 8px;
+        border-top-left-radius: 95px;
+        border-top-right-radius: 95px;
+        left: -5px;
+        top: 28px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .count {
+        font-size: 36px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .value {
+        font-size: 13px;
+    }
+}
+
+/* Mobile responsive - 2x2 grid */
+@media only screen and (max-width: 575px) {
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown {
+        min-width: 110px;
+        width: 110px;
+        height: 110px;
+        margin: 0 auto;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown::before {
+        width: 138px;
+        height: 78px;
+        border-width: 8px;
+        border-top-left-radius: 105px;
+        border-top-right-radius: 105px;
+        left: -2px;
+        top: 30px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .count {
+        font-size: 32px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .value {
+        font-size: 12px;
+    }
+}
+
+
+/* ===================================
+   2. FIX ABOUT SECTION IMAGE - Make it a perfect circle
+   =================================== */
+
+.meeta-about-section-2 .row {
+    display: flex;
+    align-items: center;
+}
+
+.meeta-about-images-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.meeta-about-images-2 .image {
+    width: 450px;
+    height: 450px;
+    max-width: 450px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meeta-about-images-2 .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+
+/* Responsive sizing */
+@media only screen and (max-width: 1199px) {
+    .meeta-about-images-2 .image {
+        width: 400px;
+        height: 400px;
+        max-width: 400px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .meeta-about-section-2 .row {
+        flex-direction: column;
+    }
+
+    .meeta-about-section-2 .row > div {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .meeta-about-images-2 {
+        margin-bottom: 40px;
+    }
+
+    .meeta-about-images-2 .image {
+        width: 350px;
+        height: 350px;
+        max-width: 350px;
+    }
+
+    .meeta-about-section-2 .about-2-content-wrap {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content {
+        padding-right: 0;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-about-images-2 .image {
+        width: 320px;
+        height: 320px;
+        max-width: 320px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-about-images-2 .image {
+        width: 280px;
+        height: 280px;
+        max-width: 280px;
+    }
+}
+
+.circle-img {
+    width: 238px !important;
+    height: 238px !important;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center;
+    border-radius: 50%;
+}
+
+
+/* ===================================
+   3. FIX COUNTER SECTION - Prevent cutoff
+   =================================== */
+
+.meeta-counter-section .counter-wrap {
+    padding-top: 20px;
+}
+
+.meeta-counter-section .counter-wrap .row {
+    margin-top: 0;
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-counter-section .counter-wrap {
+        padding-top: 30px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-counter-section .counter-wrap {
+        padding-top: 40px;
+    }
+}
+
+
+/* ===================================
+   4. CENTER LIVE BAND, PHOTO BOOTH, MERCHANDISE ITEMS
+   Triangle layout for desktop (2 on top, 1 centered below)
+   =================================== */
+
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list {
+    padding-top: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    max-width: 600px;
+}
+
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: calc(50% - 15px);
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+/* Third item (Merchandise) - full width and centered */
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item:nth-child(3) {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item .icon {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item .text {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/* Tablet responsive */
+@media only screen and (max-width: 991px) {
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul {
+        flex-direction: column;
+        gap: 20px;
+        max-width: 300px;
+        align-items: center;
+    }
+
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul .about-list-item:nth-child(3) {
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobile responsive - stack vertically */
+@media only screen and (max-width: 767px) {
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content .about-list ul {
+        max-width: 280px;
+    }
+}
+
+
+/* ===================================
+   4. FIX PRICING CARDS - Center align them properly
+   =================================== */
+
+.meeta-pricing-2 .meeta-pricing-row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    margin: 0 auto;
+}
+
+.meeta-pricing-2 .meeta-pricing-row > div {
+    display: flex;
+    justify-content: center;
+}
+
+.meeta-pricing-2 .single-pricing {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Mobile responsive */
+@media only screen and (max-width: 991px) {
+    .meeta-pricing-2 .meeta-pricing-row {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .meeta-pricing-2 .meeta-pricing-row > div {
+        max-width: 450px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .meeta-pricing-2 .single-pricing {
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-pricing-2 .container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .meeta-pricing-2 .meeta-pricing-row {
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .meeta-pricing-2 .meeta-pricing-row > div {
+        max-width: 100%;
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .meeta-pricing-2 .single-pricing {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-pricing-2 .meeta-pricing-row {
+        padding: 0;
+    }
+
+    .meeta-pricing-2 .meeta-pricing-row > div {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .meeta-pricing-2 .single-pricing {
+        max-width: 350px;
+    }
+}
+
+
+/* ===================================
+   5. FIX FOOTER LOGO LAYOUT
+   =================================== */
+
+.meeta-footer-2 .footer-widget .footer-wrap {
+    padding-bottom: 30px;
+}
+
+.meeta-footer-2 .footer-widget .footer-wrap .row {
+    align-items: flex-start;
+}
+
+/* Hide or style the footer logo better */
+.footer-logo {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.footer-logo img {
+    max-width: 180px;
+    height: auto;
+}
+
+/* Improve footer layout on mobile */
+@media only screen and (max-width: 991px) {
+    .footer-logo {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .footer-bottom-wrap {
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .footer-logo img {
+        max-width: 150px;
+    }
+}
+
+
+/* ===================================
+   6. FIX BAND SECTION - Center alignment
+   =================================== */
+
+.meeta-speakers-2 .meeta-speakers-content-wrap-2 .row {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 auto;
+}
+
+.meeta-speakers-2 .meeta-speakers-content-wrap-2 .row > div {
+    display: flex;
+    justify-content: center;
+}
+
+.meeta-speakers-2 .single-speaker-2 {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Mobile responsive */
+@media only screen and (max-width: 991px) {
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row {
+        justify-content: center;
+        padding: 0 15px;
+    }
+
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row > div {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .meeta-speakers-2 .container {
+        padding: 0 15px;
+    }
+
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row > div {
+        max-width: 50%;
+        flex: 0 0 50%;
+        padding: 0 10px;
+        margin-bottom: 30px;
+    }
+
+    .meeta-speakers-2 .single-speaker-2 {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .meeta-speakers-2 .meeta-speakers-content-wrap-2 .row > div {
+        max-width: 100%;
+        width: 100%;
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 15px;
+        margin-bottom: 30px;
+    }
+
+    .meeta-speakers-2 .single-speaker-2 {
+        max-width: 350px;
+        width: 100%;
+    }
+}
+
+
+/* ===================================
+   7. ADDITIONAL RESPONSIVE IMPROVEMENTS
+   =================================== */
+
+/* Ensure proper spacing and alignment throughout */
+@media only screen and (max-width: 575px) {
+    .meeta-about-section-2 .about-2-content-wrap .meeta-about-content {
+        padding-right: 0;
+    }
+}

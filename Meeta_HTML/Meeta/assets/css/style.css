@@ -60,6 +60,11 @@
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-size: 15px;
   line-height: 1.75;
@@ -68,7 +73,9 @@ body {
   color: #666666;
   outline: none;
   visibility: visible;
-  overflow-X: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: "";
@@ -174,19 +181,7 @@ img {
   max-width: 100%;
 }
 
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  opacity: 1;
-}
-
-input:-moz-placeholder, textarea:-moz-placeholder {
-  opacity: 1;
-}
-
-input::-moz-placeholder, textarea::-moz-placeholder {
-  opacity: 1;
-}
-
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+input::placeholder, textarea::placeholder {
   opacity: 1;
 }
 
@@ -323,17 +318,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .meeta-section-title-2 .sub-title {
-    font-size: 18px;
-  font-family: "Archivo", sans-serif;
-  font-weight: 600;
-  color: #fc097c;
-  margin-bottom: 5px;
- font-size: 22px;
-    letter-spacing: 4px;
+    font-family: "Archivo", sans-serif;
     font-weight: 600;
-     font-size: 24px;
+    font-size: 24px;
     letter-spacing: 5px;
     color: #ff3ec9;
+    margin-bottom: 5px;
 }
 
 .meeta-section-title-2 .main-title {
@@ -565,24 +555,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   height: 50px;
   border-radius: 50%;
   background-color: #fc097c;
-  -webkit-animation: preloader 1.3s linear infinite;
-          animation: preloader 1.3s linear infinite;
+  animation: preloader 1.3s linear infinite;
 }
 
 #preloader .preloader span:last-child {
-  -webkit-animation-delay: -0.8s;
-          animation-delay: -0.8s;
-}
-
-@-webkit-keyframes preloader {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(1, 1);
-    opacity: 0;
-  }
+  animation-delay: -0.8s;
 }
 
 @keyframes preloader {
@@ -1292,8 +1269,7 @@ label {
   z-index: 91;
   background-color: #311a79;
   border-bottom-color: #311a79;
-  -webkit-animation: sticky 1s;
-          animation: sticky 1s;
+  animation: sticky 1s;
 }
 
 .header-search .search-btn {
@@ -1399,7 +1375,7 @@ label {
   border-bottom: 2px solid #fc097c;
 }
 
-.search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-webkit-input-placeholder {
+.search-wrap .search-inner .search-cell .search-field-holder .main-search-input::placeholder {
   opacity: 0.95;
   font-size: 25px;
   color: #ffffff;
@@ -1407,94 +1383,19 @@ label {
 }
 
 @media only screen and (max-width: 1199px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-webkit-input-placeholder {
+  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::placeholder {
     font-size: 20px;
   }
 }
 
 @media only screen and (max-width: 767px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-webkit-input-placeholder {
+  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::placeholder {
     font-size: 16px;
   }
 }
 
 @media only screen and (max-width: 575px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-webkit-input-placeholder {
-    font-size: 14px;
-  }
-}
-
-.search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 25px;
-  color: #ffffff;
-  font-weight: 400;
-}
-
-@media only screen and (max-width: 1199px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-moz-placeholder {
-    font-size: 20px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-moz-placeholder {
-    font-size: 16px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-moz-placeholder {
-    font-size: 14px;
-  }
-}
-
-.search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 25px;
-  color: #ffffff;
-  font-weight: 400;
-}
-
-@media only screen and (max-width: 1199px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-moz-placeholder {
-    font-size: 20px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-moz-placeholder {
-    font-size: 16px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::-moz-placeholder {
-    font-size: 14px;
-  }
-}
-
-.search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-ms-input-placeholder {
-  opacity: 0.95;
-  font-size: 25px;
-  color: #ffffff;
-  font-weight: 400;
-}
-
-@media only screen and (max-width: 1199px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-ms-input-placeholder {
-    font-size: 20px;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-ms-input-placeholder {
-    font-size: 16px;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input:-ms-input-placeholder {
+  .search-wrap .search-inner .search-cell .search-field-holder .main-search-input::placeholder {
     font-size: 14px;
   }
 }
@@ -1615,15 +1516,6 @@ label {
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-@-webkit-keyframes sticky {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
-
 @keyframes sticky {
   0% {
     transform: translateY(-100%);
@@ -1703,7 +1595,6 @@ label {
   width: 75px;
   height: 75px;
   border-radius: 50%;
-  -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
@@ -1924,8 +1815,7 @@ label {
   left: 30px;
   width: 108px;
   opacity: 0.6;
-  -webkit-animation: bounce-animate 3s infinite linear;
-          animation: bounce-animate 3s infinite linear;
+  animation: bounce-animate 3s infinite linear;
 }
 
 @media only screen and (max-width: 575px) {
@@ -1939,8 +1829,7 @@ label {
   top: 20%;
   right: 30px;
   opacity: 0.6;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 @media only screen and (max-width: 575px) {
@@ -2166,18 +2055,6 @@ label {
   }
 }
 
-@-webkit-keyframes round-01 {
-  0% {
-    transform: rotate(15deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(15deg);
-  }
-}
-
 @keyframes round-01 {
   0% {
     transform: rotate(15deg);
@@ -2187,18 +2064,6 @@ label {
   }
   100% {
     transform: rotate(15deg);
-  }
-}
-
-@-webkit-keyframes bounce-animate {
-  0% {
-    transform: translateY(-20px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(-20px);
   }
 }
 
@@ -2232,8 +2097,7 @@ label {
   left: 19%;
   top: 40%;
   z-index: -1;
-  -webkit-animation: animationFrames 30s alternate infinite linear;
-          animation: animationFrames 30s alternate infinite linear;
+  animation: animationFrames 30s alternate infinite linear;
 }
 
 .meeta-hero-section-2 .shape-2 {
@@ -2241,8 +2105,7 @@ label {
   right: 28.5%;
   top: 16%;
   z-index: -1;
-  -webkit-animation: rotate-style 10s linear infinite;
-          animation: rotate-style 10s linear infinite;
+  animation: rotate-style 10s linear infinite;
 }
 
 .meeta-hero-section-2 .shape-3 {
@@ -2250,8 +2113,7 @@ label {
   right: 14.5%;
   bottom: 35%;
   z-index: -1;
-  -webkit-animation: animationFrames 30s alternate infinite linear;
-          animation: animationFrames 30s alternate infinite linear;
+  animation: animationFrames 30s alternate infinite linear;
 }
 
 .meeta-hero-section-2::before {
@@ -2281,10 +2143,15 @@ label {
 
 .meeta-hero-section-2 .meeta-hero-content .text {
   font-size: 22px;
-  line-height: 170px;
+  line-height: 1.5;
   font-family: "Archivo", sans-serif;
   font-weight: 700;
   color: #ffffff;
+  display: block;
+  margin-bottom: 50px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
@@ -2404,84 +2271,90 @@ label {
   }
   .meeta-hero-section-2 .meeta-hero-content .text {
     font-size: 18px;
-    line-height: 120px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+  .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
+    gap: 12px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown {
-    min-width: 90px;
-    height: 90px;
-    line-height: 90px;
-    padding: 25px 5px;
+    min-width: 85px;
+    width: 85px;
+    height: 85px;
+    line-height: 85px;
+    padding: 22px 8px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown::before {
-    width: 127px;
-    height: 67px;
-    left: -6px;
-    top: 35px;
+    width: 95px;
+    height: 52px;
+    border-top-left-radius: 68px;
+    border-top-right-radius: 68px;
+    border-width: 10px;
+    left: -5px;
+    top: 25px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .count {
-    font-size: 35px;
-    line-height: 12px;
+    font-size: 30px;
+    line-height: 14px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .value {
-    font-size: 14px;
-    margin-top: 15px;
+    font-size: 13px;
+    margin-top: 9px;
   }
 }
 
 @media only screen and (max-width: 575px) {
   .meeta-hero-section-2 {
-    height: 550px;
+    height: auto;
+    min-height: 100vh;
+    padding: 80px 0 60px;
   }
-  .meeta-hero-section-2 .shape-2 img {
-    width: 70%;
+  .meeta-hero-section-2 .shape-1,
+  .meeta-hero-section-2 .shape-2,
+  .meeta-hero-section-2 .shape-3 {
+    display: none;
   }
   .meeta-hero-section-2 .meeta-hero-content .title {
     font-size: 52px;
   }
   .meeta-hero-section-2 .meeta-hero-content .text {
-    font-size: 16px;
-    line-height: 70px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    padding: 0 15px;
+  }
+  .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0 15px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown {
-    min-width: 60px;
-    height: 60px;
-    line-height: 60px;
-    padding: 15px 0px;
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    padding: 20px 10px;
+    margin: 0 auto;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown::before {
-    width: 99px;
-    height: 51px;
-    left: -10px;
-    top: 23px;
+    width: 105px;
+    height: 58px;
+    border-top-left-radius: 75px;
+    border-top-right-radius: 75px;
+    border-width: 10px;
+    left: -2px;
+    top: 27px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .count {
     font-size: 28px;
-    line-height: 12px;
+    line-height: 16px;
   }
   .meeta-hero-section-2 .meeta-hero-content .meeta-countdown-2 .single-countdown .value {
     font-size: 12px;
-    margin-top: 8px;
-  }
-}
-
-@-webkit-keyframes animationFrames {
-  0% {
-    transform: translate(0px, 0px) rotate(0deg) scale(1);
-  }
-  20% {
-    transform: translate(73px, -1px) rotate(36deg) scale(0.9);
-  }
-  40% {
-    transform: translate(120px, 72px) rotate(72deg) scale(1);
-  }
-  60% {
-    transform: translate(83px, 110px) rotate(108deg) scale(1.2);
-  }
-  80% {
-    transform: translate(-40px, 72px) rotate(144deg) scale(1.1);
-  }
-  100% {
-    transform: translate(0px, 0px) rotate(0deg) scale(1);
+    margin-top: 10px;
   }
 }
 
@@ -3081,25 +2954,7 @@ label {
   color: #b5b5b5;
 }
 
-.meeta-hero-section-5 .hero-content .search-form-wrap .search-form-inner .search-form .single-form input::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  color: #b5b5b5;
-}
-
-.meeta-hero-section-5 .hero-content .search-form-wrap .search-form-inner .search-form .single-form input:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  color: #b5b5b5;
-}
-
-.meeta-hero-section-5 .hero-content .search-form-wrap .search-form-inner .search-form .single-form input::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  color: #b5b5b5;
-}
-
-.meeta-hero-section-5 .hero-content .search-form-wrap .search-form-inner .search-form .single-form input:-ms-input-placeholder {
+.meeta-hero-section-5 .hero-content .search-form-wrap .search-form-inner .search-form .single-form input::placeholder {
   opacity: 0.95;
   font-size: 14px;
   color: #b5b5b5;
@@ -4106,8 +3961,7 @@ label {
   left: -50px;
   top: 5px;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .meeta-about-section-4 .shape-2 {
@@ -4115,8 +3969,7 @@ label {
   top: 0;
   right: 130px;
   z-index: -1;
-  -webkit-animation: rotate-style 10s linear infinite;
-          animation: rotate-style 10s linear infinite;
+  animation: rotate-style 10s linear infinite;
 }
 
 .meeta-about-section-4 .shape-3 {
@@ -4124,8 +3977,7 @@ label {
   top: 60px;
   right: -50px;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .meeta-about-section-4 .meeta-about-counter-wrap {
@@ -4729,7 +4581,6 @@ label {
 
 .meeta-event-schedule-2 .meeta-event-schedule-tabs .meeta-event-schedule-tab-content .meeta-event-schedule-tab-pane .meeta-event-accordion .meeta-event-accordion-item .meeta-event-accordion-toggle .image img {
   border-radius: 50%;
-  -o-object-fit: cover;
      object-fit: cover;
 }
 
@@ -5220,7 +5071,6 @@ label {
 }
 
 .single-speaker-2 .speaker-image .image img {
-  -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
   transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -5497,15 +5347,6 @@ label {
   transform: scale(1.1);
 }
 
-@-webkit-keyframes rotate-style {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes rotate-style {
   0% {
     transform: rotate(0deg);
@@ -5588,8 +5429,7 @@ label {
   top: 55%;
   right: 55px;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .meeta-pricing .pricing-shape-02 {
@@ -5597,8 +5437,7 @@ label {
   top: 55%;
   left: 13%;
   z-index: -1;
-  -webkit-animation: rotate-style 10s linear infinite;
-          animation: rotate-style 10s linear infinite;
+  animation: rotate-style 10s linear infinite;
 }
 
 .meeta-pricing .pricing-shape-03 {
@@ -6072,7 +5911,6 @@ label {
 
 .meeta-gallery-4 .single-gallery .gallery-image img {
   height: 300px;
-  -o-object-fit: cover;
      object-fit: cover;
 }
 
@@ -6115,8 +5953,7 @@ label {
   position: absolute;
   top: 16%;
   right: -95px;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .single-testimonial {
@@ -6411,8 +6248,7 @@ label {
   right: 80px;
   top: 90px;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 @media only screen and (max-width: 1199px) {
@@ -6872,18 +6708,6 @@ label {
 .popup-video:hover {
   background: #fc097c;
   color: #ffffff;
-}
-
-@-webkit-keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 white;
-  }
-  70% {
-    box-shadow: 0 0 0 30px rgba(255, 31, 89, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 31, 89, 0);
-  }
 }
 
 @keyframes pulse {
@@ -7764,31 +7588,7 @@ label {
   overflow: hidden;
 }
 
-.sidebar-widget .search-form input::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Open Sans", sans-serif;
-  color: #797e82;
-  font-weight: 400;
-}
-
-.sidebar-widget .search-form input:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Open Sans", sans-serif;
-  color: #797e82;
-  font-weight: 400;
-}
-
-.sidebar-widget .search-form input::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Open Sans", sans-serif;
-  color: #797e82;
-  font-weight: 400;
-}
-
-.sidebar-widget .search-form input:-ms-input-placeholder {
+.sidebar-widget .search-form input::placeholder {
   opacity: 0.95;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
@@ -8271,28 +8071,7 @@ label {
   border-radius: 0;
 }
 
-.blog-details-post .blog-details-content .comment-wrap .comment-form .comment-form-wrap .single-form .form-control::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 13px;
-  color: #9d9d9d;
-  font-weight: 400;
-}
-
-.blog-details-post .blog-details-content .comment-wrap .comment-form .comment-form-wrap .single-form .form-control:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 13px;
-  color: #9d9d9d;
-  font-weight: 400;
-}
-
-.blog-details-post .blog-details-content .comment-wrap .comment-form .comment-form-wrap .single-form .form-control::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 13px;
-  color: #9d9d9d;
-  font-weight: 400;
-}
-
-.blog-details-post .blog-details-content .comment-wrap .comment-form .comment-form-wrap .single-form .form-control:-ms-input-placeholder {
+.blog-details-post .blog-details-content .comment-wrap .comment-form .comment-form-wrap .single-form .form-control::placeholder {
   opacity: 0.95;
   font-size: 13px;
   color: #9d9d9d;
@@ -8505,28 +8284,7 @@ label {
   border-radius: 0;
 }
 
-.contact-form-section .contact-wrap .contact-form-wrap .single-form .form-control::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 16px;
-  color: #a7a5c6;
-  font-weight: 400;
-}
-
-.contact-form-section .contact-wrap .contact-form-wrap .single-form .form-control:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 16px;
-  color: #a7a5c6;
-  font-weight: 400;
-}
-
-.contact-form-section .contact-wrap .contact-form-wrap .single-form .form-control::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 16px;
-  color: #a7a5c6;
-  font-weight: 400;
-}
-
-.contact-form-section .contact-wrap .contact-form-wrap .single-form .form-control:-ms-input-placeholder {
+.contact-form-section .contact-wrap .contact-form-wrap .single-form .form-control::placeholder {
   opacity: 0.95;
   font-size: 16px;
   color: #a7a5c6;
@@ -8671,25 +8429,7 @@ label {
   padding-left: 40px;
 }
 
-.event-list-top-bar .event-list-search .single-form input::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 15px;
-  color: #828282;
-}
-
-.event-list-top-bar .event-list-search .single-form input:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 15px;
-  color: #828282;
-}
-
-.event-list-top-bar .event-list-search .single-form input::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 15px;
-  color: #828282;
-}
-
-.event-list-top-bar .event-list-search .single-form input:-ms-input-placeholder {
+.event-list-top-bar .event-list-search .single-form input::placeholder {
   opacity: 0.95;
   font-size: 15px;
   color: #828282;
@@ -9271,8 +9011,7 @@ label {
   left: 240px;
   top: 28%;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .meeta-trending-section .trending-shape-3 {
@@ -9287,8 +9026,7 @@ label {
   right: 170px;
   top: 40%;
   z-index: -1;
-  -webkit-animation: rotate-style 10s linear infinite;
-          animation: rotate-style 10s linear infinite;
+  animation: rotate-style 10s linear infinite;
 }
 
 .meeta-trending-section .trending-shape-5 {
@@ -9296,8 +9034,7 @@ label {
   right: -40px;
   bottom: 30%;
   z-index: -1;
-  -webkit-animation: round-01 5s linear infinite;
-          animation: round-01 5s linear infinite;
+  animation: round-01 5s linear infinite;
 }
 
 .meeta-trending-content-wrap {
@@ -9667,31 +9404,7 @@ label {
   border-radius: 0;
 }
 
-.login-register-section .login-register-wrap .login-register-box .login-register-form .single-form .form-control::-webkit-input-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Archivo", sans-serif;
-  color: #787884;
-  font-weight: 400;
-}
-
-.login-register-section .login-register-wrap .login-register-box .login-register-form .single-form .form-control:-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Archivo", sans-serif;
-  color: #787884;
-  font-weight: 400;
-}
-
-.login-register-section .login-register-wrap .login-register-box .login-register-form .single-form .form-control::-moz-placeholder {
-  opacity: 0.95;
-  font-size: 14px;
-  font-family: "Archivo", sans-serif;
-  color: #787884;
-  font-weight: 400;
-}
-
-.login-register-section .login-register-wrap .login-register-box .login-register-form .single-form .form-control:-ms-input-placeholder {
+.login-register-section .login-register-wrap .login-register-box .login-register-form .single-form .form-control::placeholder {
   opacity: 0.95;
   font-size: 14px;
   font-family: "Archivo", sans-serif;
@@ -10577,11 +10290,217 @@ label {
 }
 
 img.nirvana-title {
-    margin-top: 360px;      /* moves image DOWN */
-    /* max-width: 120px;      controls size */
+    margin-top: 0;
+    max-width: 100%;
     width: auto;
     height: auto;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+  /* Prevent Horizontal Overflow on Tablets */
+  body, html {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .main-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  section, div[class*="section"] {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  img.nirvana-title {
+    max-width: 80%;
+    margin-bottom: 20px;
+  }
+
+  /* Tablet Fixes */
+  .meeta-hero-section-2 {
+    height: auto;
+    min-height: 800px;
+    padding: 100px 0 80px;
+    overflow-x: hidden;
+  }
+
+  .meeta-about-section-2 {
+    overflow-x: hidden;
+  }
+
+  .meeta-about-section-2 .meeta-about-images-2 {
+    padding: 0 30px;
+    margin-bottom: 50px;
+  }
+
+  .meeta-about-section-2 .about-2-content-wrap {
+    padding-left: 0;
+  }
+
+  /* Ensure images fit properly */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .row {
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  /* Prevent Horizontal Overflow */
+  body, html {
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  .main-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Fix all sections to prevent overflow */
+  section, div[class*="section"] {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow-x: hidden;
+  }
+
+  .row {
+    margin-left: -15px;
+    margin-right: -15px;
+    max-width: 100%;
+  }
+
+  [class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  img.nirvana-title {
+    max-width: 90%;
+    margin-bottom: 15px;
+  }
+
+  /* About Section Mobile Fixes */
+  .meeta-about-section-2 {
+    overflow-x: hidden;
+  }
+
+  .meeta-about-section-2 .meeta-about-images-2 {
+    padding: 0 15px;
+    margin-bottom: 40px;
+  }
+
+  .meeta-about-section-2 .meeta-about-images-2 .image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .meeta-about-section-2 .meeta-about-images-2 .play-btn {
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  .meeta-about-section-2 .about-2-content-wrap {
+    padding-left: 0;
+    padding: 0 15px;
+  }
+
+  /* General Image Responsiveness */
+  .meeta-about-images-2 .image,
+  .single-gallery .gallery-image,
+  .meeta-speakers-content-wrap-2 .speaker-image .image {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .meeta-about-images-2 .image img,
+  .single-gallery .gallery-image img,
+  .meeta-speakers-content-wrap-2 .speaker-image .image img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /* Gallery Section */
+  .meeta-gallery {
+    overflow-x: hidden;
+  }
+
+  .meeta-gallery .row {
+    margin: 0;
+  }
+
+  .meeta-gallery [class*="col-"] {
+    padding: 0;
+  }
+
+  /* Counter Section */
+  .meeta-counter-section {
+    overflow-x: hidden;
+  }
+
+  /* Speakers Section */
+  .meeta-speakers-2 {
+    overflow-x: hidden;
+  }
+
+  /* Pricing Section */
+  .meeta-pricing {
+    overflow-x: hidden;
+  }
+
+  /* Footer */
+  .meeta-footer-section {
+    overflow-x: hidden;
+  }
+
+  /* Section Padding Adjustments */
+  .section-padding {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .section-padding-02 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  /* Hide any overflowing decorative elements */
+  [class*="shape-"] {
+    max-width: 100% !important;
+  }
+}
+
+/* Accessibility: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
