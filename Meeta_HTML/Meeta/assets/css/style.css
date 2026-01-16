@@ -5414,7 +5414,7 @@ label {
   content: '';
   width: 100%;
   height: 100%;
-  background-image: url(../images/shape/shape-9.jpg);
+  /* background-image: url(../images/shape/shape-9.jpg); */
   background-position: center center;
   background-size: cover;
   opacity: 0.15;
@@ -5512,9 +5512,9 @@ label {
 }
 
 .single-pricing .pricing-header .price {
-  width: 95px;
-  height: 95px;
-  line-height: 95px;
+  width: 125px;
+  height: 125px;
+  line-height: 125px;
   margin: 0 auto;
   background-color: #ffffff;
   border-radius: 50%;
@@ -5591,7 +5591,7 @@ label {
   content: '';
   width: 100%;
   height: 100%;
-  background-image: url(../images/event-bg-1.jpg);
+  /* background-image: url(../images/event-bg-1.jpg); */
   background-position: center center;
   background-size: cover;
   position: absolute;
@@ -5631,7 +5631,7 @@ label {
   content: '';
   width: 100%;
   height: 100%;
-  background-image: url(../images/bg/price-3-bg.jpg);
+  /* background-image: url(../images/bg/price-3-bg.jpg); */
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -5665,7 +5665,7 @@ label {
   content: '';
   width: 100%;
   height: 100%;
-  background-image: url(../images/bg/price-4-bg.jpg);
+  /* background-image: url(../images/bg/price-4-bg.jpg); */
   background-position: center center;
   background-size: cover;
   position: absolute;
@@ -5901,7 +5901,7 @@ label {
   position: absolute;
   left: 0;
   top: 0;
-  background-image: url(../images/bg/insta-bg.jpg);
+  /* background-image: url(../images/bg/insta-bg.jpg); */
   background-repeat: no-repeat;
   background-position: center toopp;
   background-size: cover;
