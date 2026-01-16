@@ -1,6 +1,25 @@
 /* BhaZen Clubbing - Custom Fixes */
 
 /* ===================================
+   STICKY HEADER - Energetic gradient background
+   =================================== */
+
+/* Sticky header with vibrant gradient */
+.header-section.sticky {
+    background: linear-gradient(90deg, #2D0A4E 0%, #FF8C00 50%, #00CED1 100%) !important;
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.header-section.sticky .main-menu ul li a {
+    color: #ffffff !important;
+}
+
+.header-section.sticky .main-menu ul li a:hover {
+    color: #FF69B4 !important;
+}
+
+/* ===================================
    1. FIX HERO SECTION - Nirvana title image and countdown
    =================================== */
 
@@ -624,5 +643,223 @@
 @media only screen and (max-width: 575px) {
     .meeta-about-section-2 .about-2-content-wrap .meeta-about-content {
         padding-right: 0;
+    }
+}
+
+/* ===================================
+   8. FAQ SECTION - Improved typography and readability
+   =================================== */
+
+/* Reduce spacing between section title and FAQ items */
+.faq-accordion-wrapper {
+    padding-top: 30px !important;
+}
+
+/* FAQ section background */
+.meeta-faq-section {
+    background-color: transparent !important;
+}
+
+/* FAQ accordion items background */
+.faq-accordion .accordion-item {
+    background: transparent !important;
+}
+
+/* FAQ question buttons - larger, bolder text with better styling */
+.faq-accordion .accordion-item .accordion-header .accordion-button {
+    font-size: 20px !important;
+    line-height: 32px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    background: transparent !important;
+    font-family: 'Poppins', 'Open Sans', sans-serif !important;
+    text-transform: none !important;
+    border: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 20px 0px !important;
+}
+
+/* Collapsed state */
+.faq-accordion .accordion-item .accordion-header .accordion-button.collapsed {
+    background: transparent !important;
+    color: #000000 !important;
+    opacity: 1 !important;
+}
+
+/* Expanded state - not collapsed */
+.faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+    background: transparent !important;
+    color: #00CED1 !important;
+    box-shadow: none !important;
+}
+
+/* Reduce padding between FAQ items */
+.faq-accordion .accordion-item .accordion-header {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+/* FAQ answer text - improved readability with lighter weight */
+.faq-accordion .accordion-item .accordion-body {
+    padding-top: 10px !important;
+    padding-bottom: 25px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.faq-accordion .accordion-item .accordion-body p {
+    font-size: 15px !important;
+    line-height: 26px !important;
+    color: #000000 !important;
+    font-weight: 400 !important;
+    font-family: 'Open Sans', sans-serif !important;
+    text-align: left !important;
+}
+
+/* FAQ links in answers */
+.faq-accordion .accordion-item .accordion-body p a {
+    color: #FF8C00 !important;
+    text-decoration: underline;
+}
+
+.faq-accordion .accordion-item .accordion-body p a:hover {
+    color: #00CED1 !important;
+}
+
+/* FAQ button icon color */
+.faq-accordion .accordion-item .accordion-header .accordion-button .faq-button {
+    color: #FF8C00 !important;
+}
+
+.faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) .faq-button {
+    color: #00CED1 !important;
+}
+
+/* FAQ hover state */
+.faq-accordion .accordion-item .accordion-header .accordion-button:hover {
+    color: #00CED1 !important;
+}
+
+/* Reduce spacing between FAQ items */
+.faq-accordion .accordion-item {
+    margin-bottom: 5px !important;
+}
+
+/* Force text nodes inside button to be visible */
+.faq-accordion .accordion-item .accordion-header .accordion-button::before,
+.faq-accordion .accordion-item .accordion-header .accordion-button::after {
+    display: none !important;
+}
+
+/* Ensure button text content is visible */
+.faq-accordion .accordion-item .accordion-header .accordion-button,
+.faq-accordion .accordion-item .accordion-header .accordion-button * {
+    color: inherit !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Specific targeting for button text */
+.faq-accordion .accordion-item .accordion-header .accordion-button.collapsed {
+    color: #000000 !important;
+}
+
+.faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+    color: #00CED1 !important;
+}
+
+/* Responsive font sizes for FAQ */
+@media only screen and (max-width: 767px) {
+    .faq-accordion-wrapper {
+        padding-top: 20px !important;
+    }
+
+    .faq-accordion .accordion-item .accordion-header .accordion-button {
+        font-size: 17px !important;
+        line-height: 28px !important;
+    }
+
+    .faq-accordion .accordion-item .accordion-header {
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+    }
+
+    .faq-accordion .accordion-item .accordion-body p {
+        font-size: 14px !important;
+        line-height: 24px !important;
+    }
+}
+
+/* ===================================
+   9. CONTACT SECTION - Improved typography
+   =================================== */
+
+/* Contact section title adjustments */
+#contact .meeta-section-title-2 .main-title {
+    font-size: 42px !important;
+    margin-bottom: 50px !important;
+}
+
+/* Contact info card title */
+.single-contact-info .info-content .title {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Contact info card text */
+.single-contact-info .info-content p {
+    font-size: 16px !important;
+    line-height: 26px !important;
+}
+
+/* Contact section icon colors - set to white */
+.single-contact-info .info-icon i {
+    color: #ffffff !important;
+}
+
+/* ===================================
+   10. SECTION BACKGROUNDS - Consistent contrast and theme
+   =================================== */
+
+/* About Section - Light background for contrast after dark hero */
+.meeta-about-section-2 {
+    background: #f8f9fa !important;
+}
+
+/* Band/Speakers Section - Dark background with gradient */
+.meeta-speakers-2 {
+    background: linear-gradient(135deg, #1a0530 0%, #2D0A4E 50%, #1a0530 100%) !important;
+}
+
+/* Gallery Section - Light background */
+.meeta-gallery.meeta-gallery-2 {
+    background: #ffffff !important;
+}
+
+/* FAQ Section - Light background with subtle tint */
+.meeta-faq-section {
+    background: #f8f9fa !important;
+}
+
+/* Responsive adjustments for contact section */
+@media only screen and (max-width: 767px) {
+    #contact .meeta-section-title-2 .main-title {
+        font-size: 32px !important;
+        margin-bottom: 35px !important;
+    }
+
+    .single-contact-info .info-content .title {
+        font-size: 18px !important;
+    }
+
+    .single-contact-info .info-content p {
+        font-size: 15px !important;
     }
 }
