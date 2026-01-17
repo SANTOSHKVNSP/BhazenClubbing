@@ -36,7 +36,9 @@
     background-attachment: fixed !important;
 }
 
-/* Counter section background with WebP */
+/* Counter section background with WebP and parallax */
 .webp .meeta-counter-section {
-    background-image: url('../images/webp/concert-bg-1.webp') !important;
+    /* background: linear-gradient(135deg, rgba(29, 5, 65, 0.50) 0%, rgba(45, 10, 78, 0.45) 50%, rgba(29, 5, 65, 0.50) 100%), */
+                /* url('../images/webp/concert-bg-1.webp') center/cover !important; */
+    background-attachment: fixed !important;
 }

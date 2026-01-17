@@ -6189,6 +6189,7 @@ label {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  background-attachment: fixed;
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -6199,7 +6200,7 @@ label {
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -10147,7 +10148,7 @@ label {
     backdrop-filter: blur(6px);
 }
 .meeta-counter-section-2 {
-    background: linear-gradient(135deg, #1a0033, #3a0ca3, #7209b7, #4361ee);
+    /* background: linear-gradient(135deg, #1a0033, #3a0ca3, #7209b7, #4361ee); */
     position: relative;
     overflow: hidden;
 }
