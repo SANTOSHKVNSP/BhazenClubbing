@@ -6257,7 +6257,6 @@ label {
 }
 
 .single-counter::before {
-  content: "";
   position: absolute;
   right: 0;
   top: 50%;
@@ -6274,7 +6273,6 @@ label {
 }
 
 .single-counter.counter-item-1::after {
-  content: "";
   position: absolute;
   left: 0;
   top: 50%;

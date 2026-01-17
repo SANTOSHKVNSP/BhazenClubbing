@@ -758,14 +758,15 @@
     padding-top: 30px !important;
 }
 
-/* FAQ section background */
-.meeta-faq-section {
-    background-color: transparent !important;
-}
+/* FAQ section background - removed transparent override to allow inline background */
 
 /* FAQ accordion items background */
 .faq-accordion .accordion-item {
-    background: transparent !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(5px) !important;
+    border-radius: 10px !important;
+    margin-bottom: 15px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 /* FAQ question buttons - larger, bolder text with better styling */
@@ -773,7 +774,7 @@
     font-size: 20px !important;
     line-height: 32px !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #ffffff !important;
     background: transparent !important;
     font-family: 'Poppins', 'Open Sans', sans-serif !important;
     text-transform: none !important;
@@ -781,24 +782,25 @@
     opacity: 1 !important;
     visibility: visible !important;
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: space-between !important;
+    gap: 15px !important;
     width: 100% !important;
     text-align: left !important;
-    padding: 20px 0px !important;
+    padding: 20px 25px !important;
 }
 
 /* Collapsed state */
 .faq-accordion .accordion-item .accordion-header .accordion-button.collapsed {
     background: transparent !important;
-    color: #000000 !important;
+    color: #ffffff !important;
     opacity: 1 !important;
 }
 
 /* Expanded state - not collapsed */
 .faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
     background: transparent !important;
-    color: #00CED1 !important;
+    color: #FF8C00 !important;
     box-shadow: none !important;
 }
 
@@ -812,14 +814,14 @@
 .faq-accordion .accordion-item .accordion-body {
     padding-top: 10px !important;
     padding-bottom: 25px !important;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
 }
 
 .faq-accordion .accordion-item .accordion-body p {
     font-size: 15px !important;
     line-height: 26px !important;
-    color: #000000 !important;
+    color: rgba(255, 255, 255) !important;
     font-weight: 400 !important;
     font-family: 'Open Sans', sans-serif !important;
     text-align: left !important;
@@ -835,9 +837,11 @@
     color: #00CED1 !important;
 }
 
-/* FAQ button icon color */
+/* FAQ button icon color and alignment */
 .faq-accordion .accordion-item .accordion-header .accordion-button .faq-button {
     color: #FF8C00 !important;
+    flex-shrink: 0 !important;
+    margin-top: 4px !important;
 }
 
 .faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) .faq-button {
@@ -852,29 +856,6 @@
 /* Reduce spacing between FAQ items */
 .faq-accordion .accordion-item {
     margin-bottom: 5px !important;
-}
-
-/* Force text nodes inside button to be visible */
-.faq-accordion .accordion-item .accordion-header .accordion-button::before,
-.faq-accordion .accordion-item .accordion-header .accordion-button::after {
-    display: none !important;
-}
-
-/* Ensure button text content is visible */
-.faq-accordion .accordion-item .accordion-header .accordion-button,
-.faq-accordion .accordion-item .accordion-header .accordion-button * {
-    color: inherit !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* Specific targeting for button text */
-.faq-accordion .accordion-item .accordion-header .accordion-button.collapsed {
-    color: #000000 !important;
-}
-
-.faq-accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
-    color: #00CED1 !important;
 }
 
 /* Responsive font sizes for FAQ */
@@ -947,9 +928,9 @@
 }
 
 /* FAQ Section - Light background with subtle tint */
-.meeta-faq-section {
+/* .meeta-faq-section {
     background: #f8f9fa !important;
-}
+} */
 
 /* Responsive adjustments for contact section */
 @media only screen and (max-width: 767px) {
