@@ -1,6 +1,21 @@
 /* BhaZen Clubbing - Custom Fixes */
 
 /* ===================================
+   HEADER LOGO - Smaller size
+   =================================== */
+
+.header-logo img {
+    max-height: 80px;
+    width: auto;
+}
+
+@media only screen and (max-width: 991px) {
+    .header-logo img {
+        max-height: 80px;
+    }
+}
+
+/* ===================================
    STICKY HEADER - Energetic gradient background
    =================================== */
 
