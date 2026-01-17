@@ -1267,8 +1267,8 @@ label {
   left: 0;
   width: 100%;
   z-index: 91;
-  background-color: #311a79;
-  border-bottom-color: #311a79;
+  background-color: #1d0541;
+  border-bottom-color: #1d0541;
   animation: sticky 1s;
 }
 
@@ -2116,17 +2116,7 @@ label {
   animation: animationFrames 30s alternate infinite linear;
 }
 
-.meeta-hero-section-2::before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(-87deg, #5e0886 0%, #5e0885 47%, rgba(94, 8, 133, 0.99) 48%, rgba(186, 9, 252, 0.61176) 100%);
-  opacity: 0.95;
-  z-index: -1;
-}
+/* Removed ::before overlay - using inline gradient on hero section instead */
 
 .meeta-hero-section-2 .meeta-hero-content {
   max-width: 760px;

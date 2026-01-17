@@ -244,7 +244,6 @@
                         </li> -->
                         <li><a href="#band">Band</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li style="margin-top: 20px;"><a href="#pricing" class="btn btn-primary" style="display: block; background: linear-gradient(135deg, #FF8C00, #FF6B00); border: none; padding: 15px 30px; font-weight: 600; text-align: center; border-radius: 50px;">Buy Tickets Now</a></li>
                     </ul>
                 </div>
             </div>
@@ -253,7 +252,7 @@
         <!-- Offcanvas End -->
 
         <!-- Slider Section Start  -->
-        <div class="meeta-hero-section-2" style="background: linear-gradient(135deg, rgba(13, 5, 32, 0.4) 0%, rgba(45, 10, 78, 0.3) 50%, rgba(255, 140, 0, 0.2) 100%), url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80') center/cover no-repeat;">
+        <div class="meeta-hero-section-2" style="background: linear-gradient(135deg, rgba(29, 5, 65, 0.6) 0%, rgba(29, 5, 65, 0.5) 50%, rgba(29, 5, 65, 0.4) 100%), url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80') center/cover no-repeat;">
 
             <div class="shape-1">
                 <img src="assets/images/shape/hero-sahpe-1.png" alt="">
@@ -269,9 +268,9 @@
                     <div class="col-lg-12">
                         <div class="meeta-hero-content text-center" data-aos-delay="700" data-aos="fade-up">
                             <div class="hero-title-image" style="display: flex; flex-direction: column; align-items: center;">
-                                <img src="https://www.artofliving.org/in-en/app/uploads/2023/07/AOL-LOGO.png" alt="Art of Living" class="aol-logo" style="width: 180px; max-width: 80%; margin-bottom: 15px; filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(255,255,255,0.5));">
-                                <p class="presents-text" style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 15px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase;">presents</p>
-                                <h1 class="hero-main-title" style="font-size: clamp(2rem, 8vw, 4.5rem); font-weight: 800; color: #fff; text-shadow: 2px 2px 20px rgba(0,0,0,0.5); margin-bottom: 0; line-height: 1.1;">BhaZen <span style="color: #FF8C00;">Clubbing</span></h1>
+                                <img src="https://www.artofliving.org/in-en/app/uploads/2023/07/AOL-LOGO.png" alt="Art of Living" class="aol-logo" style="width: 200px; max-width: 70%; margin-bottom: 12px; filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.4));">
+                                <p class="presents-text" style="font-size: 1rem; color: rgba(255,255,255,0.85); margin-bottom: 10px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase;">presents</p>
+                                <img src="assets/images/bhazenclubbing.png" alt="BhaZen Clubbing" style="max-width: 180px; width: 50%; filter: drop-shadow(0 0 15px rgba(0,0,0,0.4));">
                             </div>
 
                             <span class="text">January 25, 2026 | 5:30 PM Onwards | Gurajada Kalakshetram, Visakhapatnam</span>
@@ -298,7 +297,7 @@
                             </div>
                             <!-- Countdown End -->
                             <div class="header-btn" data-aos-delay="900" data-aos="fade-up">
-                                <a class="btn-2" href="#pricing">Grab Your Tickets Now</a>
+                                <a class="btn-2" href="#pricing">Buy Ticket Now</a>
                             </div>
                         </div>
                     </div>
@@ -433,7 +432,7 @@
                             <!-- Single Counter Start -->
                             <div class="single-counter counter-item-3 text-center">
                                 <div class="counter-text">
-                                    <span class="counter">4</span>
+                                    <span class="counter">3</span>
                                     <p>Hours of Music</p>
                                 </div>
                             </div>
@@ -858,7 +857,7 @@
                 <!-- Section Title Start -->
                 <div class="meeta-section-title-2 text-center">
                     <!-- <h4 class="sub-title">Ticket Price</h4> -->
-                    <h2 class="main-title text-white">Grab Your Tickets Now</h2>
+                    <h2 class="main-title text-white">Buy Ticket Now</h2>
                 </div>
                 <!-- Section Title End -->
 
@@ -1485,13 +1484,37 @@
     <script src="assets/js/main.js"></script>
 
     <!-- Mobile Sticky Buy Tickets Button -->
-    <a href="#pricing" class="mobile-buy-tickets" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #FF8C00, #FF6B00); color: #fff; padding: 15px 35px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 20px rgba(255, 140, 0, 0.5); z-index: 9999; text-align: center;">
-        Buy Tickets Now
-    </a>
+    <a href="#pricing" class="mobile-buy-tickets">Buy Ticket Now</a>
     <style>
+        .mobile-buy-tickets {
+            display: none;
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF8C00, #FF6B00);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.5);
+            z-index: 9999;
+            text-align: center;
+            white-space: nowrap;
+            max-width: 90%;
+        }
         @media (max-width: 991px) {
             .mobile-buy-tickets {
                 display: block !important;
+            }
+        }
+        @media (max-width: 400px) {
+            .mobile-buy-tickets {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+                bottom: 10px;
             }
         }
     </style>
