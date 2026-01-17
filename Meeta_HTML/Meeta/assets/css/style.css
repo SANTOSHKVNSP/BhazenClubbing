@@ -2080,7 +2080,8 @@ label {
 }
 
 .meeta-hero-section-2 {
-  height: 1040px;
+  height: auto;
+  min-height: 900px;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2090,6 +2091,7 @@ label {
   z-index: 1;
   display: flex;
   align-items: center;
+  padding: 100px 0 80px;
 }
 
 .meeta-hero-section-2 .shape-1 {
@@ -2213,7 +2215,8 @@ label {
 
 @media only screen and (max-width: 1199px) {
   .meeta-hero-section-2 {
-    height: 820px;
+    height: auto;
+    min-height: 750px;
   }
   .meeta-hero-section-2 .shape-1 {
     left: 5%;
@@ -2254,7 +2257,8 @@ label {
 
 @media only screen and (max-width: 767px) {
   .meeta-hero-section-2 {
-    height: 650px;
+    height: auto;
+    min-height: 600px;
   }
   .meeta-hero-section-2 .meeta-hero-content .title {
     font-size: 65px;
@@ -2296,7 +2300,7 @@ label {
 @media only screen and (max-width: 575px) {
   .meeta-hero-section-2 {
     height: auto;
-    min-height: 100vh;
+    min-height: 85vh;
     padding: 80px 0 60px;
   }
   .meeta-hero-section-2 .shape-1,
@@ -10314,7 +10318,7 @@ img.nirvana-title {
   /* Tablet Fixes */
   .meeta-hero-section-2 {
     height: auto;
-    min-height: 800px;
+    min-height: 700px;
     padding: 100px 0 80px;
     overflow-x: hidden;
   }
