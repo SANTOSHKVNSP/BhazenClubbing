@@ -1,6 +1,21 @@
 /* BhaZen Clubbing - Custom Fixes */
 
 /* ===================================
+   HEADER LOGO - Smaller size
+   =================================== */
+
+.header-logo img {
+    max-height: 80px;
+    width: auto;
+}
+
+@media only screen and (max-width: 991px) {
+    .header-logo img {
+        max-height: 80px;
+    }
+}
+
+/* ===================================
    STICKY HEADER - Energetic gradient background
    =================================== */
 
@@ -23,12 +38,81 @@
    1. FIX HERO SECTION - Nirvana title image and countdown
    =================================== */
 
+/* Ensure hero content is always centered */
+.meeta-hero-section-2 .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.meeta-hero-section-2 .meeta-hero-content {
+    text-align: center !important;
+    width: 100%;
+}
+
 /* Center and make Nirvana title image responsive */
 .meeta-hero-section-2 .meeta-hero-content .hero-title-image {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+    width: 100%;
+}
+
+/* Hero text span centered */
+.meeta-hero-section-2 .meeta-hero-content .text {
+    text-align: center !important;
+    display: block;
+    width: 100%;
+}
+
+/* Hero button centered */
+.meeta-hero-section-2 .meeta-hero-content .header-btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Mobile specific hero centering */
+@media only screen and (max-width: 767px) {
+    .meeta-hero-section-2 .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content {
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .meeta-hero-section-2 .meeta-hero-content .hero-title-image img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .meeta-hero-section-2 .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .meeta-hero-section-2 .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .meeta-hero-section-2 .col-lg-12 {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .meeta-hero-section-2 .meeta-hero-content .hero-title-image img.nirvana-title {
