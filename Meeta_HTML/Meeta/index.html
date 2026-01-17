@@ -32,11 +32,22 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
 
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style-optimized.min.css">
 
     <!-- BhaZen Custom Fixes -->
-    <link rel="stylesheet" href="assets/css/bhazen-fixes.css">
+    <link rel="stylesheet" href="assets/css/bhazen-fixes.min.css">
 
+    <!-- WebP Support CSS -->
+    <link rel="stylesheet" href="assets/css/webp-support.css">
+
+    <!-- Resource Hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+    <!-- WebP Detection (Inline for immediate execution) -->
+    <script>
+    (function(){var a=new Image;a.onload=a.onerror=function(){document.documentElement.classList.add(2==a.height?"webp":"no-webp")};a.src="data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA"})();
+    </script>
 </head>
 
 <body id="top">
@@ -148,7 +159,7 @@
 
                     <div class="mini-cart-item">
                         <div class="mini-cart-item-image">
-                            <a href="#"><img src="assets/images/cart/cart-1.jpg" alt="Cart"></a>
+                            <a href="#"><img src="assets/images/cart/cart-1.jpg" loading="lazy" decoding="async" alt="Cart"></a>
                         </div>
                         <div class="mini-cart-item-content">
                             <h4 class="mini-cart-title"><a href="#">Virtual Event with Protected Content and Hidden Livestream </a></h4>
@@ -159,7 +170,7 @@
 
                     <div class="mini-cart-item">
                         <div class="mini-cart-item-image">
-                            <a href="#"><img src="assets/images/cart/cart-2.jpg" alt="Cart"></a>
+                            <a href="#"><img src="assets/images/cart/cart-2.jpg" loading="lazy" decoding="async" alt="Cart"></a>
                         </div>
                         <div class="mini-cart-item-content">
                             <h4 class="mini-cart-title"><a href="#">Virtual Event with Protected Content and Hidden Livestream </a></h4>
@@ -170,7 +181,7 @@
 
                     <div class="mini-cart-item">
                         <div class="mini-cart-item-image">
-                            <a href="#"><img src="assets/images/cart/cart-3.jpg" alt="Cart"></a>
+                            <a href="#"><img src="assets/images/cart/cart-3.jpg" loading="lazy" decoding="async" alt="Cart"></a>
                         </div>
                         <div class="mini-cart-item-content">
                             <h4 class="mini-cart-title"><a href="#">Virtual Event with Protected Content and Hidden Livestream </a></h4>
@@ -200,7 +211,7 @@
             <div class="offcanvas-header">
                 <!-- Offcanvas Logo Start -->
                 <div class="offcanvas-logo">
-                    <a href="#top"><img src="assets/images/logo-4.png" alt=""></a>
+                    <a href="#top"><img src="assets/images/logo-4.png" loading="lazy" decoding="async" alt=""></a>
                 </div>
                 <!-- Offcanvas Logo End -->
                 <button type="button" class="close-btn" data-bs-dismiss="offcanvas"><i class="flaticon-close"></i></button>
@@ -255,13 +266,13 @@
         <div class="meeta-hero-section-2" style="background: linear-gradient(135deg, rgba(29, 5, 65, 0.6) 0%, rgba(29, 5, 65, 0.5) 50%, rgba(29, 5, 65, 0.4) 100%), url('assets/images/hero-background.jpeg') center/cover no-repeat; background-attachment: fixed;">
 
             <div class="shape-1">
-                <img src="assets/images/shape/hero-sahpe-1.png" alt="">
+                <img src="assets/images/shape/hero-sahpe-1.png" loading="lazy" decoding="async" alt="">
             </div>
             <!-- <div class="shape-2">
-                <img src="assets/images/shape/hero-shape-2.png" alt="">
+                <img src="assets/images/shape/hero-shape-2.png" loading="lazy" decoding="async" alt="">
             </div> -->
             <div class="shape-3">
-                <img src="assets/images/shape/hero-shape-3.png" alt="">
+                <img src="assets/images/shape/hero-shape-3.png" loading="lazy" decoding="async" alt="">
             </div>
             <div class="container">
                 <div class="row">
@@ -316,10 +327,10 @@
                         <!-- About Images Start -->
                         <div class="meeta-about-images-2">
                             <div class="shape-1">
-                                <img src="assets/images/shape/about-2-shape.png" alt="">
+                                <img src="assets/images/shape/about-2-shape.png" loading="lazy" decoding="async" alt="">
                             </div>
                             <div class="image">
-                                <img src="assets/images/nirvana-8.jpg" alt="About">
+                                <img src="assets/images/nirvana-8.jpg" loading="lazy" decoding="async" alt="About">
                             </div>
                             <div class="play-btn">
                                 <a class="popup-video" href="https://www.youtube-nocookie.com/embed/Lh1Cg1RCDTA"><i class="fas fa-play"></i></a>
@@ -346,7 +357,7 @@
                                     <ul>
                                         <li class="about-list-item">
                                             <div class="about-icon">
-                                                <img src="assets/images/ab-icon-1.png" alt="">
+                                                <img src="assets/images/ab-icon-1.png" loading="lazy" decoding="async" alt="">
                                             </div>
                                             <div class="about-text">
                                                 <h3 class="title">Live Band</h3>
@@ -354,7 +365,7 @@
                                         </li>
                                         <!-- <li class="about-list-item">
                                             <div class="about-icon">
-                                                <img src="assets/images/ab-icon-2.png" alt="">
+                                                <img src="assets/images/ab-icon-2.png" loading="lazy" decoding="async" alt="">
                                             </div>
                                             <div class="about-text">
                                                 <h3 class="title">Food & Drinks</h3>
@@ -362,7 +373,7 @@
                                         </li> -->
                                         <li class="about-list-item">
                                             <div class="about-icon">
-                                                <img src="assets/images/ab-icon-3.png" alt="">
+                                                <img src="assets/images/ab-icon-3.png" loading="lazy" decoding="async" alt="">
                                             </div>
                                             <div class="about-text">
                                                 <h3 class="title">Photo Booth</h3>
@@ -370,7 +381,7 @@
                                         </li>
                                         <li class="about-list-item">
                                             <div class="about-icon">
-                                                <img src="assets/images/ab-icon-4.png" alt="">
+                                                <img src="assets/images/ab-icon-4.png" loading="lazy" decoding="async" alt="">
                                             </div>
                                             <div class="about-text">
                                                 <h3 class="title">Merchandise</h3>
@@ -394,16 +405,16 @@
         <div class="meeta-counter-section section-padding" style="background-image: url(assets/images/bg/concert-bg-1.png);">
 
             <div class="shape-1">
-                <img src="assets/images/shape/counter-shape-1.png" alt="">
+                <img src="assets/images/shape/counter-shape-1.png" loading="lazy" decoding="async" alt="">
             </div>
             <div class="shape-2">
-                <img src="assets/images/shape/counter-shape-2.png" alt="">
+                <img src="assets/images/shape/counter-shape-2.png" loading="lazy" decoding="async" alt="">
             </div>
             <div class="shape-3">
-                <img src="assets/images/shape/hero-sahpe-1.png" alt="">
+                <img src="assets/images/shape/hero-sahpe-1.png" loading="lazy" decoding="async" alt="">
             </div>
             <div class="shape-4">
-                <img src="assets/images/shape/counter-shape-4.png" alt="">
+                <img src="assets/images/shape/counter-shape-4.png" loading="lazy" decoding="async" alt="">
             </div>
             <div class="container">
                 <div class="counter-wrap">
@@ -465,21 +476,21 @@
                     </div>
                     <!-- Section Title End -->
                     <div class="meeta-speakers-content-wrap-2">
-                        <div class="row">
+                        <div class="row g-4">
 
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-1 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                     <div class="speaker-image">
     <div class="image circle-img">
-        <img src="assets/images/nirvana-3.jpg" alt="Member 1">
+        <img src="assets/images/nirvana-3.jpg" loading="lazy" decoding="async" alt="Member 1">
     </div>
 
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
@@ -489,18 +500,18 @@
                                 </div>
                                 <!-- Single Speakers End -->
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-2 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                      <div class="speaker-image">
                                         <div class="image circle-img">
-        <img src="assets/images/nirvana-16.png" alt="Member 1">
+        <img src="assets/images/nirvana-16.png" loading="lazy" decoding="async" alt="Member 1">
     </div>
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
@@ -510,18 +521,18 @@
                                 </div>
                                 <!-- Single Speakers End -->
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-3 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                     <div class="speaker-image">
                                         <div class="image circle-img">
-        <img src="assets/images/nirvana-12.jpg" alt="Member 1">
+        <img src="assets/images/nirvana-12.jpg" loading="lazy" decoding="async" alt="Member 1">
     </div>
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
@@ -531,18 +542,18 @@
                                 </div>
                                 <!-- Single Speakers End -->
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-4 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                     <div class="speaker-image">
                                         <div class="image circle-img">
-        <img src="assets/images/nirvana-13.jpg" alt="Member 1">
+        <img src="assets/images/nirvana-13.jpg" loading="lazy" decoding="async" alt="Member 1">
     </div>
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
@@ -552,18 +563,18 @@
                                 </div>
                                 <!-- Single Speakers End -->
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-5 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                     <div class="speaker-image">
                                          <div class="image circle-img">
-        <img src="assets/images/nirvana-15.png" alt="Member 1">
+        <img src="assets/images/nirvana-15.png" loading="lazy" decoding="async" alt="Member 1">
     </div>
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
@@ -573,22 +584,64 @@
                                 </div>
                                 <!-- Single Speakers End -->
                             </div>
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-12 col-sm-6 col-lg-3">
                                 <!-- Single Speakers Start -->
                                 <div class="single-speaker-2 color-6 text-center">
                                     <div class="shape-2">
-                                        <img src="assets/images/shape/sp-shape-2.png" alt="">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
                                     </div>
                                     <div class="speaker-image">
                                         <div class="image circle-img">
-        <img src="assets/images/nirvana-14.jpg" alt="Member 1">
+        <img src="assets/images/nirvana-14.jpg" loading="lazy" decoding="async" alt="Member 1">
     </div>
                                         <div class="shape-1">
-                                            <img src="assets/images/shape/sp-shape-1.png" alt="">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
                                         </div>
                                     </div>
                                     <div class="speaker-content">
                                         <h4 class="speaker-name"><a href="#">Flutist</a></h4>
+                                        <p class="speaker-designation">Nirvana Station</p>
+                                    </div>
+                                </div>
+                                <!-- Single Speakers End -->
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <!-- Single Speakers Start -->
+                                <div class="single-speaker-2 color-1 text-center">
+                                    <div class="shape-2">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
+                                    </div>
+                                    <div class="speaker-image">
+                                        <div class="image circle-img">
+        <img src="assets/images/nirvana-3.jpg" loading="lazy" decoding="async" alt="Member 7">
+    </div>
+                                        <div class="shape-1">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="speaker-content">
+                                        <h4 class="speaker-name"><a href="#">Percussionist</a></h4>
+                                        <p class="speaker-designation">Nirvana Station</p>
+                                    </div>
+                                </div>
+                                <!-- Single Speakers End -->
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <!-- Single Speakers Start -->
+                                <div class="single-speaker-2 color-2 text-center">
+                                    <div class="shape-2">
+                                        <img src="assets/images/shape/sp-shape-2.png" loading="lazy" decoding="async" alt="">
+                                    </div>
+                                    <div class="speaker-image">
+                                        <div class="image circle-img">
+        <img src="assets/images/nirvana-16.png" loading="lazy" decoding="async" alt="Member 8">
+    </div>
+                                        <div class="shape-1">
+                                            <img src="assets/images/shape/sp-shape-1.png" loading="lazy" decoding="async" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="speaker-content">
+                                        <h4 class="speaker-name"><a href="#">Rhythm Guitarist</a></h4>
                                         <p class="speaker-designation">Nirvana Station</p>
                                     </div>
                                 </div>
@@ -651,7 +704,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-1.jpg" alt="">
+                                                    <img src="assets/images/schedule-1.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">5:00 PM - 6:00 PM</span>
@@ -666,7 +719,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-2.jpg" alt="">
+                                                    <img src="assets/images/schedule-2.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">5:00 PM - 6:00 PM</span>
@@ -681,7 +734,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-3.jpg" alt="">
+                                                    <img src="assets/images/schedule-3.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">5:00 PM - 6:00 PM</span>
@@ -702,7 +755,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-1.jpg" alt="">
+                                                    <img src="assets/images/schedule-1.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">6:00 PM - 6:15 PM</span>
@@ -717,7 +770,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-2.jpg" alt="">
+                                                    <img src="assets/images/schedule-2.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">6:15 PM - 7:00 PM</span>
@@ -739,7 +792,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-1.jpg" alt="">
+                                                    <img src="assets/images/schedule-1.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">7:00 PM - 8:30 PM</span>
@@ -754,7 +807,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-2.jpg" alt="">
+                                                    <img src="assets/images/schedule-2.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">8:30 PM - 9:00 PM</span>
@@ -769,7 +822,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-3.jpg" alt="">
+                                                    <img src="assets/images/schedule-3.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">9:00 PM - 10:00 PM</span>
@@ -790,7 +843,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-1.jpg" alt="">
+                                                    <img src="assets/images/schedule-1.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">10:00 PM - 10:30 PM</span>
@@ -805,7 +858,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-2.jpg" alt="">
+                                                    <img src="assets/images/schedule-2.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">10:30 PM - 10:45 PM</span>
@@ -820,7 +873,7 @@
                                         <li class="meeta-event-accordion-item">
                                             <div class="meeta-event-accordion-toggle">
                                                 <div class="image">
-                                                    <img src="assets/images/schedule-3.jpg" alt="">
+                                                    <img src="assets/images/schedule-3.jpg" loading="lazy" decoding="async" alt="">
                                                 </div>
                                                 <div class="event-title">
                                                     <span class="time">10:45 PM</span>
@@ -849,7 +902,7 @@
         <div class="meeta-pricing meeta-pricing-2 section-padding" id="pricing" style="background: linear-gradient(135deg, rgba(13, 5, 32, 0.75) 0%, rgba(45, 10, 78, 0.70) 50%, rgba(13, 5, 32, 0.75) 100%), url('assets/images/pricing-background.jpeg') center/cover; background-blend-mode: overlay; background-attachment: fixed;">
 
             <div class="shape-1">
-                <img src="assets/images/shape/price-2-bg.png" alt="">
+                <img src="assets/images/shape/price-2-bg.png" loading="lazy" decoding="async" alt="">
             </div>
 
             <div class="container">
@@ -927,22 +980,22 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="meeta-sponsor-logo">
-                                    <img src="assets/images/sponsors-5.png" alt="">
+                                    <img src="assets/images/sponsors-5.png" loading="lazy" decoding="async" alt="">
                                 </div>
                             </div>
                             <div class="swiper-slide">
                                 <div class="meeta-sponsor-logo">
-                                    <img src="assets/images/sponsors-6.png" alt="">
+                                    <img src="assets/images/sponsors-6.png" loading="lazy" decoding="async" alt="">
                                 </div>
                             </div>
                             <div class="swiper-slide">
                                 <div class="meeta-sponsor-logo">
-                                    <img src="assets/images/sponsors-7.png" alt="">
+                                    <img src="assets/images/sponsors-7.png" loading="lazy" decoding="async" alt="">
                                 </div>
                             </div>
                             <div class="swiper-slide">
                                 <div class="meeta-sponsor-logo">
-                                    <img src="assets/images/sponsors-8.png" alt="">
+                                    <img src="assets/images/sponsors-8.png" loading="lazy" decoding="async" alt="">
                                 </div>
                             </div>
                         </div>
@@ -968,7 +1021,7 @@
                           <-- Single Blog Start -->
                             <!-- <div class="single-blog">
                                 <div class="blog-image">
-                                    <a h  ref="blog-details.html"><img src="assets/images/blog/blog-1.jpg" alt=""></a>
+                                    <a h  ref="blog-details.html"><img src="assets/images/blog/blog-1.jpg" loading="lazy" decoding="async" alt=""></a>
                                 </div> --> 
                                 <!-- <div class="blog-content">
                                     <div class="blog-meta">
@@ -984,7 +1037,7 @@
                             <!-- Single Blog Start -->
                             <!-- <div class="single-blog">
                                 <div class="blog-image">
-                                    <a href="blog-details.html"><img src="assets/images/blog/blog-2.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="assets/images/blog/blog-2.jpg" loading="lazy" decoding="async" alt=""></a>
                                 </div> -->
                                 <!-- <div class="blog-content">
                                     <div class="blog-meta">
@@ -1000,7 +1053,7 @@
                             <!-- Single Blog Start -->
                             <!-- <div class="single-blog">
                                 <div class="blog-image">
-                                    <a href="blog-details.html"><img src="assets/images/blog/blog-3.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="assets/images/blog/blog-3.jpg" loading="lazy" decoding="async" alt=""></a>
                                 </div> -->
                                 <!-- <div class="blog-content">
                                     <div class="blog-meta">
@@ -1026,7 +1079,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/edit-8.png" alt="Gallery">
+                            <img src="assets/images/edit-8.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1045,7 +1098,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/nirvana-17.png" alt="Gallery">
+                            <img src="assets/images/nirvana-17.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1064,7 +1117,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/nirvana-18.png" alt="Gallery">
+                            <img src="assets/images/nirvana-18.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1083,7 +1136,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/nirvana-19.png" alt="Gallery">
+                            <img src="assets/images/nirvana-19.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1102,7 +1155,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/nirvana-2.jpg" alt="Gallery">
+                            <img src="assets/images/nirvana-2.jpg" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1121,7 +1174,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/nirvana-20.png" alt="Gallery">
+                            <img src="assets/images/nirvana-20.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1140,7 +1193,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/edit-5.png" alt="Gallery">
+                            <img src="assets/images/edit-5.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1159,7 +1212,7 @@
                     <!-- Single Gallery Start -->
                     <div class="single-gallery">
                         <div class="gallery-image">
-                            <img src="assets/images/edit-11.png" alt="Gallery">
+                            <img src="assets/images/edit-11.png" loading="lazy" decoding="async" alt="Gallery">
                         </div>
                         <!-- <div class="gallery-content">
                             <div class="gallery-content-wrap">
@@ -1191,44 +1244,44 @@
 
                 <!-- Venue Details Grid -->
                 <div class="venue-horizontal-wrap">
-                    <div class="row justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-stretch">
 
                         <!-- Location -->
-                        <div class="col-lg-3 col-md-6" style="margin-bottom: 20px;">
-                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 25px 15px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3);">
-                                <i class="fas fa-map-marker-alt" style="font-size: 35px; color: #FF8C00; margin-bottom: 12px; display: block;"></i>
-                                <h4 class="text-white" style="font-size: 16px; margin-bottom: 8px;">Location</h4>
-                                <p class="text-white" style="font-size: 14px; margin-bottom: 0;">Gurajada Kalakshetram<br>Siripuram, Visakhapatnam</p>
+                        <div class="col-lg-4 col-md-6" style="margin-bottom: 20px;">
+                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 30px 20px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3); display: flex; flex-direction: column; justify-content: center;">
+                                <i class="fas fa-map-marker-alt" style="font-size: 40px; color: #FF8C00; margin-bottom: 15px; display: block;"></i>
+                                <h4 class="text-white" style="font-size: 18px; margin-bottom: 10px; font-weight: 600;">Location</h4>
+                                <p class="text-white" style="font-size: 15px; margin-bottom: 0; line-height: 1.6;">Gurajada Kalakshetram<br>Siripuram, Visakhapatnam</p>
                             </div>
                         </div>
 
                         <!-- Date & Time -->
-                        <div class="col-lg-3 col-md-6" style="margin-bottom: 20px;">
-                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 25px 15px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3);">
-                                <i class="fas fa-calendar-alt" style="font-size: 35px; color: #FF8C00; margin-bottom: 12px; display: block;"></i>
-                                <h4 class="text-white" style="font-size: 16px; margin-bottom: 8px;">Date & Time</h4>
-                                <p class="text-white" style="font-size: 14px; margin-bottom: 0;">January 25, 2026<br>5:30 PM Onwards</p>
+                        <div class="col-lg-4 col-md-6" style="margin-bottom: 20px;">
+                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 30px 20px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3); display: flex; flex-direction: column; justify-content: center;">
+                                <i class="fas fa-calendar-alt" style="font-size: 40px; color: #FF8C00; margin-bottom: 15px; display: block;"></i>
+                                <h4 class="text-white" style="font-size: 18px; margin-bottom: 10px; font-weight: 600;">Date & Time</h4>
+                                <p class="text-white" style="font-size: 15px; margin-bottom: 0; line-height: 1.6;">January 25, 2026<br>5:30 PM Onwards</p>
                             </div>
                         </div>
 
                         <!-- Capacity -->
-                        <div class="col-lg-3 col-md-6" style="margin-bottom: 20px;">
-                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 25px 15px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3);">
-                                <i class="fas fa-users" style="font-size: 35px; color: #FF8C00; margin-bottom: 12px; display: block;"></i>
-                                <h4 class="text-white" style="font-size: 16px; margin-bottom: 8px;">Capacity</h4>
-                                <p class="text-white" style="font-size: 14px; margin-bottom: 0;">2500+ Attendees<br>Premium Venue</p>
+                        <div class="col-lg-4 col-md-6" style="margin-bottom: 20px;">
+                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 30px 20px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3); display: flex; flex-direction: column; justify-content: center;">
+                                <i class="fas fa-users" style="font-size: 40px; color: #FF8C00; margin-bottom: 15px; display: block;"></i>
+                                <h4 class="text-white" style="font-size: 18px; margin-bottom: 10px; font-weight: 600;">Capacity</h4>
+                                <p class="text-white" style="font-size: 15px; margin-bottom: 0; line-height: 1.6;">2500+ Attendees</p>
                             </div>
                         </div>
 
-                        <!-- Get Directions -->
-                        <div class="col-lg-3 col-md-6" style="margin-bottom: 20px;">
-                            <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 25px 15px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100%;">
-                                <a href="https://www.google.com/maps/search/?api=1&query=Gurajada+Kalakshetram+Visakhapatnam" target="_blank" class="btn" style="background: #FF8C00; color: #ffffff; padding: 14px 30px; font-size: 16px; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);">
-                                    <i class="fas fa-map-marked-alt" style="margin-right: 8px; font-size: 18px;"></i>Get Directions
-                                </a>
-                            </div>
-                        </div>
+                    </div>
 
+                    <!-- Get Directions Button -->
+                    <div class="row justify-content-center" style="margin-top: 30px;">
+                        <div class="col-auto">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Gurajada+Kalakshetram+Visakhapatnam" target="_blank" class="btn" style="background: #FF8C00; color: #ffffff; padding: 16px 40px; font-size: 17px; border-radius: 50px; text-decoration: none; display: inline-flex; align-items: center; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4); transition: all 0.3s ease;">
+                                <i class="fas fa-map-marked-alt" style="margin-right: 10px; font-size: 20px;"></i>Get Directions
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1236,13 +1289,13 @@
         <!-- Venue Section End -->
 
         <!-- FAQ Start -->
-        <div class="meeta-faq-section section-padding" id="faq">
+        <div class="meeta-faq-section section-padding" id="faq" style="background: linear-gradient(135deg, rgba(13, 5, 32, 0.92) 0%, rgba(29, 5, 65, 0.90) 50%, rgba(13, 5, 32, 0.92) 100%), url('assets/images/FAQ-background.png') center/cover; background-attachment: fixed;">
             <div class="container">
                 <div class="meeta-faq-wrapper">
                     <!-- Section Title Start -->
                     <div class="meeta-section-title-2 text-center">
                         <!-- <h4 class="sub-title">Got Questions?</h4> -->
-                        <h2 class="main-title" style="color: #FF8C00;">Frequently Asked Questions</h2>
+                        <h2 class="main-title text-white" style="color: #ffffff;">Frequently Asked Questions</h2>
                     </div>
                     <!-- Section Title End -->
 
@@ -1478,21 +1531,21 @@
 
 
     <!-- Bootstrap JS -->
-    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/popper.min.js" defer></script>
     <script src="assets/js/bootstrap.min.js"></script>
 
     <!-- Plugins JS -->
-    <script src="assets/js/swiper-bundle.min.js"></script>
-    <script src="assets/js/back-to-top.js"></script>
+    <script src="assets/js/swiper-bundle.min.js" defer></script>
+    <script src="assets/js/back-to-top.js" defer></script>
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
     <script src="assets/js/jquery.counterup.min.js"></script>
-    <script src="assets/js/waypoints.min.js"></script>
-    <script src="assets/js/aos.js"></script>
+    <script src="assets/js/waypoints.min.js" defer></script>
+    <script src="assets/js/aos.js" defer></script>
     <script src="assets/js/jquery.nice-select.min.js"></script>
 
 
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" defer></script>
 
     <!-- Mobile Sticky Buy Tickets Button -->
     <a href="#pricing" class="mobile-buy-tickets">Buy Ticket Now</a>
