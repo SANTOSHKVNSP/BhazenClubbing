@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Invoke-WebRequest -Uri ''https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80'' -OutFile ''hero-background.jpg'' -UserAgent ''Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36''\")",
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)"
+    ]
+  }
+}

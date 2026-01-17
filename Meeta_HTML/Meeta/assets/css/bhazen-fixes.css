@@ -16,6 +16,25 @@
 }
 
 /* ===================================
+   HEADER - Fix vertical scrolling on mobile
+   =================================== */
+
+.header-middle.header-sticky {
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.header-middle.header-sticky .container {
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.header-middle.header-sticky .header-wrap {
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+}
+
+/* ===================================
    STICKY HEADER - Energetic gradient background
    =================================== */
 
