@@ -292,7 +292,7 @@
                                 <img src="assets/images/bhazenclubbing.png" alt="BhaZen Clubbing" style="max-width: 230px; width: 50%; filter: drop-shadow(0 0 15px rgba(0,0,0,0.4));">
                             </div>
 
-                            <span class="text">January 25, 2026 | 5:30 PM Onwards | Gurajada Kalakshetram, Visakhapatnam</span>
+                            <span class="text">January 25, 2026 | 5:00 PM Onwards | Gurajada Kalakshetram, Visakhapatnam</span>
 
                             <!-- Countdown Start -->
                             <div class="meeta-countdown-2 countdown" data-countdown="2026/01/25" data-format="short">
@@ -324,6 +324,100 @@
             </div>
         </div>
         <!-- Slider Section End -->
+
+        <!-- Early Bird Announcement Banner Start -->
+        <div class="early-bird-announcement" style="background: linear-gradient(135deg, #FF1744 0%, #E91E63 100%); padding: 18px 0; position: relative; overflow: hidden; border-top: 3px solid rgba(255, 255, 255, 0.3); border-bottom: 3px solid rgba(255, 255, 255, 0.3);">
+            <div class="container">
+                <div class="announcement-content" style="text-align: center; position: relative; z-index: 2;">
+                    <p style="margin: 0; color: #ffffff; font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                        <span style="font-size: 1.5rem; animation: pulse-icon 1.5s ease-in-out infinite;"></span>
+                        <span>Early Bird Offer Live Now!</span>
+                        <a class="btn-2" href="#pricing"><span style="background: rgba(255, 255, 255, 0.2); padding: 5px 15px; border-radius: 20px; font-size: 1.1rem;">Get Tickets at ₹299</span></a>
+                        <span style="font-size: 1.5rem; animation: pulse-icon 1.5s ease-in-out infinite;"></span>
+                    </p>
+                </div>
+            </div>
+            <style>
+                @keyframes pulse-icon {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.2); }
+                }
+
+                /* Tablet responsive */
+                @media (max-width: 991px) {
+                    .early-bird-announcement {
+                        padding: 16px 15px !important;
+                    }
+                    .announcement-content p {
+                        font-size: 1.15rem !important;
+                        gap: 10px !important;
+                    }
+                    .announcement-content p span:nth-child(1),
+                    .announcement-content p span:nth-child(4) {
+                        font-size: 1.3rem !important;
+                    }
+                    .announcement-content p span:nth-child(3) {
+                        font-size: 1rem !important;
+                        padding: 5px 14px !important;
+                    }
+                }
+
+                /* Mobile responsive */
+                @media (max-width: 767px) {
+                    .early-bird-announcement {
+                        padding: 14px 10px !important;
+                    }
+                    .announcement-content p {
+                        font-size: 0.95rem !important;
+                        gap: 8px !important;
+                        flex-wrap: wrap;
+                    }
+                    .announcement-content p span:nth-child(1),
+                    .announcement-content p span:nth-child(4) {
+                        font-size: 1.1rem !important;
+                    }
+                    .announcement-content p span:nth-child(2) {
+                        font-size: 0.95rem !important;
+                    }
+                    .announcement-content p span:nth-child(3) {
+                        font-size: 0.85rem !important;
+                        padding: 4px 12px !important;
+                        flex-basis: 100%;
+                        margin-top: 5px;
+                    }
+                }
+
+                /* Small mobile responsive */
+                @media (max-width: 480px) {
+                    .early-bird-announcement {
+                        padding: 12px 8px !important;
+                    }
+                    .announcement-content p {
+                        font-size: 0.85rem !important;
+                        gap: 6px !important;
+                    }
+                    .announcement-content p span:nth-child(1),
+                    .announcement-content p span:nth-child(4) {
+                        font-size: 1rem !important;
+                    }
+                    .announcement-content p span:nth-child(2) {
+                        font-size: 0.85rem !important;
+                    }
+                    .announcement-content p span:nth-child(3) {
+                        font-size: 0.8rem !important;
+                        padding: 4px 10px !important;
+                    }
+                }
+
+                /* Very small screens */
+                @media (max-width: 360px) {
+                    .announcement-content p span:nth-child(2) {
+                        font-size: 0.8rem !important;
+                    }
+                }
+            </style>
+        </div>
+        <!-- Early Bird Announcement Banner End -->
 
         <!-- About Section Start -->
         <div class="meeta-about-section-2 section-padding">
@@ -924,9 +1018,10 @@
                 <!-- Section Title End -->
 
                 <div class="row gy-5 justify-content-center meeta-pricing-row">
-                    <div class="col-lg-5 col-md-8">
+                    <!-- EARLY BIRD OFFER: Student Pass Hidden - Uncomment to restore original pricing -->
+                    <!-- <div class="col-lg-5 col-md-8">
 
-                        <!-- Single Pricing Start -->
+                        Single Pricing Start
                         <div class="single-pricing">
                             <div class="pricing-header">
                                 <h3 class="price_title">Student Pass</h3>
@@ -944,17 +1039,27 @@
                                 <a class="btn" href="http://aolt.in/945415">Book Now</a>
                             </div>
                         </div>
-                        <!-- Single Pricing End -->
+                        Single Pricing End
 
-                    </div>
+                    </div> -->
                     <div class="col-lg-5 col-md-8">
 
                         <!-- Single Pricing Start -->
-                        <div class="single-pricing active">
+                        <!-- EARLY BIRD OFFER: General Pass updated with early bird pricing -->
+                        <!-- ORIGINAL: Price ₹499, Link: http://aolt.in/945423 -->
+                        <div class="single-pricing active early-bird-pricing">
                             <div class="pricing-header">
+                                <div class="early-bird-badge-wrapper">
+                                    <span class="early-bird-badge">
+                                        <span class="badge-icon">🎉</span>
+                                        <span class="badge-text">Early Bird Offer</span>
+                                        <span class="badge-pulse-ring"></span>
+                                    </span>
+                                </div>
                                 <h3 class="price_title">General Pass</h3>
-                                <div class="price">
-                                    <span><sup>₹</sup>499</span>
+                                <div class="price" style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                                    <span style="text-decoration: line-through; opacity: 0.5; font-size: 2rem; color: #000;">₹499</span>
+                                    <span><sup>₹</sup>299</span>
                                 </div>
                             </div>
                             <div class="pricing-body">
@@ -964,7 +1069,8 @@
                                     <li>Entry to All Performances</li>
                                     <li>Event Wristband</li>
                                 </ul>
-                                <a class="btn" href="http://aolt.in/945423">Book Now</a>
+                                <!-- EARLY BIRD: Using student pass booking link -->
+                                <a class="btn" href="http://aolt.in/945415">Book Now</a>
                             </div>
                         </div>
                         <!-- Single Pricing End -->
@@ -1269,7 +1375,7 @@
                             <div class="venue-info-card text-center" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 30px 20px; border-radius: 15px; height: 100%; border: 1px solid rgba(255, 140, 0, 0.3); display: flex; flex-direction: column; justify-content: center;">
                                 <i class="fas fa-calendar-alt" style="font-size: 40px; color: #FF8C00; margin-bottom: 15px; display: block;"></i>
                                 <h4 class="text-white" style="font-size: 18px; margin-bottom: 10px; font-weight: 600;">Date & Time</h4>
-                                <p class="text-white" style="font-size: 15px; margin-bottom: 0; line-height: 1.6;">January 25, 2026<br>5:30 PM Onwards</p>
+                                <p class="text-white" style="font-size: 15px; margin-bottom: 0; line-height: 1.6;">January 25, 2026<br>5:00 PM Onwards</p>
                             </div>
                         </div>
 
@@ -1354,7 +1460,7 @@
                                         </h2>
                                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <p>Gates open at 5:30 PM on January 25, 2026. We recommend arriving early to collect your wristband, find good seating, and enjoy the pre-show activities including the photo booth and merchandise stalls.</p>
+                                                <p>Gates open at 5:00 PM on January 25, 2026. We recommend arriving early to collect your wristband, find good seating, and enjoy the pre-show activities including the photo booth and merchandise stalls.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1467,7 +1573,7 @@
                                         <!-- Footer Info Start -->
                                         <div class="footer-info">
                                             <h3 class="title">Event Details</h3>
-                                            <span class="date">January 25, 2026 | 5:30 PM Onwards</span>
+                                            <span class="date">January 25, 2026 | 5:00 PM Onwards</span>
                                             <p>Gurajada Kalakshetram, Siripuram, Visakhapatnam, Andhra Pradesh, India</p>
 
                                             <!-- Contact Information -->

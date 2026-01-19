@@ -554,6 +554,119 @@
     max-width: 100%;
 }
 
+/* ===================================
+   EARLY BIRD OFFER BADGE - Highlighted with pulsing effect
+   =================================== */
+
+/* Change pricing card from yellow to blue */
+.early-bird-pricing .pricing-header {
+    background-color: #1E90FF !important; /* Dodger Blue */
+}
+
+.early-bird-pricing .price span {
+    color: #1E90FF !important; /* Dodger Blue */
+}
+
+.early-bird-pricing .pricing-body .btn {
+    background-color: #1E90FF !important; /* Dodger Blue */
+}
+
+.early-bird-pricing .pricing-body .btn:hover {
+    background-color: #4169E1 !important; /* Royal Blue - slightly darker on hover */
+}
+
+/* Enhanced styling for early bird pricing card */
+.early-bird-pricing {
+    position: relative;
+    border: 3px solid #1E90FF !important; /* Blue border instead of orange */
+    box-shadow: 0 8px 40px rgba(30, 144, 255, 0.4), 0 4px 20px rgba(65, 105, 225, 0.3) !important;
+    animation: cardGlow 3s ease-in-out infinite;
+}
+
+/* Card glow animation */
+@keyframes cardGlow {
+    0%, 100% {
+        box-shadow: 0 8px 40px rgba(30, 144, 255, 0.4), 0 4px 20px rgba(65, 105, 225, 0.3);
+    }
+    50% {
+        box-shadow: 0 12px 50px rgba(30, 144, 255, 0.6), 0 6px 30px rgba(65, 105, 225, 0.5);
+    }
+}
+
+/* Early bird badge wrapper */
+.early-bird-badge-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Early bird badge styling */
+.early-bird-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FF1744; /* Vibrant red - high contrast */
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: visible;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+/* Badge icon - no animation */
+.early-bird-badge .badge-icon {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+/* Badge text */
+.early-bird-badge .badge-text {
+    display: inline-block;
+    font-family: 'Archivo', 'Open Sans', sans-serif;
+}
+
+/* Hide the pulse ring */
+.early-bird-badge .badge-pulse-ring {
+    display: none;
+}
+
+/* Simple hover effect for badge */
+.early-bird-badge:hover {
+    background: #E91E63; /* Slightly different vibrant pink on hover */
+}
+
+/* Responsive adjustments for early bird badge */
+@media only screen and (max-width: 767px) {
+    .early-bird-badge {
+        font-size: 0.9rem;
+        padding: 7px 18px;
+    }
+
+    .early-bird-badge .badge-icon {
+        font-size: 0.95rem;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .early-bird-badge {
+        font-size: 0.85rem;
+        padding: 6px 16px;
+    }
+
+    .early-bird-badge .badge-icon {
+        font-size: 0.9rem;
+    }
+}
+
 /* Mobile responsive */
 @media only screen and (max-width: 991px) {
     .meeta-pricing-2 .meeta-pricing-row {

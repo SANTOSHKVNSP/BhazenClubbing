@@ -5506,8 +5506,8 @@ label {
 }
 
 .single-pricing .pricing-header .price {
-  width: 125px;
-  height: 125px;
+  width: auto;
+  height: auto;
   line-height: 125px;
   margin: 0 auto;
   background-color: #ffffff;
