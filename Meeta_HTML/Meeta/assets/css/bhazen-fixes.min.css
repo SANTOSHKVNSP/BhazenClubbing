@@ -560,26 +560,26 @@
 
 /* Change pricing card from yellow to blue */
 .early-bird-pricing .pricing-header {
- background-color: #1E90FF !important; /* Dodger Blue */
+ background-color: #004D00 !important; /* Dodger Blue */
 }
 
 .early-bird-pricing .price span {
- color: #1E90FF !important; /* Dodger Blue */
+ color: #004D00 !important; /* Dodger Blue */
 }
 
 .early-bird-pricing .pricing-body .btn {
- background-color: #1E90FF !important; /* Dodger Blue */
+ background-color: #004D00 !important; /* Dodger Blue */
 }
 
 .early-bird-pricing .pricing-body .btn:hover {
- background-color: #4169E1 !important; /* Royal Blue - slightly darker on hover */
+ background-color: #023702 !important; /* Royal Blue - slightly darker on hover */
 }
 
 /* Enhanced styling for early bird pricing card */
 .early-bird-pricing {
  position: relative;
- border: 3px solid #1E90FF !important; /* Blue border instead of orange */
- box-shadow: 0 8px 40px rgba(30, 144, 255, 0.4), 0 4px 20px rgba(65, 105, 225, 0.3) !important;
+ border: 3px solid #004D00 !important; /* Blue border instead of orange */
+ box-shadow: 0 8px 40px rgba(3, 113, 10, 0.4), 0 4px 20px rgba(3, 107, 10, 0.3) !important;
  animation: cardGlow 3s ease-in-out infinite;
 }
 
@@ -608,8 +608,8 @@
  align-items: center;
  justify-content: center;
  gap: 8px;
- background: #FF1744; /* Vibrant red - high contrast */
- color: #ffffff;
+ background: #fff; /* Vibrant red - high contrast */
+ color: #004D00;
  font-size: 0.95rem;
  font-weight: 700;
  padding: 8px 20px;
