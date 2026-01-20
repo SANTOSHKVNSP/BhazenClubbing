@@ -641,7 +641,7 @@
 
 /* Simple hover effect for badge */
 .early-bird-badge:hover {
- background: #E91E63; /* Slightly different vibrant pink on hover */
+ background: #fff; /* Slightly different vibrant pink on hover */
 }
 
 /* Responsive adjustments for early bird badge */
