@@ -1,0 +1,13 @@
+{
+  "name": "Sattvick Beats Scanner",
+  "short_name": "SB Scan",
+  "start_url": "/scan",
+  "scope": "/scan",
+  "display": "standalone",
+  "background_color": "#1a0530",
+  "theme_color": "#1d0541",
+  "icons": [
+    { "src": "/images/bhazen/bhazenclubbing.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/bhazen/bhazenclubbing.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

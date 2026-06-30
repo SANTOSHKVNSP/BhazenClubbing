@@ -2,6 +2,7 @@ import { prisma } from "../db";
 import { computePricing } from "../pricing";
 import { releaseExpiredHolds } from "./holds";
 import { signTicket } from "../tickets/qr";
+import { notify } from "../notify";
 
 // Convert a valid hold into a pending Order with computed pricing, attaching tickets.
 export async function createOrderFromHold(holdToken: string, userId: string) {
@@ -79,5 +80,26 @@ export async function fulfillOrder(orderId: string, razorpayPaymentId?: string):
       where: { id: t.id },
       data: { qrToken: signTicket({ tid: t.id, sid: t.showtimeId }) },
     });
+  }
+
+  // First-fulfillment only: send confirmation (email + WhatsApp; dev-console fallback).
+  if (unsigned.length > 0) {
+    try {
+      const o = await prisma.order.findUnique({
+        where: { id: orderId },
+        include: { user: true, tickets: { include: { seat: true } }, showtime: { include: { event: true } } },
+      });
+      if (o) {
+        const seats = o.tickets.map((t) => `${t.seat.row}${t.seat.number}`).join(", ");
+        await notify({
+          email: o.user.email ?? undefined,
+          phone: o.user.phone,
+          subject: `Your ${o.showtime.event.title} tickets`,
+          body: `Booking confirmed! Seats ${seats}. View your tickets at ${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/account`,
+        });
+      }
+    } catch {
+      // delivery failure must not block fulfillment
+    }
   }
 }

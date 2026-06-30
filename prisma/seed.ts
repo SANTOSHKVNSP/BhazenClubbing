@@ -9,6 +9,9 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Clear (dev only) in FK-safe order.
+  await prisma.refund.deleteMany();
+  await prisma.invoice.deleteMany();
+  await prisma.checkinEvent.deleteMany();
   await prisma.eventBand.deleteMany();
   await prisma.ticket.deleteMany();
   await prisma.order.deleteMany();

@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   description:
     "Sattvick Beats — live concerts across India, presented by Art of Living. Book tickets for events in your city.",
   metadataBase: new URL("https://www.sattvickbeats.com"),
+  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {

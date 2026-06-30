@@ -53,13 +53,13 @@
 **DoD:** TS-AUTH, TS-CART, TS-PAY, TS-ORD, TS-REF pass (Razorpay test mode).
 **Pending input:** Razorpay keys + KYC; GSTIN/SAC/invoice series.
 
-## Phase 4 — Tickets, delivery & offline check-in  🟦  ★high-risk (offline)
+## Phase 4 — Tickets, delivery & offline check-in  🟦  ★high-risk (offline) _(core done; PDF ticket, T-2 reminder job, real-device camera/PWA QA deferred)_
 **Goal:** Get tickets to buyers; admit them offline.
 - ✅ Ed25519 QR signing (`lib/tickets/qr`) + per-ticket token on fulfillment + owner ticket page `/ticket/[id]` with rendered QR + confirmation links. PDF later
-- ⬜ Email (Resend/SES) confirmation + invoice; WhatsApp confirmation + ticket link; **T-2 reminder** job
-- ⬜ Scanner PWA: install, pre-sync allowlist + public key (IndexedDB)
-- ⬜ Offline validate (signature + allowlist + used-set), green/red UX, manual-entry fallback
-- ⬜ Background sync (idempotent, earliest-wins) + cross-device duplicate flagging + anomaly report
+- 🟦 Confirmation via notify module (email Resend + WhatsApp BSP; dev-console fallback) on fulfillment. PDF attachment + T-2 reminder job deferred
+- ✅ Scanner PWA: pre-sync allowlist + public key to IndexedDB; manifest + service worker (offline cache)
+- ✅ Offline validate (allowlist hash membership + local used-set), green/red UX, manual + BarcodeDetector camera entry
+- ✅ Check-in sync (idempotent resync; cross-device duplicate flagging via flagged CheckinEvent). Earliest-wins refinement + anomaly-report UI later
 **DoD:** TS-NOTIF, TS-SCAN (all), real-device offline drill pass.
 **Pending input:** WhatsApp BSP + templates; email domain/DNS.
 
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 4 scanner + delivery: offline scanner PWA (`/scan`) — token-gated sync API (allowlist + Ed25519 public key) → IndexedDB, offline validate (hash membership + used-set), manual + camera (BarcodeDetector) entry, idempotent check-in sync with cross-device duplicate flagging; manifest + service worker. Notify module (email/WhatsApp, dev-console fallback) sends confirmation on fulfillment. Server flow verified: sync → admit → duplicate → resync. Deferred: PDF ticket, T-2 reminder, real-device camera/offline-reload QA.
 - **2026-06-30** — Phase 4 start: Ed25519-signed QR tickets — keypair, `lib/tickets/qr` (sign/verify/hash), sign per ticket on fulfillment, owner ticket page `/ticket/[id]` with rendered QR + confirmation links. QR test passes (roundtrip, tamper rejected, PNG). Next: delivery + offline scanner.
 - **2026-06-30** — Phase 3 tail: refund engine (per-event policy gate, dev-aware Razorpay refund, seat release sold→refunded, Refund + AuditLog, admin + self-service) + GST invoice (gap-free Counter numbering + viewable invoice page) generated on payment. Refund test passes (seats freed; invoice SB/2026/00001). Phase 3 account-free scaffolding complete. → Phase 4.
 - **2026-06-30** — Phase 3 auth + checkout (account-free): phone OTP login (dev-console code) + account/booking history; hold→Order→pricing→idempotent fulfillment (held→sold) with dev-pay simulation; Razorpay REST client + signature-verified idempotent webhook (inert until keys). Money-path test passes (paid, 2 seats sold, idempotent). Remaining P3: GST invoice, refund engine, live Razorpay widget.
