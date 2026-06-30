@@ -53,9 +53,9 @@
 **DoD:** TS-AUTH, TS-CART, TS-PAY, TS-ORD, TS-REF pass (Razorpay test mode).
 **Pending input:** Razorpay keys + KYC; GSTIN/SAC/invoice series.
 
-## Phase 4 — Tickets, delivery & offline check-in  ⬜  ★high-risk (offline)
+## Phase 4 — Tickets, delivery & offline check-in  🟦  ★high-risk (offline)
 **Goal:** Get tickets to buyers; admit them offline.
-- ⬜ Ed25519 QR signing; PDF tickets (per-seat QR)
+- ✅ Ed25519 QR signing (`lib/tickets/qr`) + per-ticket token on fulfillment + owner ticket page `/ticket/[id]` with rendered QR + confirmation links. PDF later
 - ⬜ Email (Resend/SES) confirmation + invoice; WhatsApp confirmation + ticket link; **T-2 reminder** job
 - ⬜ Scanner PWA: install, pre-sync allowlist + public key (IndexedDB)
 - ⬜ Offline validate (signature + allowlist + used-set), green/red UX, manual-entry fallback
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 4 start: Ed25519-signed QR tickets — keypair, `lib/tickets/qr` (sign/verify/hash), sign per ticket on fulfillment, owner ticket page `/ticket/[id]` with rendered QR + confirmation links. QR test passes (roundtrip, tamper rejected, PNG). Next: delivery + offline scanner.
 - **2026-06-30** — Phase 3 tail: refund engine (per-event policy gate, dev-aware Razorpay refund, seat release sold→refunded, Refund + AuditLog, admin + self-service) + GST invoice (gap-free Counter numbering + viewable invoice page) generated on payment. Refund test passes (seats freed; invoice SB/2026/00001). Phase 3 account-free scaffolding complete. → Phase 4.
 - **2026-06-30** — Phase 3 auth + checkout (account-free): phone OTP login (dev-console code) + account/booking history; hold→Order→pricing→idempotent fulfillment (held→sold) with dev-pay simulation; Razorpay REST client + signature-verified idempotent webhook (inert until keys). Money-path test passes (paid, 2 seats sold, idempotent). Remaining P3: GST invoice, refund engine, live Razorpay widget.
 - **2026-06-30** — Phase 3 start (account-free): pricing engine (fee + GST, additive/inclusive, free events) with 7 vitest unit tests; CI now runs `npm test`. Next: dev-mode OTP auth, checkout flow, Razorpay/webhook scaffolding.

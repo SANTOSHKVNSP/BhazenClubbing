@@ -18,9 +18,9 @@ export default async function ConfirmedPage({ params }: { params: Promise<{ orde
   if (!order || order.userId !== session.user.id) notFound();
 
   const event = order.showtime.event;
-  const seats = order.tickets
-    .map((t) => `${t.seat.row}${t.seat.number}`)
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const tickets = [...order.tickets].sort((a, b) =>
+    `${a.seat.row}${a.seat.number}`.localeCompare(`${b.seat.row}${b.seat.number}`, undefined, { numeric: true })
+  );
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary to-purple-deep px-6 py-16">
@@ -28,9 +28,13 @@ export default async function ConfirmedPage({ params }: { params: Promise<{ orde
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600">✓</div>
         <h1 className="mt-5 font-display text-3xl font-bold text-ink">Booking confirmed!</h1>
         <p className="mt-2 text-muted">{event.title}</p>
-        <p className="mt-4 text-sm text-ink">
-          Seats: <span className="font-semibold">{seats.join(", ")}</span>
-        </p>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {tickets.map((t) => (
+            <Link key={t.id} href={`/ticket/${t.id}`} className="rounded-full bg-cream px-4 py-1.5 text-sm font-semibold text-ink hover:bg-orange/10">
+              Seat {t.seat.row}{t.seat.number} · ticket →
+            </Link>
+          ))}
+        </div>
         <p className="mt-1 font-display text-2xl font-extrabold text-ink">₹{rupees(order.total)} paid</p>
         <p className="mt-5 rounded-lg bg-cream p-3 text-xs text-muted">
           Your ticket &amp; QR code will be emailed and sent on WhatsApp (Phase 4). A GST invoice is generated for paid orders.

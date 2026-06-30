@@ -1,6 +1,7 @@
 import { prisma } from "../db";
 import { computePricing } from "../pricing";
 import { releaseExpiredHolds } from "./holds";
+import { signTicket } from "../tickets/qr";
 
 // Convert a valid hold into a pending Order with computed pricing, attaching tickets.
 export async function createOrderFromHold(holdToken: string, userId: string) {
@@ -70,4 +71,13 @@ export async function fulfillOrder(orderId: string, razorpayPaymentId?: string):
       },
     });
   });
+
+  // Sign a QR token per newly-sold ticket (idempotent — only those missing one).
+  const unsigned = await prisma.ticket.findMany({ where: { orderId, state: "sold", qrToken: null } });
+  for (const t of unsigned) {
+    await prisma.ticket.update({
+      where: { id: t.id },
+      data: { qrToken: signTicket({ tid: t.id, sid: t.showtimeId }) },
+    });
+  }
 }
