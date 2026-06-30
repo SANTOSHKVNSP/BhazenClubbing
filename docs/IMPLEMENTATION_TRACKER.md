@@ -42,10 +42,10 @@
 - ✅ Concurrency proof (`scripts/hold-concurrency.ts`): 25 simultaneous holds → 1 winner, no double-book
 **DoD:** TS-SEAT, TS-SEATBLD, TS-HOLD, TS-PERF-02 pass.
 
-## Phase 3 — Accounts & payments  ⬜
+## Phase 3 — Accounts & payments  🟦 _(account-free scaffolding now; live when Razorpay/WhatsApp/email keys provided)_
 **Goal:** Login + real money.
 - ⬜ Auth.js phone provider: **WhatsApp OTP + email fallback**; account area + booking history; rate limits/lockout
-- ⬜ Pricing engine: per-event fee + GST + promo; ₹0 events
+- ✅ Pricing engine: per-event fee + GST (additive/inclusive), ₹0 events; 7 vitest unit tests; CI runs `npm test`. Promo later
 - ⬜ Razorpay: order creation, Checkout, **webhook** (signature + idempotency), fulfillment held→sold
 - ⬜ GST invoice (numbering, GSTIN, SAC, PDF) 
 - ⬜ Refund engine: per-event policy, Razorpay refunds, seat release, audit; event-cancel bulk refund
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 3 start (account-free): pricing engine (fee + GST, additive/inclusive, free events) with 7 vitest unit tests; CI now runs `npm test`. Next: dev-mode OTP auth, checkout flow, Razorpay/webhook scaffolding.
 - **2026-06-30** — Phase 2 complete (seat engine): atomic seat-hold service (8-min holds on the partial unique index), interactive tier-colored seat-selection UI, reserve→hold-countdown flow (payment placeholder for Phase 3). Concurrency proof passes (25 holds → 1 winner, no double-book). Rate limiting + visual drag builder + GA zone deferred. → Phase 3.
 - **2026-06-30** — Phase 2 start (seat engine foundation): seat-map types + theatre/stadium generators (`lib/seatmap`), per-showtime seat materialization + admin "Generate seats"; reseeded BhaZen with a 14×24 theatre map + Gold/Silver/Bronze tiers (336 seats). Next: hold service + selection UI.
 - **2026-06-30** — Phase 1 complete: dynamic `sitemap.xml` + `robots.txt` (disallow /admin,/api), public per-event Partners section (+ sample partners seeded). Only deferred item: Vercel Blob image upload (account-gated). → Phase 2 next.
