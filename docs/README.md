@@ -9,6 +9,7 @@ This folder holds the **single source of truth** for the Sattvick Beats platform
 | [TESTING_SCOPE.md](./TESTING_SCOPE.md) | Detailed QA scope — functional + non-functional test areas, scenarios, edge cases, acceptance criteria. Handed to QA to produce test cases. | QA / Stakeholders |
 | [IMPLEMENTATION_TRACKER.md](./IMPLEMENTATION_TRACKER.md) | Phased plan, task breakdown, status, definition-of-done, changelog. | Everyone |
 | [RUNBOOKS.md](./RUNBOOKS.md) | Operational procedures — on-sale, refunds, offline scanner, incidents. | Ops / On-call |
+| [DEPLOYMENT.md](./DEPLOYMENT.md) | Vercel + Neon deploy — setup, env vars, migrations, domain. | Deploy / DevOps |
 
 ## Maintenance rules (the "always up to date" contract)
 

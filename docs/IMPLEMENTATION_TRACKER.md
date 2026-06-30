@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Deploy prep: `vercel-build` (migrate deploy + build) so Vercel auto-applies migrations; cleaned `.env.example` (required ✅ vs optional; dropped legacy ADMIN_USER/PASSWORD; added SUPER_ADMIN_PHONE); `docs/DEPLOYMENT.md` (Vercel + Neon, env table, seed-once, domain). Plus self-serve dev login (dev-only OTP auto-fill) + demo tooling.
 - **2026-06-30** — Phase 6 (a11y + runbooks): accessibility pass — global focus-visible ring, seat-map aria-labels/aria-pressed + live regions, login error `role=alert` (lang + reduced-motion already present); `docs/RUNBOOKS.md` (on-sale, refunds, offline scanner, incidents). **Account-free Phase 6 hardening complete**; remaining items account-gated (Sentry/Neon/Vercel/DNS) + load/UAT.
 - **2026-06-30** — Phase 6 (rate-limit + ops pages): in-memory rate limiter (Upstash later) on OTP (5/10min per phone) + holds (20/min per IP); `/api/health` (DB ping); global error boundary; legal pages (terms/privacy/refund, draft). Verified: limiter blocks 6th call, health ok, legal pages 200.
 - **2026-06-30** — Phase 6 start (security): closed server-action authz gaps — `deleteEvent`/`setEventStatus` + all event sub-entity actions (showtime/category/partner/seats) now assert admin + city scope (entity-derived, not form-supplied); `setEventStatus` super-only. Added security headers (CSP, X-Frame-Options DENY, HSTS, Referrer-Policy, Permissions-Policy `camera=(self)`) via next.config (CSP prod-only). Verified: 6 headers present + event page renders under CSP.
