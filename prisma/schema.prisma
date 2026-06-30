@@ -280,6 +280,7 @@ model Order {
   subtotal          Int         @default(0)
   fee               Int         @default(0)
   gst               Int         @default(0)
+  discount          Int         @default(0)
   total             Int         @default(0)
   currency          String      @default("INR")
   razorpayOrderId   String?     @unique

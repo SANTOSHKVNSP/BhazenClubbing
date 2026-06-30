@@ -1,14 +1,15 @@
 import { redirect, notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import { payDev } from "@/lib/booking/checkout-actions";
+import { payDev, applyPromo } from "@/lib/booking/checkout-actions";
 import { razorpayConfigured } from "@/lib/payments/razorpay";
 
 export const dynamic = "force-dynamic";
 const rupees = (p: number) => (p / 100).toLocaleString("en-IN");
 
-export default async function CheckoutPage({ params }: { params: Promise<{ orderId: string }> }) {
+export default async function CheckoutPage({ params, searchParams }: { params: Promise<{ orderId: string }>; searchParams: Promise<{ promo?: string }> }) {
   const { orderId } = await params;
+  const { promo: promoFlag } = await searchParams;
   const session = await auth();
   if (!session?.user?.id) redirect(`/login?callbackUrl=${encodeURIComponent(`/checkout/${orderId}`)}`);
 
@@ -41,10 +42,21 @@ export default async function CheckoutPage({ params }: { params: Promise<{ order
 
         <dl className="mt-4 space-y-1 border-t border-black/10 pt-4 text-sm">
           <div className="flex justify-between"><dt className="text-muted">Subtotal</dt><dd>₹{rupees(order.subtotal)}</dd></div>
+          {order.discount > 0 && <div className="flex justify-between text-green-700"><dt>Discount</dt><dd>−₹{rupees(order.discount)}</dd></div>}
           {order.fee > 0 && <div className="flex justify-between"><dt className="text-muted">Convenience fee</dt><dd>₹{rupees(order.fee)}</dd></div>}
           {order.gst > 0 && <div className="flex justify-between"><dt className="text-muted">GST</dt><dd>₹{rupees(order.gst)}</dd></div>}
           <div className="flex justify-between border-t border-black/10 pt-2 font-display text-xl font-extrabold text-ink"><dt>Total</dt><dd>₹{rupees(order.total)}</dd></div>
         </dl>
+
+        {!order.promoId && (
+          <form action={applyPromo} className="mt-5 flex gap-2">
+            <input type="hidden" name="orderId" value={order.id} />
+            <input name="code" placeholder="Promo code" className="flex-1 rounded-lg border border-black/15 px-3 py-2 text-sm uppercase" />
+            <button className="rounded-lg bg-ink px-4 py-2 text-sm font-bold text-white">Apply</button>
+          </form>
+        )}
+        {promoFlag === "applied" && <p className="mt-2 text-xs font-semibold text-green-700">Promo applied!</p>}
+        {promoFlag === "invalid" && <p className="mt-2 text-xs font-semibold text-red-600">Invalid or expired code.</p>}
 
         {razorpayConfigured() ? (
           // When keys are set, render the Razorpay Checkout widget here (client) using a

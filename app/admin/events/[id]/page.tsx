@@ -12,6 +12,9 @@ import {
   submitEvent,
   approveEvent,
   rejectEvent,
+  addPromo,
+  deletePromo,
+  issueComp,
 } from "@/lib/admin/actions";
 import { requireAdmin, canEditCity } from "@/lib/admin/auth";
 import { Field, TextArea, SelectField, Submit, Card } from "@/components/admin/ui";
@@ -191,6 +194,47 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
               <Field label="Website" name="url" />
               <Submit>Add partner</Submit>
             </form>
+          </Card>
+
+          {/* Promo codes */}
+          <Card>
+            <h2 className="font-display text-xl font-bold">Promo codes</h2>
+            <ul className="mt-3 divide-y divide-black/5 text-sm">
+              {event!.promos.map((p) => (
+                <li key={p.id} className="flex items-center justify-between py-2">
+                  <span><b>{p.code}</b> · {p.type === "percent" ? `${p.value / 100}%` : `₹${p.value / 100}`}{p.maxUses != null && <span className="text-muted"> · {p.usedCount}/{p.maxUses} used</span>}</span>
+                  <form action={deletePromo}><input type="hidden" name="id" value={p.id} /><input type="hidden" name="eventId" value={event!.id} /><button className="text-xs text-red-600 hover:underline">Remove</button></form>
+                </li>
+              ))}
+              {event!.promos.length === 0 && <li className="py-2 text-muted">No promo codes.</li>}
+            </ul>
+            <form action={addPromo} className="mt-4 flex flex-wrap items-end gap-3">
+              <input type="hidden" name="eventId" value={event!.id} />
+              <Field label="Code" name="code" required />
+              <SelectField label="Type" name="type" defaultValue="percent"><option value="percent">percent (%)</option><option value="flat">flat (₹)</option></SelectField>
+              <Field label="Value" name="value" required />
+              <Field label="Max uses" name="maxUses" />
+              <Submit>Add promo</Submit>
+            </form>
+          </Card>
+
+          {/* Comps / guest list */}
+          <Card>
+            <h2 className="font-display text-xl font-bold">Comps / guest list</h2>
+            <ul className="mt-3 divide-y divide-black/5 text-sm">
+              {event!.comps.map((c) => (
+                <li key={c.id} className="py-2">{c.name}{c.phone && <span className="text-muted"> · {c.phone}</span>} · {c.qty} ticket(s)</li>
+              ))}
+              {event!.comps.length === 0 && <li className="py-2 text-muted">No comps issued.</li>}
+            </ul>
+            <form action={issueComp} className="mt-4 flex flex-wrap items-end gap-3">
+              <input type="hidden" name="eventId" value={event!.id} />
+              <Field label="Guest name" name="name" required />
+              <Field label="Phone (+91…)" name="phone" required />
+              <Field label="Qty" name="qty" defaultValue="1" />
+              <Submit>Issue comps</Submit>
+            </form>
+            <p className="mt-2 text-xs text-muted">Auto-assigns available seats, blocks them, and issues signed QR tickets. The guest logs in with their phone to view.</p>
           </Card>
         </div>
       )}

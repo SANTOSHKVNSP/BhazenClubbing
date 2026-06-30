@@ -19,7 +19,7 @@ export default async function TicketPage({ params }: { params: Promise<{ ticketI
   if (!ticket || ticket.order?.userId !== session.user.id) notFound();
 
   const event = ticket.showtime.event;
-  const active = ticket.state === "sold" && !!ticket.qrToken;
+  const active = (ticket.state === "sold" || ticket.state === "comp") && !!ticket.qrToken;
   const qr = active ? await QRCode.toDataURL(ticket.qrToken!, { width: 320, margin: 1, color: { dark: "#1d0541", light: "#ffffff" } }) : null;
 
   return (

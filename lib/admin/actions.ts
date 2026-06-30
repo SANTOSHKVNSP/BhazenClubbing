@@ -11,7 +11,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { materializeSeats } from "@/lib/seatmap/materialize";
 import { refundOrder } from "@/lib/booking/refunds";
-import { assertAdmin, assertSuper } from "@/lib/admin/auth";
+import { assertAdmin, assertSuper, type Staff } from "@/lib/admin/auth";
+import { signTicket } from "@/lib/tickets/qr";
+import { notify } from "@/lib/notify";
 
 // ---- FormData helpers ----
 const str = (fd: FormData, k: string) => {
@@ -282,4 +284,84 @@ export async function rejectEvent(fd: FormData) {
   await prisma.event.update({ where: { id }, data: { status: "draft", rejectedReason: reason } });
   await prisma.auditLog.create({ data: { actorId: staff.userId, action: "reject", entity: "Event", entityId: id, after: { reason } } });
   revalidatePath(`/admin/events/${id}`);
+}
+
+async function assertEventCity(staff: Staff, eventId: string) {
+  if (staff.isSuper) return;
+  const ev = await prisma.event.findUnique({ where: { id: eventId }, select: { cityId: true } });
+  if (!ev || !staff.cityIds.includes(ev.cityId)) throw new Error("Not authorized");
+}
+
+// ---- Promo codes (ADR-005) ----
+export async function addPromo(fd: FormData) {
+  const staff = await assertAdmin();
+  const eventId = str(fd, "eventId");
+  await assertEventCity(staff, eventId);
+  const isFlat = str(fd, "type") === "flat";
+  await prisma.promo.create({
+    data: {
+      eventId,
+      code: str(fd, "code").toUpperCase(),
+      type: isFlat ? "flat" : "percent",
+      value: isFlat ? paise(fd, "value") : int(fd, "value") * 100, // flat→paise, percent→pct*100
+      maxUses: intOrNull(fd, "maxUses"),
+      endsAt: dateOrNull(fd, "endsAt"),
+    },
+  });
+  revalidatePath(`/admin/events/${eventId}`);
+}
+export async function deletePromo(fd: FormData) {
+  const staff = await assertAdmin();
+  const eventId = str(fd, "eventId");
+  await assertEventCity(staff, eventId);
+  await prisma.promo.delete({ where: { id: str(fd, "id") } });
+  revalidatePath(`/admin/events/${eventId}`);
+}
+
+// ---- Comps / guest list (ADR-006) ----
+// Auto-assigns available seats, blocks them (so they can't be sold), and issues
+// signed QR comp tickets under a paid-₹0 order so the guest can view them by phone login.
+export async function issueComp(fd: FormData) {
+  const staff = await assertAdmin();
+  const eventId = str(fd, "eventId");
+  await assertEventCity(staff, eventId);
+  const name = str(fd, "name");
+  const phone = str(fd, "phone");
+  const qty = Math.max(1, int(fd, "qty", 1));
+  if (!phone) throw new Error("Phone required for comp delivery");
+
+  const showtime = await prisma.showtime.findFirst({ where: { eventId }, orderBy: { startsAt: "asc" } });
+  if (!showtime) throw new Error("No showtime for this event");
+
+  const taken = await prisma.ticket.findMany({
+    where: { showtimeId: showtime.id, state: { in: ["held", "sold", "comp"] } },
+    select: { seatId: true },
+  });
+  const takenIds = new Set(taken.map((t) => t.seatId));
+  const seats = (await prisma.seat.findMany({ where: { showtimeId: showtime.id, blocked: false } }))
+    .filter((s) => !takenIds.has(s.id))
+    .slice(0, qty);
+  if (seats.length < qty) throw new Error(`Only ${seats.length} seats available`);
+
+  const user = await prisma.user.upsert({ where: { phone }, update: { name }, create: { phone, name } });
+  const order = await prisma.order.create({
+    data: { userId: user.id, showtimeId: showtime.id, status: "paid", subtotal: 0, fee: 0, gst: 0, discount: 0, total: 0, paidAt: new Date() },
+  });
+
+  for (const s of seats) {
+    const t = await prisma.ticket.create({
+      data: { orderId: order.id, showtimeId: showtime.id, seatId: s.id, category: s.category, price: 0, state: "comp" },
+    });
+    await prisma.ticket.update({ where: { id: t.id }, data: { qrToken: signTicket({ tid: t.id, sid: showtime.id }) } });
+    await prisma.seat.update({ where: { id: s.id }, data: { blocked: true } });
+  }
+
+  await prisma.comp.create({ data: { eventId, name, phone, qty: seats.length } });
+  await prisma.auditLog.create({ data: { actorId: staff.userId, action: "comp", entity: "Event", entityId: eventId, after: { name, phone, qty: seats.length } } });
+  try {
+    await notify({ phone, subject: "Your complimentary tickets", body: `${seats.length} comp ticket(s) issued. Log in with this number to view: ${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/account` });
+  } catch {
+    // delivery failure must not block issuance
+  }
+  revalidatePath(`/admin/events/${eventId}`);
 }

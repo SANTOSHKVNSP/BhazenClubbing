@@ -47,6 +47,8 @@ export const adminGetEvent = (id: string) =>
       categories: { orderBy: { basePrice: "asc" } },
       showtimes: { orderBy: { startsAt: "asc" }, include: { _count: { select: { seats: true } } } },
       partners: { orderBy: { sortOrder: "asc" } },
+      promos: { orderBy: { createdAt: "desc" } },
+      comps: { orderBy: { createdAt: "desc" } },
       bands: { include: { band: true } },
     },
   });
