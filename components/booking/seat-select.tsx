@@ -77,7 +77,7 @@ export function SeatSelect({ seating, slug }: { seating: ShowtimeSeating; slug: 
       </div>
 
       {/* Seat map */}
-      <div className="mt-8 overflow-x-auto">
+      <div className="mt-8 overflow-x-auto" role="group" aria-label="Seat map — choose your seats">
         <div className="mx-auto w-max space-y-6">
           {seating.sections.map((sec) => (
             <div key={sec.id}>
@@ -97,6 +97,8 @@ export function SeatSelect({ seating, slug }: { seating: ShowtimeSeating; slug: 
                           key={s.id}
                           type="button"
                           title={`${row.label}${s.number} · ${s.category} · ₹${rupees(priceByCat.get(s.category) ?? 0)}`}
+                          aria-label={`Seat ${row.label}${s.number}, ${s.category}, ₹${rupees(priceByCat.get(s.category) ?? 0)}${taken ? ", unavailable" : ""}`}
+                          aria-pressed={isSel}
                           onClick={() => toggle(s.id, s.status)}
                           disabled={taken}
                           className={`h-6 w-6 rounded text-[9px] font-bold transition ${
@@ -123,7 +125,7 @@ export function SeatSelect({ seating, slug }: { seating: ShowtimeSeating; slug: 
       {/* Footer bar */}
       <div className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-purple-deep/95 backdrop-blur">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 py-4">
-          <div className="text-sm text-white/80">
+          <div className="text-sm text-white/80" aria-live="polite">
             {selectedIds.length > 0 ? (
               <>
                 <span className="font-bold text-white">{selectedIds.length}</span> seat{selectedIds.length > 1 ? "s" : ""} ·{" "}

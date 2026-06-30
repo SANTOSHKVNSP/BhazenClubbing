@@ -91,7 +91,7 @@ export function LoginForm() {
           </button>
         </form>
       )}
-      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      {error && <p role="alert" className="mt-4 text-sm text-red-600">{error}</p>}
     </div>
   );
 }

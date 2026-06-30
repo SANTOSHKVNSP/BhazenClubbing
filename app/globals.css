@@ -40,6 +40,13 @@ h3 {
     line-height: 1.05;
 }
 
+/* Keyboard focus visibility (a11y) */
+:focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
 
     *,

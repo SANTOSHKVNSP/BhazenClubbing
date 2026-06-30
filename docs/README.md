@@ -1,6 +1,6 @@
 # Sattvick Beats — Project Documentation
 
-This folder holds the **single source of truth** for the Sattvick Beats platform. These four documents are **kept continuously in sync** — every phase / significant change updates all of the relevant ones in the same change set.
+This folder holds the **single source of truth** for the Sattvick Beats platform. The first four are **kept continuously in sync** — every phase / significant change updates all of the relevant ones in the same change set.
 
 | Document | Purpose | Audience |
 |---|---|---|
@@ -8,6 +8,7 @@ This folder holds the **single source of truth** for the Sattvick Beats platform
 | [ARCHITECTURE.md](./ARCHITECTURE.md) | System design: stack, data model, booking/concurrency, payments, offline scanner, security, i18n. | Engineers |
 | [TESTING_SCOPE.md](./TESTING_SCOPE.md) | Detailed QA scope — functional + non-functional test areas, scenarios, edge cases, acceptance criteria. Handed to QA to produce test cases. | QA / Stakeholders |
 | [IMPLEMENTATION_TRACKER.md](./IMPLEMENTATION_TRACKER.md) | Phased plan, task breakdown, status, definition-of-done, changelog. | Everyone |
+| [RUNBOOKS.md](./RUNBOOKS.md) | Operational procedures — on-sale, refunds, offline scanner, incidents. | Ops / On-call |
 
 ## Maintenance rules (the "always up to date" contract)
 
@@ -19,7 +20,7 @@ This folder holds the **single source of truth** for the Sattvick Beats platform
 
 ## Quick status
 
-- **Phase:** Phase 0 — Foundations (in progress: app scaffolded, design system ported & rendering)
+- **Phase:** Phases 0–5 complete; Phase 6 hardening — account-free items done (security, rate-limit, ops pages, a11y, runbooks); remaining items account-gated + UAT.
 - **Stack:** Next.js (App Router, TS) · Postgres (Neon) · Vercel · Razorpay · Resend + WhatsApp BSP
 - **First event to migrate:** BhaZen Clubbing (Vizag) — content already in `Meeta_HTML/` (legacy static site, kept as content source).
 
