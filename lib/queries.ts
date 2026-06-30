@@ -10,6 +10,7 @@ export async function getEventBySlug(slug: string) {
       venue: true,
       categories: { orderBy: { basePrice: "asc" } },
       showtimes: { orderBy: { startsAt: "asc" } },
+      partners: { orderBy: { sortOrder: "asc" } },
       bands: {
         include: {
           band: { include: { members: { orderBy: { sortOrder: "asc" } } } },

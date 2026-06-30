@@ -209,6 +209,35 @@ export default async function EventPage({ params }: Params) {
         </section>
       )}
 
+      {/* Partners */}
+      {event.partners.length > 0 && (
+        <section className="bg-white px-6 py-20">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">Our Partners</h2>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+              {event.partners.map((p) => {
+                const inner = (
+                  <>
+                    {p.logoUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={p.logoUrl} alt={p.name} className="mx-auto h-12 object-contain" />
+                    ) : (
+                      <span className="font-display text-2xl font-bold text-ink">{p.name}</span>
+                    )}
+                    {p.tier && <span className="mt-1 block text-xs uppercase tracking-wider text-muted">{p.tier}</span>}
+                  </>
+                );
+                return p.url ? (
+                  <a key={p.id} href={p.url} target="_blank" rel="noopener" className="block">{inner}</a>
+                ) : (
+                  <div key={p.id}>{inner}</div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Contact */}
       <section id="contact" className="bg-gradient-to-br from-primary to-purple-deep px-6 py-24">
         <div className="mx-auto max-w-5xl">

@@ -149,6 +149,12 @@ async function main() {
         },
       },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
+      partners: {
+        create: [
+          { name: "Art of Living", tier: "Presented by", url: "https://www.artofliving.org", sortOrder: 0 },
+          { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 1 },
+        ],
+      },
     },
   });
 

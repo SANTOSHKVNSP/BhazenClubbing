@@ -3,7 +3,7 @@
 > Durable, detailed phase/task plan. The harness task list mirrors the **current** phase; this file holds the full plan, definition-of-done (DoD), dependencies, and changelog. Update statuses here whenever work moves.
 
 **Status keys:** ⬜ todo · 🟦 in progress · ✅ done · ⛔ blocked
-**Current focus:** Phase 1 — Content model & public site _(Phase 0 done except Vercel/Neon/Sentry, which are account-gated)_
+**Current focus:** Phase 2 — Seat-map engine _(Phase 1 done; Vercel Blob upload + Vercel/Neon/Sentry deferred to accounts)_
 
 ---
 
@@ -21,13 +21,13 @@
 **DoD:** app builds & deploys to Preview; CI green; tokens visible on a sample page; DB migration runs; docs updated.
 **Depends on:** Vercel + Neon account owner (Pending input).
 
-## Phase 1 — Content model & public site  🟦
+## Phase 1 — Content model & public site  ✅ _(Vercel Blob image upload deferred — account-gated)_
 **Goal:** Public browsing of cities/events; BhaZen migrated as event #1; basic content admin (super admin).
 - ✅ Schema: City, Venue, Band/BandMember, Event, Showtime, Partner, Media (+ translatable JSON, Event.contentJson)
-- 🟦 Public routes: `/` (dynamic landing), `/[city]`, `/e/[slug]` live + per-page SEO via generateMetadata; sitemap/robots/OG-image pending
+- ✅ Public routes: `/`, `/[city]`, `/e/[slug]` + per-page SEO + dynamic `sitemap.xml`/`robots.txt`
 - ✅ Templated DB-driven event page (hero+countdown, about, counter, band, tickets, gallery, FAQ, contact, footer)
 - ✅ Seed **BhaZen Clubbing (Vizag)** — city/venue/band+members/event/showtime/categories; images copied to `public/images/bhazen/`
-- 🟦 AOL Trust CTA (external redirect) done; per-event partners section on event page pending
+- ✅ AOL Trust CTA (external redirect) + per-event Partners section on the public event page
 - ✅ Admin (super-admin): dashboard + CRUD for Cities/Venues/Bands/Events (+ inline showtimes/ticket-categories/partners), server actions, JSON editors; temp HTTP-Basic gate (`middleware.ts`). Media via image URLs for now — Vercel Blob upload deferred to account.
 **DoD:** BhaZen event fully renders via the platform; only `live` content public; TS-PUB/TS-CITY pass.
 **Pending input:** Sattvick Beats logo (or approve text wordmark); AOL Trust URL.
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 1 complete: dynamic `sitemap.xml` + `robots.txt` (disallow /admin,/api), public per-event Partners section (+ sample partners seeded). Only deferred item: Vercel Blob image upload (account-gated). → Phase 2 next.
 - **2026-06-30** — Content admin (super-admin): password-gated (`middleware.ts`, temp HTTP Basic) dashboard + CRUD for Cities/Venues/Bands/Events incl. inline showtimes/categories/partners + status publish; server actions; JSON editors for flexible content. Verified via screenshots. Remaining Phase 1: Vercel Blob media upload, sitemap/robots, public partners section.
 - **2026-06-30** — Phase 1 slice: DB-driven public site. Seeded BhaZen; data-access layer (`lib/queries`); templated event page `/e/bhazen-clubbing` ported from the static site (reads Postgres) + countdown client component; dynamic home + `/[city]` with EventCard; per-page SEO. Verified via screenshots. Pending: sitemap/robots, partners section, content admin.
 - **2026-06-30** — Phase 0 wrap (no-account items): next-intl i18n (en), design-system primitives + branded 404/loading, Auth.js v5 skeleton (builds on Next 16), CI workflow (lint+build), npm `db:*`/`postinstall` scripts. Remaining Phase 0 (Vercel deploy, Sentry) gated on accounts. Next: Phase 1.
