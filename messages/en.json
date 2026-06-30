@@ -1,0 +1,26 @@
+{
+  "Landing": {
+    "nav": {
+      "events": "Events",
+      "about": "About"
+    },
+    "hero": {
+      "eyebrow": "Art of Living presents",
+      "titleLead": "Live music,",
+      "titleAccent": "nationwide.",
+      "subtitle": "Sattvick Beats brings unforgettable concerts to cities across India. Pick your city, choose your seats, and be there.",
+      "cta": "Explore Events"
+    },
+    "events": {
+      "heading": "Upcoming Events",
+      "subtitle": "Cities and events are added by Art of Living teams. The first event is on its way.",
+      "comingSoon": "On sale soon",
+      "eventTitle": "Nirvana Station — Live",
+      "eventVenue": "Visakhapatnam · Gurajada Kalakshetram"
+    },
+    "footer": {
+      "tagline": "Live concerts across India, presented by Art of Living.",
+      "rights": "© 2026 Sattvick Beats. All rights reserved."
+    }
+  }
+}

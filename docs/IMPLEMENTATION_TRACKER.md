@@ -12,12 +12,12 @@
 - ✅ Scaffold Next.js (App Router, TS, ESLint, Tailwind) at repo root — Next 16.2.9 / React 19.2.4 / Tailwind 4.3.2; builds clean
 - ✅ Port BhaZen design tokens (colors, Big Shoulders + Open Sans fonts) into Tailwind `@theme`; branded landing shell renders
 - ✅ Add Postgres + Prisma 6 — schema (22 models), initial migration + partial-index guard (ADR-009) applied & verified; `.env`/`.env.example` + `lib/db.ts`. Dev DB = local Docker Postgres on **:5433** (host :5432 was taken); Neon for prod later.
-- ⬜ Auth.js skeleton (session plumbing; providers stubbed for Phase 3)
-- ⬜ i18n scaffolding (next-intl) with `en` catalog
-- 🟦 Base layout, design-system components, 404, loading states (root layout + landing shell done; component library + 404/loading pending)
-- ⬜ Vercel project + Preview deploys; CI (typecheck, lint, unit test) 
+- ✅ Auth.js skeleton (v5) — session plumbing + `/api/auth/[...nextauth]`; OTP provider deferred to Phase 3; builds on Next 16
+- ✅ i18n scaffolding (next-intl, "without routing"); `en` catalog; landing strings externalized
+- ✅ Base layout + design-system primitives (Button/ButtonLink, Container), branded 404 + loading states
+- 🟦 CI (GitHub Action: lint + build) added; Vercel project + preview deploys pending account 
 - ⬜ Sentry + analytics wiring (no-op safe in dev)
-- ⬜ Repo housekeeping: `.gitignore`, scripts, README for app
+- ✅ Repo housekeeping: `.gitignore`, npm scripts (`db:*`, `typecheck`, `postinstall`→prisma generate)
 **DoD:** app builds & deploys to Preview; CI green; tokens visible on a sample page; DB migration runs; docs updated.
 **Depends on:** Vercel + Neon account owner (Pending input).
 
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 0 wrap (no-account items): next-intl i18n (en), design-system primitives + branded 404/loading, Auth.js v5 skeleton (builds on Next 16), CI workflow (lint+build), npm `db:*`/`postinstall` scripts. Remaining Phase 0 (Vercel deploy, Sentry) gated on accounts. Next: Phase 1.
 - **2026-06-30** — Prisma data model landed: 22-model schema, init migration + raw-SQL partial unique index (`ticket_active_seat_unique`) for the seat-hold concurrency guard, verified in Postgres. Pinned **Prisma 6** (v7 dropped in-schema `url` + mandates driver adapters — deferred; see ADR-018). Dev DB on Docker `:5433`.
 - **2026-06-30** — Phase 0 in progress: Next.js app scaffolded at repo root (Next 16 / React 19 / Tailwind 4), BhaZen design tokens + fonts ported, branded landing shell building & rendering. Note: Google merged "Big Shoulders Display" → "Big Shoulders" (variable) — `next/font` export is `Big_Shoulders`.
 - **2026-06-30** — Initial plan created from discovery Q&A (ADR-001…017). Added offline-first scanner (ADR-014) + Ed25519 QR (ADR-015) after stakeholder input. Phase 0 started.
