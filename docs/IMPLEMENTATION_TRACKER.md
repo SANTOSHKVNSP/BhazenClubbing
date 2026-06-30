@@ -44,9 +44,9 @@
 
 ## Phase 3 — Accounts & payments  🟦 _(account-free scaffolding now; live when Razorpay/WhatsApp/email keys provided)_
 **Goal:** Login + real money.
-- ⬜ Auth.js phone provider: **WhatsApp OTP + email fallback**; account area + booking history; rate limits/lockout
+- ✅ Auth.js phone OTP (dev-console code; WhatsApp/email send wired in Phase 4) + account/booking history + 5-attempt lockout. Rate-limit deferred (Upstash)
 - ✅ Pricing engine: per-event fee + GST (additive/inclusive), ₹0 events; 7 vitest unit tests; CI runs `npm test`. Promo later
-- ⬜ Razorpay: order creation, Checkout, **webhook** (signature + idempotency), fulfillment held→sold
+- 🟦 Razorpay REST client + signature-verified idempotent **webhook** + idempotent fulfillment (held→sold). Dev-pay simulates capture; live Checkout widget wires when keys provided
 - ⬜ GST invoice (numbering, GSTIN, SAC, PDF) 
 - ⬜ Refund engine: per-event policy, Razorpay refunds, seat release, audit; event-cancel bulk refund
 - ⬜ Reconciliation job for stuck `pending` orders
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 3 auth + checkout (account-free): phone OTP login (dev-console code) + account/booking history; hold→Order→pricing→idempotent fulfillment (held→sold) with dev-pay simulation; Razorpay REST client + signature-verified idempotent webhook (inert until keys). Money-path test passes (paid, 2 seats sold, idempotent). Remaining P3: GST invoice, refund engine, live Razorpay widget.
 - **2026-06-30** — Phase 3 start (account-free): pricing engine (fee + GST, additive/inclusive, free events) with 7 vitest unit tests; CI now runs `npm test`. Next: dev-mode OTP auth, checkout flow, Razorpay/webhook scaffolding.
 - **2026-06-30** — Phase 2 complete (seat engine): atomic seat-hold service (8-min holds on the partial unique index), interactive tier-colored seat-selection UI, reserve→hold-countdown flow (payment placeholder for Phase 3). Concurrency proof passes (25 holds → 1 winner, no double-book). Rate limiting + visual drag builder + GA zone deferred. → Phase 3.
 - **2026-06-30** — Phase 2 start (seat engine foundation): seat-map types + theatre/stadium generators (`lib/seatmap`), per-showtime seat materialization + admin "Generate seats"; reseeded BhaZen with a 14×24 theatre map + Gold/Silver/Bronze tiers (336 seats). Next: hold service + selection UI.

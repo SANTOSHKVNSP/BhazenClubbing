@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getHold } from "@/lib/booking/holds";
 import { releaseHoldAction } from "@/lib/booking/actions";
+import { proceedToCheckout } from "@/lib/booking/checkout-actions";
 import { HoldTimer } from "@/components/booking/hold-timer";
 
 export const dynamic = "force-dynamic";
@@ -55,13 +56,13 @@ export default async function HoldPage({ params }: { params: Promise<{ slug: str
           <span className="font-display text-2xl font-extrabold text-ink">₹{rupees(total)}</span>
         </div>
 
-        <button
-          disabled
-          className="mt-6 w-full cursor-not-allowed rounded-full bg-gradient-to-br from-orange to-orange-2 px-8 py-3.5 font-bold text-white opacity-60"
-          title="Razorpay checkout arrives in Phase 3"
-        >
-          Proceed to payment (opens in Phase 3)
-        </button>
+        <form action={proceedToCheckout} className="mt-6">
+          <input type="hidden" name="holdToken" value={token} />
+          <input type="hidden" name="slug" value={slug} />
+          <button className="w-full rounded-full bg-gradient-to-br from-orange to-orange-2 px-8 py-3.5 font-bold text-white">
+            Proceed to checkout →
+          </button>
+        </form>
 
         <form action={releaseHoldAction} className="mt-3 text-center">
           <input type="hidden" name="holdToken" value={token} />

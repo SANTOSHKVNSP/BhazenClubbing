@@ -456,3 +456,14 @@ model Media {
   ownerId   String?
   createdAt DateTime @default(now())
 }
+
+model OtpChallenge {
+  id        String   @id @default(cuid())
+  phone     String
+  codeHash  String
+  attempts  Int      @default(0)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}
