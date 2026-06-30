@@ -2,7 +2,8 @@
  * Dev seed — Sattvick Beats. Seeds the first event (BhaZen Clubbing, Vizag).
  * Re-runnable: clears content tables, then recreates. Run: `npx tsx prisma/seed.ts`.
  */
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
+import { generateTheatre } from "../lib/seatmap/generate";
 
 const prisma = new PrismaClient();
 
@@ -37,6 +38,17 @@ async function main() {
     },
   });
 
+  const seatMap = generateTheatre({
+    rows: 14,
+    seatsPerRow: 24,
+    tiers: [
+      { category: "Gold", rows: 4 },
+      { category: "Silver", rows: 5 },
+      { category: "Bronze", rows: 5 },
+    ],
+    sectionLabel: "Auditorium",
+  });
+
   const venue = await prisma.venue.create({
     data: {
       name: "Gurajada Kalakshetram",
@@ -44,7 +56,7 @@ async function main() {
       address: "Siripuram, Visakhapatnam, Andhra Pradesh, India",
       template: "theatre",
       capacity: 2500,
-      layoutJson: { template: "theatre", sections: [] }, // real seat map: Phase 2
+      layoutJson: seatMap as unknown as Prisma.InputJsonValue,
       mapsEmbed:
         "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15202.060860575693!2d83.3004605554199!3d17.720347000000015!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a3943002684e6eb%3A0xc13c5c7e5bf80e6b!2sGurajada%20Kalakhestram!5e0!3m2!1sen!2sus!4v1768498886773!5m2!1sen!2sus",
     },
@@ -158,7 +170,7 @@ async function main() {
     },
   });
 
-  await prisma.showtime.create({
+  const showtime = await prisma.showtime.create({
     data: {
       eventId: event.id,
       startsAt: new Date("2026-01-25T17:30:00+05:30"),
@@ -168,12 +180,31 @@ async function main() {
 
   await prisma.ticketCategory.createMany({
     data: [
-      { eventId: event.id, name: "Student Pass", color: "#00ced1", basePrice: 29900 },
-      { eventId: event.id, name: "General Pass", color: "#ff8c00", basePrice: 49900 },
+      { eventId: event.id, name: "Gold", color: "#f9d464", basePrice: 149900 },
+      { eventId: event.id, name: "Silver", color: "#c0c7d0", basePrice: 99900 },
+      { eventId: event.id, name: "Bronze", color: "#cd7f4d", basePrice: 59900 },
     ],
   });
 
-  console.log(`Seeded: city=${city.slug}, event=/e/${event.slug}, band=${band.name}`);
+  // Materialize seats for the showtime from the venue layout.
+  const seatRows = seatMap.sections.flatMap((sec) =>
+    sec.rows.flatMap((row) =>
+      row.seats.map((cell) => ({
+        showtimeId: showtime.id,
+        section: sec.id,
+        row: row.label,
+        number: cell.number,
+        category: cell.category,
+        accessible: !!cell.accessible,
+        blocked: !!cell.blocked,
+      }))
+    )
+  );
+  await prisma.seat.createMany({ data: seatRows });
+
+  console.log(
+    `Seeded: city=${city.slug}, event=/e/${event.slug}, band=${band.name}, seats=${seatRows.length}`
+  );
 }
 
 main()

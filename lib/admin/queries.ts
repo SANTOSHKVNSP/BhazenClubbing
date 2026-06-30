@@ -44,7 +44,7 @@ export const adminGetEvent = (id: string) =>
       city: true,
       venue: true,
       categories: { orderBy: { basePrice: "asc" } },
-      showtimes: { orderBy: { startsAt: "asc" } },
+      showtimes: { orderBy: { startsAt: "asc" }, include: { _count: { select: { seats: true } } } },
       partners: { orderBy: { sortOrder: "asc" } },
       bands: { include: { band: true } },
     },

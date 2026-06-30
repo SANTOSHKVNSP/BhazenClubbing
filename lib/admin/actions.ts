@@ -9,6 +9,7 @@ import {
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { materializeSeats } from "@/lib/seatmap/materialize";
 
 // ---- FormData helpers ----
 const str = (fd: FormData, k: string) => {
@@ -216,5 +217,12 @@ export async function addPartner(fd: FormData) {
 export async function deletePartner(fd: FormData) {
   const eventId = str(fd, "eventId");
   await prisma.partner.delete({ where: { id: str(fd, "id") } });
+  revalidatePath(`/admin/events/${eventId}`);
+}
+
+// Materialize seats for a showtime from the venue's seat map (ADR-002/013).
+export async function generateSeats(fd: FormData) {
+  const eventId = str(fd, "eventId");
+  await materializeSeats(str(fd, "showtimeId"));
   revalidatePath(`/admin/events/${eventId}`);
 }

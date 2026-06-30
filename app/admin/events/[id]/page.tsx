@@ -8,6 +8,7 @@ import {
   deleteCategory,
   addPartner,
   deletePartner,
+  generateSeats,
 } from "@/lib/admin/actions";
 import { Field, TextArea, SelectField, Submit, Card } from "@/components/admin/ui";
 
@@ -102,8 +103,11 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
             <ul className="mt-3 divide-y divide-black/5 text-sm">
               {event!.showtimes.map((s) => (
                 <li key={s.id} className="flex items-center justify-between py-2">
-                  <span>{fmtDT(s.startsAt)} <span className="text-muted">· {s.status}</span></span>
-                  <form action={deleteShowtime}><input type="hidden" name="id" value={s.id} /><input type="hidden" name="eventId" value={event!.id} /><button className="text-xs text-red-600 hover:underline">Remove</button></form>
+                  <span>{fmtDT(s.startsAt)} <span className="text-muted">· {s.status} · {s._count.seats} seats</span></span>
+                  <span className="flex items-center gap-3">
+                    <form action={generateSeats}><input type="hidden" name="showtimeId" value={s.id} /><input type="hidden" name="eventId" value={event!.id} /><button className="text-xs text-orange-2 hover:underline">Generate seats</button></form>
+                    <form action={deleteShowtime}><input type="hidden" name="id" value={s.id} /><input type="hidden" name="eventId" value={event!.id} /><button className="text-xs text-red-600 hover:underline">Remove</button></form>
+                  </span>
                 </li>
               ))}
               {event!.showtimes.length === 0 && <li className="py-2 text-muted">No showtimes.</li>}
