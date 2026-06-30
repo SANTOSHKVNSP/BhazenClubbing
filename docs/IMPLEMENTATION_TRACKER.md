@@ -72,9 +72,9 @@
 - ✅ Audit-log viewer (`/admin/audit`, super-only); entries written on approve/reject/refund/comp. Admin notification settings deferred
 **DoD:** TS-ADMIN, TS-PROMO, TS-ANALYTICS pass; RBAC/IDOR security tests pass.
 
-## Phase 6 — Hardening & launch  ⬜
+## Phase 6 — Hardening & launch  🟦
 **Goal:** Production-ready.
-- ⬜ Security review (TS-SEC), pen-test checklist, rate-limit audit
+- 🟦 Security: server-action authz/IDOR fixes (event sub-entities scoped, entity-derived) + headers + CSP (verified non-breaking). Rate-limit + full pen-test next
 - ⬜ Full load/on-sale simulation; performance budgets met
 - ⬜ Accessibility AA (TS-A11Y); compatibility matrix (TS-COMPAT)
 - ⬜ Monitoring/alerting (Sentry), backups (Neon PITR), runbooks (on-sale, refunds, scanner)
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 6 start (security): closed server-action authz gaps — `deleteEvent`/`setEventStatus` + all event sub-entity actions (showtime/category/partner/seats) now assert admin + city scope (entity-derived, not form-supplied); `setEventStatus` super-only. Added security headers (CSP, X-Frame-Options DENY, HSTS, Referrer-Policy, Permissions-Policy `camera=(self)`) via next.config (CSP prod-only). Verified: 6 headers present + event page renders under CSP.
 - **2026-06-30** — Phase 5 close: audit-log viewer (`/admin/audit`, super-only) listing approve/reject/refund/comp actions with actor + details. **Phase 5 governance complete** (admin notification settings deferred). → Phase 6 (hardening) + account-gated activations.
 - **2026-06-30** — Phase 5 analytics + promo/comps: analytics dashboard (KPIs + per-event, city-scoped) + orders CSV export; promo codes (CRUD in event editor; apply at checkout recomputes discount→fee/GST); comps/guest list (auto-assign + block seats, signed QR under a ₹0 paid order, phone login to view). Added `Order.discount`. Verified via script: 10% promo (₹2998→₹2698.20), 2 comps signed + seats blocked + comped seat unholdable.
 - **2026-06-30** — Phase 5 RBAC + approval: replaced temp HTTP-Basic gate with Auth.js session gating via **middleware** (split Edge-safe `auth.config.ts`) on /admin·/account·/checkout·/ticket + StaffMembership roles (super/city), city scoping, and the approval workflow (draft→pending→live/reject, audited). **Fixed an auth gap** — layout/page `redirect()` didn't reliably block document GETs; added `trustHost`. Verified `/admin`→302 `/login`. Seeded super `+919999999999` + city admin `+918888888888`.

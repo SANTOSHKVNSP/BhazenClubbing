@@ -178,11 +178,15 @@ export async function saveEvent(fd: FormData) {
   redirect(`/admin/events/${eventId}`);
 }
 export async function deleteEvent(fd: FormData) {
-  await prisma.event.delete({ where: { id: str(fd, "id") } });
+  const staff = await assertAdmin();
+  const id = str(fd, "id");
+  await assertEventCity(staff, id);
+  await prisma.event.delete({ where: { id } });
   revalidatePath("/admin/events");
   redirect("/admin/events");
 }
 export async function setEventStatus(fd: FormData) {
+  await assertSuper();
   await prisma.event.update({
     where: { id: str(fd, "id") },
     data: { status: str(fd, "status") as ContentStatus },
@@ -194,6 +198,7 @@ export async function setEventStatus(fd: FormData) {
 // ---- Event sub-entities ----
 export async function addShowtime(fd: FormData) {
   const eventId = str(fd, "eventId");
+  await assertEventCity(await assertAdmin(), eventId);
   await prisma.showtime.create({
     data: {
       eventId,
@@ -205,24 +210,32 @@ export async function addShowtime(fd: FormData) {
   revalidatePath(`/admin/events/${eventId}`);
 }
 export async function deleteShowtime(fd: FormData) {
-  const eventId = str(fd, "eventId");
+  const staff = await assertAdmin();
+  const st = await prisma.showtime.findUnique({ where: { id: str(fd, "id") }, select: { eventId: true } });
+  if (!st) return;
+  await assertEventCity(staff, st.eventId);
   await prisma.showtime.delete({ where: { id: str(fd, "id") } });
-  revalidatePath(`/admin/events/${eventId}`);
+  revalidatePath(`/admin/events/${st.eventId}`);
 }
 export async function addCategory(fd: FormData) {
   const eventId = str(fd, "eventId");
+  await assertEventCity(await assertAdmin(), eventId);
   await prisma.ticketCategory.create({
     data: { eventId, name: str(fd, "name"), color: opt(fd, "color"), basePrice: paise(fd, "price") },
   });
   revalidatePath(`/admin/events/${eventId}`);
 }
 export async function deleteCategory(fd: FormData) {
-  const eventId = str(fd, "eventId");
+  const staff = await assertAdmin();
+  const cat = await prisma.ticketCategory.findUnique({ where: { id: str(fd, "id") }, select: { eventId: true } });
+  if (!cat) return;
+  await assertEventCity(staff, cat.eventId);
   await prisma.ticketCategory.delete({ where: { id: str(fd, "id") } });
-  revalidatePath(`/admin/events/${eventId}`);
+  revalidatePath(`/admin/events/${cat.eventId}`);
 }
 export async function addPartner(fd: FormData) {
   const eventId = str(fd, "eventId");
+  await assertEventCity(await assertAdmin(), eventId);
   await prisma.partner.create({
     data: {
       eventId,
@@ -235,16 +248,23 @@ export async function addPartner(fd: FormData) {
   revalidatePath(`/admin/events/${eventId}`);
 }
 export async function deletePartner(fd: FormData) {
-  const eventId = str(fd, "eventId");
+  const staff = await assertAdmin();
+  const partner = await prisma.partner.findUnique({ where: { id: str(fd, "id") }, select: { eventId: true } });
+  if (!partner) return;
+  await assertEventCity(staff, partner.eventId);
   await prisma.partner.delete({ where: { id: str(fd, "id") } });
-  revalidatePath(`/admin/events/${eventId}`);
+  revalidatePath(`/admin/events/${partner.eventId}`);
 }
 
 // Materialize seats for a showtime from the venue's seat map (ADR-002/013).
 export async function generateSeats(fd: FormData) {
-  const eventId = str(fd, "eventId");
-  await materializeSeats(str(fd, "showtimeId"));
-  revalidatePath(`/admin/events/${eventId}`);
+  const staff = await assertAdmin();
+  const showtimeId = str(fd, "showtimeId");
+  const st = await prisma.showtime.findUnique({ where: { id: showtimeId }, select: { eventId: true } });
+  if (!st) return;
+  await assertEventCity(staff, st.eventId);
+  await materializeSeats(showtimeId);
+  revalidatePath(`/admin/events/${st.eventId}`);
 }
 
 // Admin refund (bypasses per-event policy; ADR-008). Scoped to the admin's city.
