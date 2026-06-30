@@ -3,7 +3,7 @@
 > Durable, detailed phase/task plan. The harness task list mirrors the **current** phase; this file holds the full plan, definition-of-done (DoD), dependencies, and changelog. Update statuses here whenever work moves.
 
 **Status keys:** ⬜ todo · 🟦 in progress · ✅ done · ⛔ blocked
-**Current focus:** Phase 0 — Foundations
+**Current focus:** Phase 1 — Content model & public site _(Phase 0 done except Vercel/Neon/Sentry, which are account-gated)_
 
 ---
 
@@ -21,13 +21,13 @@
 **DoD:** app builds & deploys to Preview; CI green; tokens visible on a sample page; DB migration runs; docs updated.
 **Depends on:** Vercel + Neon account owner (Pending input).
 
-## Phase 1 — Content model & public site  ⬜
+## Phase 1 — Content model & public site  🟦
 **Goal:** Public browsing of cities/events; BhaZen migrated as event #1; basic content admin (super admin).
-- ⬜ Schema: City, Venue, Band/BandMember, Event, Showtime, Partner, Media (+ translatable JSON)
-- ⬜ Public routes: `/` national landing, `/[city]`, `/e/[slug]`, event listing; SEO/OG; sitemap/robots
-- ⬜ Port BhaZen event page layout into the templated event page
-- ⬜ Seed **BhaZen Clubbing (Vizag)** from `Meeta_HTML/` content + optimized images
-- ⬜ AOL Trust CTA (external redirect); per-event partners display
+- ✅ Schema: City, Venue, Band/BandMember, Event, Showtime, Partner, Media (+ translatable JSON, Event.contentJson)
+- 🟦 Public routes: `/` (dynamic landing), `/[city]`, `/e/[slug]` live + per-page SEO via generateMetadata; sitemap/robots/OG-image pending
+- ✅ Templated DB-driven event page (hero+countdown, about, counter, band, tickets, gallery, FAQ, contact, footer)
+- ✅ Seed **BhaZen Clubbing (Vizag)** — city/venue/band+members/event/showtime/categories; images copied to `public/images/bhazen/`
+- 🟦 AOL Trust CTA (external redirect) done; per-event partners section on event page pending
 - ⬜ Minimal admin: content CRUD (super admin), media upload (Blob)
 **DoD:** BhaZen event fully renders via the platform; only `live` content public; TS-PUB/TS-CITY pass.
 **Pending input:** Sattvick Beats logo (or approve text wordmark); AOL Trust URL.
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 1 slice: DB-driven public site. Seeded BhaZen; data-access layer (`lib/queries`); templated event page `/e/bhazen-clubbing` ported from the static site (reads Postgres) + countdown client component; dynamic home + `/[city]` with EventCard; per-page SEO. Verified via screenshots. Pending: sitemap/robots, partners section, content admin.
 - **2026-06-30** — Phase 0 wrap (no-account items): next-intl i18n (en), design-system primitives + branded 404/loading, Auth.js v5 skeleton (builds on Next 16), CI workflow (lint+build), npm `db:*`/`postinstall` scripts. Remaining Phase 0 (Vercel deploy, Sentry) gated on accounts. Next: Phase 1.
 - **2026-06-30** — Prisma data model landed: 22-model schema, init migration + raw-SQL partial unique index (`ticket_active_seat_unique`) for the seat-hold concurrency guard, verified in Postgres. Pinned **Prisma 6** (v7 dropped in-schema `url` + mandates driver adapters — deferred; see ADR-018). Dev DB on Docker `:5433`.
 - **2026-06-30** — Phase 0 in progress: Next.js app scaffolded at repo root (Next 16 / React 19 / Tailwind 4), BhaZen design tokens + fonts ported, branded landing shell building & rendering. Note: Google merged "Big Shoulders Display" → "Big Shoulders" (variable) — `next/font` export is `Big_Shoulders`.

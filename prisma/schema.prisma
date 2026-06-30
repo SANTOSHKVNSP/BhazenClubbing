@@ -154,6 +154,7 @@ model Event {
   description  Json?
   heroMediaUrl String?
   galleryJson  Json?
+  contentJson  Json? // flexible per-event sections: intro, features, stats, faqs, contact, hero media
   status       ContentStatus @default(draft)
 
   // Pricing & policy (ADR-005, ADR-008)
