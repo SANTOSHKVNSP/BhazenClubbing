@@ -74,11 +74,11 @@
 
 ## Phase 6 — Hardening & launch  🟦
 **Goal:** Production-ready.
-- 🟦 Security: server-action authz/IDOR fixes (event sub-entities scoped, entity-derived) + headers + CSP (verified non-breaking). Rate-limit + full pen-test next
+- ✅ Security: authz/IDOR fixes (event sub-entities scoped) + headers + CSP + rate-limiting (OTP 5/10min per phone, holds 20/min per IP). Full pen-test checklist at UAT
 - ⬜ Full load/on-sale simulation; performance budgets met
 - ⬜ Accessibility AA (TS-A11Y); compatibility matrix (TS-COMPAT)
 - ⬜ Monitoring/alerting (Sentry), backups (Neon PITR), runbooks (on-sale, refunds, scanner)
-- ⬜ Content seeding for launch cities; legal pages
+- 🟦 Legal pages (terms/privacy/refund — draft) + `/api/health` (DB ping) + error/404 boundaries done. Content seeding for launch cities pending
 - ⬜ DNS cutover to Vercel (`sattvickbeats.com`); `bhazenclubbing.com` redirect
 - ⬜ UAT sign-off (content/finance/ops); launch checklist (TESTING_SCOPE §10)
 **DoD:** launch sign-off checklist complete.
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 6 (rate-limit + ops pages): in-memory rate limiter (Upstash later) on OTP (5/10min per phone) + holds (20/min per IP); `/api/health` (DB ping); global error boundary; legal pages (terms/privacy/refund, draft). Verified: limiter blocks 6th call, health ok, legal pages 200.
 - **2026-06-30** — Phase 6 start (security): closed server-action authz gaps — `deleteEvent`/`setEventStatus` + all event sub-entity actions (showtime/category/partner/seats) now assert admin + city scope (entity-derived, not form-supplied); `setEventStatus` super-only. Added security headers (CSP, X-Frame-Options DENY, HSTS, Referrer-Policy, Permissions-Policy `camera=(self)`) via next.config (CSP prod-only). Verified: 6 headers present + event page renders under CSP.
 - **2026-06-30** — Phase 5 close: audit-log viewer (`/admin/audit`, super-only) listing approve/reject/refund/comp actions with actor + details. **Phase 5 governance complete** (admin notification settings deferred). → Phase 6 (hardening) + account-gated activations.
 - **2026-06-30** — Phase 5 analytics + promo/comps: analytics dashboard (KPIs + per-event, city-scoped) + orders CSV export; promo codes (CRUD in event editor; apply at checkout recomputes discount→fee/GST); comps/guest list (auto-assign + block seats, signed QR under a ₹0 paid order, phone login to view). Added `Order.discount`. Verified via script: 10% promo (₹2998→₹2698.20), 2 comps signed + seats blocked + comped seat unholdable.
