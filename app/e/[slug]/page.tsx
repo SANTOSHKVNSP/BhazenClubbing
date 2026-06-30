@@ -45,7 +45,7 @@ export default async function EventPage({ params }: Params) {
           <Link href="/" className="font-display text-xl font-extrabold tracking-wide text-white">
             SATTVICK&nbsp;<span className="text-orange">BEATS</span>
           </Link>
-          <a href="#tickets" className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
+          <a href={`/e/${event.slug}/seats`} className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
             Buy Ticket Now
           </a>
         </div>
@@ -70,7 +70,7 @@ export default async function EventPage({ params }: Params) {
           )}
           <p className="mb-9 text-sm font-medium tracking-wide text-white/90 sm:text-base">{metaLine}</p>
           {showtime && <Countdown target={showtime.startsAt.toISOString()} />}
-          <a href="#tickets" className="mt-10 inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
+          <a href={`/e/${event.slug}/seats`} className="mt-10 inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
             Buy Ticket Now
           </a>
         </div>
@@ -161,19 +161,22 @@ export default async function EventPage({ params }: Params) {
       <section id="tickets" className="bg-gradient-to-br from-primary to-purple-deep px-6 py-24">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Buy Ticket Now</h2>
-          <p className="mt-3 text-center text-sm text-white/60">Online seat selection &amp; secure checkout open soon.</p>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          <p className="mt-3 text-center text-sm text-white/60">Reserved seating — choose your seats by tier. Secure checkout opens soon.</p>
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {event.categories.map((cat, i) => (
               <div key={cat.id} className={`rounded-2xl bg-white p-8 shadow-xl ${i === event.categories.length - 1 ? "ring-2 ring-orange" : ""}`}>
                 <h3 className="text-center font-display text-2xl font-bold text-purple">{cat.name}</h3>
                 <div className="mt-3 text-center font-display text-5xl font-extrabold text-ink">
                   <sup className="top-[-1.1rem] text-2xl">₹</sup>{rupees(cat.basePrice)}
                 </div>
-                <div className="mt-7 rounded-full bg-orange/10 py-3 text-center text-sm font-bold uppercase tracking-wide text-orange-2">
-                  Booking opens soon
-                </div>
+                <p className="mt-6 text-center text-xs font-semibold uppercase tracking-wide text-muted">Reserved seating</p>
               </div>
             ))}
+          </div>
+          <div className="mt-10 text-center">
+            <a href={`/e/${event.slug}/seats`} className="inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
+              Select your seats →
+            </a>
           </div>
         </div>
       </section>

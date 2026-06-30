@@ -3,7 +3,7 @@
 > Durable, detailed phase/task plan. The harness task list mirrors the **current** phase; this file holds the full plan, definition-of-done (DoD), dependencies, and changelog. Update statuses here whenever work moves.
 
 **Status keys:** ⬜ todo · 🟦 in progress · ✅ done · ⛔ blocked
-**Current focus:** Phase 2 — Seat-map engine _(Phase 1 done; Vercel Blob upload + Vercel/Neon/Sentry deferred to accounts)_
+**Current focus:** Phase 3 — Accounts & payments _(Phase 2 done; rate-limit/visual-builder/GA deferred; Razorpay/WhatsApp/Vercel/Neon need accounts)_
 
 ---
 
@@ -32,14 +32,14 @@
 **DoD:** BhaZen event fully renders via the platform; only `live` content public; TS-PUB/TS-CITY pass.
 **Pending input:** Sattvick Beats logo (or approve text wordmark); AOL Trust URL.
 
-## Phase 2 — Seat-map engine  🟦  ★high-risk
+## Phase 2 — Seat-map engine  ✅  ★high-risk _(visual drag builder, GA zone, rate-limit deferred)_
 **Goal:** Reserved seating end-to-end except payment.
 - 🟦 Seat-map generators (theatre/stadium) in `lib/seatmap` + admin "Generate seats"; visual drag builder + GA zone later
 - ✅ Materialize Seat inventory per showtime from venue layout (336 seats seeded for BhaZen); category→price via TicketCategory
-- ⬜ Public seat-map render + selection UI (states, legend, max-per-order, mobile zoom)
-- ⬜ Seat-hold service: partial unique index, 8-min holds, atomic insert, expiry cleanup, rate limiting
-- ⬜ "Reserve" stub flow (no charge) + hold countdown UI
-- ⬜ Load test (k6) proving no double-book
+- ✅ Public seat-selection UI (tier-colored map, available/held/sold/blocked/selected, legend, max 10/order, mobile scroll)
+- ✅ Seat-hold service: atomic 8-min holds via partial unique index (`ON CONFLICT DO NOTHING` + rollback), lazy expiry cleanup. Rate limiting deferred (needs Upstash/account)
+- ✅ Reserve flow → hold page with 8-min countdown + total; payment placeholder (Phase 3)
+- ✅ Concurrency proof (`scripts/hold-concurrency.ts`): 25 simultaneous holds → 1 winner, no double-book
 **DoD:** TS-SEAT, TS-SEATBLD, TS-HOLD, TS-PERF-02 pass.
 
 ## Phase 3 — Accounts & payments  ⬜
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 2 complete (seat engine): atomic seat-hold service (8-min holds on the partial unique index), interactive tier-colored seat-selection UI, reserve→hold-countdown flow (payment placeholder for Phase 3). Concurrency proof passes (25 holds → 1 winner, no double-book). Rate limiting + visual drag builder + GA zone deferred. → Phase 3.
 - **2026-06-30** — Phase 2 start (seat engine foundation): seat-map types + theatre/stadium generators (`lib/seatmap`), per-showtime seat materialization + admin "Generate seats"; reseeded BhaZen with a 14×24 theatre map + Gold/Silver/Bronze tiers (336 seats). Next: hold service + selection UI.
 - **2026-06-30** — Phase 1 complete: dynamic `sitemap.xml` + `robots.txt` (disallow /admin,/api), public per-event Partners section (+ sample partners seeded). Only deferred item: Vercel Blob image upload (account-gated). → Phase 2 next.
 - **2026-06-30** — Content admin (super-admin): password-gated (`middleware.ts`, temp HTTP Basic) dashboard + CRUD for Cities/Venues/Bands/Events incl. inline showtimes/categories/partners + status publish; server actions; JSON editors for flexible content. Verified via screenshots. Remaining Phase 1: Vercel Blob media upload, sitemap/robots, public partners section.

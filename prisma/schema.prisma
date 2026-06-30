@@ -313,6 +313,7 @@ model Ticket {
   checkinStatus   CheckinStatus @default(unused)
   checkinAt       DateTime?
   scannerDeviceId String?
+  holdToken       String? // guest hold reference before login (Phase 3 attaches an Order)
   expiresAt       DateTime?
   createdAt       DateTime      @default(now())
 
@@ -322,6 +323,7 @@ model Ticket {
   @@index([showtimeId, seatId])
   @@index([orderId])
   @@index([expiresAt])
+  @@index([holdToken])
 }
 
 // ----------------------------- Partners, promos, comps -----------------------------
