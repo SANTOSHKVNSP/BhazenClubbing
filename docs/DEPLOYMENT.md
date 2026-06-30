@@ -1,6 +1,6 @@
 # Sattvick Beats — Deployment (Vercel + Neon)
 
-Next.js app on **Vercel**, Postgres on **Neon**. Migrations apply automatically on
+Next.js app on **Vercel**, Postgres on **Supabase**. Migrations apply automatically on
 every deploy (`vercel-build` = `prisma migrate deploy && next build`); the Prisma
 client is generated on install (`postinstall`). Local `npm run build` stays
 DB-independent (plain `next build`).
@@ -10,10 +10,12 @@ DB-independent (plain `next build`).
 
 ## One-time setup
 
-### 1. Database — Neon
-- Create a Neon project (region near the audience, e.g. **Singapore** / **Mumbai**).
-- Copy the **pooled** connection string (host contains `-pooler`), keep `?sslmode=require`.
-- That value is `DATABASE_URL`.
+### 1. Database — Supabase
+- Create a Supabase project (region near the audience, e.g. **Mumbai** / **Singapore**). Save the DB password.
+- **Project Settings → Database → Connection string** — copy two:
+  - **Transaction pooler** (port `6543`) → `DATABASE_URL`; append `?pgbouncer=true&connection_limit=1`.
+  - **Direct connection** (port `5432`) → `DIRECT_URL` (migrations).
+- Prisma uses the pooled URL at runtime and the direct URL for `migrate deploy` (configured in `schema.prisma`).
 
 ### 2. Secrets (generate fresh — do not reuse dev)
 - `AUTH_SECRET`: `openssl rand -base64 32`
@@ -42,7 +44,8 @@ npx tsx prisma/seed.ts
 ## Environment variables
 | Var | Required | Notes |
 |---|---|---|
-| `DATABASE_URL` | ✅ | Neon **pooled** URL, `sslmode=require` |
+| `DATABASE_URL` | ✅ | Supabase **transaction pooler** (6543) + `?pgbouncer=true&connection_limit=1` |
+| `DIRECT_URL` | ✅ | Supabase **direct** connection (5432) — migrations |
 | `AUTH_SECRET` | ✅ | `openssl rand -base64 32` |
 | `QR_SIGNING_PRIVATE_KEY` / `QR_SIGNING_PUBLIC_KEY` | ✅ | Ed25519 base64 PEM (fresh) |
 | `SCANNER_TOKEN` | ✅ | gate for `/api/scan` |
