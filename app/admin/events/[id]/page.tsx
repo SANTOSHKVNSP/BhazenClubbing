@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { adminGetEvent, optionCities, optionVenues, optionBands } from "@/lib/admin/queries";
 import {
   saveEvent,
@@ -9,7 +9,11 @@ import {
   addPartner,
   deletePartner,
   generateSeats,
+  submitEvent,
+  approveEvent,
+  rejectEvent,
 } from "@/lib/admin/actions";
+import { requireAdmin, canEditCity } from "@/lib/admin/auth";
 import { Field, TextArea, SelectField, Submit, Card } from "@/components/admin/ui";
 
 const STATUSES = ["draft", "pending", "live", "archived"];
@@ -20,6 +24,7 @@ const fmtDT = (d: Date) =>
 export default async function EventForm({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const isNew = id === "new";
+  const staff = await requireAdmin();
   const [event, cities, venues, bands] = await Promise.all([
     isNew ? null : adminGetEvent(id),
     optionCities(),
@@ -27,6 +32,8 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
     optionBands(),
   ]);
   if (!isNew && !event) notFound();
+  if (event && !canEditCity(staff, event.cityId)) redirect("/admin/events");
+  const visibleCities = staff.isSuper ? cities : cities.filter((c) => staff.cityIds.includes(c.id));
 
   const selBands = new Set(event?.bands.map((b) => b.bandId) ?? []);
   const desc = (event?.description as { en?: string } | null)?.en ?? "";
@@ -44,23 +51,46 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
         )}
       </div>
 
+      {!isNew && (
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-black/10 bg-white p-4">
+          <span className="text-sm">Status: <b>{event!.status}</b></span>
+          {event!.rejectedReason && <span className="text-sm text-red-600">Rejected: {event!.rejectedReason}</span>}
+          {!staff.isSuper && event!.status === "draft" && (
+            <form action={submitEvent}><input type="hidden" name="id" value={event!.id} /><button className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-4 py-1.5 text-sm font-bold text-white">Submit for review</button></form>
+          )}
+          {staff.isSuper && event!.status === "pending" && (
+            <>
+              <form action={approveEvent}><input type="hidden" name="id" value={event!.id} /><button className="rounded-full bg-green-600 px-4 py-1.5 text-sm font-bold text-white">Approve &amp; publish</button></form>
+              <form action={rejectEvent} className="flex items-center gap-2"><input type="hidden" name="id" value={event!.id} /><input name="reason" placeholder="reason" className="rounded-lg border border-black/15 px-2 py-1 text-sm" /><button className="rounded-full bg-red-600 px-4 py-1.5 text-sm font-bold text-white">Reject</button></form>
+            </>
+          )}
+        </div>
+      )}
+
       {/* Core form */}
       <Card className="mt-6 max-w-3xl">
         <form action={saveEvent} className="grid gap-4 sm:grid-cols-2">
           {!isNew && <input type="hidden" name="id" value={event!.id} />}
           <Field label="Title" name="title" defaultValue={event?.title} required />
           <Field label="Slug" name="slug" defaultValue={event?.slug} required hint="e.g. bhazen-clubbing" />
-          <SelectField label="City" name="cityId" defaultValue={event?.cityId ?? ""} required>
+          <SelectField label="City" name="cityId" defaultValue={event?.cityId ?? visibleCities[0]?.id ?? ""} required>
             <option value="" disabled>Select…</option>
-            {cities.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {visibleCities.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </SelectField>
           <SelectField label="Venue" name="venueId" defaultValue={event?.venueId ?? ""}>
             <option value="">— none —</option>
             {venues.map((v) => <option key={v.id} value={v.id}>{v.name}</option>)}
           </SelectField>
-          <SelectField label="Status" name="status" defaultValue={event?.status ?? "draft"}>
-            {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
-          </SelectField>
+          {staff.isSuper ? (
+            <SelectField label="Status" name="status" defaultValue={event?.status ?? "draft"}>
+              {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </SelectField>
+          ) : (
+            <label className="block">
+              <span className="text-sm font-semibold text-ink">Status</span>
+              <p className="mt-1 rounded-lg bg-black/5 px-3 py-2 text-sm">{event?.status ?? "draft"} <span className="text-muted">· managed via review</span></p>
+            </label>
+          )}
           <Field label="Hero image URL" name="heroMediaUrl" defaultValue={event?.heroMediaUrl ?? ""} />
           <Field label="On-sale at (UTC)" name="onSaleAt" type="datetime-local" defaultValue={toInput(event?.onSaleAt)} />
           <Field label="Doors at (UTC)" name="doorsAt" type="datetime-local" defaultValue={toInput(event?.doorsAt)} />

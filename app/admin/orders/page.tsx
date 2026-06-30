@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { adminListOrders } from "@/lib/admin/queries";
 import { adminRefundOrder } from "@/lib/admin/actions";
+import { requireAdmin } from "@/lib/admin/auth";
 
 export const dynamic = "force-dynamic";
 const rupees = (p: number) => (p / 100).toLocaleString("en-IN");
 
 export default async function OrdersList() {
-  const orders = await adminListOrders();
+  const staff = await requireAdmin();
+  const orders = await adminListOrders(staff.isSuper ? undefined : staff.cityIds);
   return (
     <>
       <h1 className="font-display text-3xl font-bold">Orders</h1>

@@ -1,20 +1,18 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 
-// TEMPORARY admin gate via HTTP Basic auth. Replaced by Auth.js phone login +
-// role-based access (Super/City admin) in Phase 3/5 — see docs/DECISIONS.md ADR-003/004.
-export function middleware(req: NextRequest) {
-  const user = process.env.ADMIN_USER || "admin";
-  const pass = process.env.ADMIN_PASSWORD || "sattvick";
-  const expected = "Basic " + btoa(`${user}:${pass}`);
+// Edge session gate: protected routes require a logged-in session (reliable 307).
+// Role checks (staff/super) happen in the admin layout/pages with Prisma.
+const { auth } = NextAuth(authConfig);
 
-  if (req.headers.get("authorization") !== expected) {
-    return new NextResponse("Authentication required", {
-      status: 401,
-      headers: { "WWW-Authenticate": 'Basic realm="Sattvick Beats Admin"' },
-    });
+export default auth((req) => {
+  if (!req.auth) {
+    const url = new URL("/login", req.nextUrl);
+    url.searchParams.set("callbackUrl", req.nextUrl.pathname);
+    return Response.redirect(url);
   }
-  return NextResponse.next();
-}
+});
 
-export const config = { matcher: ["/admin/:path*"] };
+export const config = {
+  matcher: ["/admin/:path*", "/account/:path*", "/checkout/:path*", "/ticket/:path*"],
+};

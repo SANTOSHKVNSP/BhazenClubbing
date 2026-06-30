@@ -32,8 +32,9 @@ export const adminListBands = () =>
 export const adminGetBand = (id: string) =>
   prisma.band.findUnique({ where: { id }, include: { members: { orderBy: { sortOrder: "asc" } } } });
 
-export const adminListEvents = () =>
+export const adminListEvents = (cityIds?: string[]) =>
   prisma.event.findMany({
+    where: cityIds ? { cityId: { in: cityIds } } : undefined,
     orderBy: { createdAt: "desc" },
     include: { city: true, venue: true, _count: { select: { showtimes: true } } },
   });
@@ -50,8 +51,9 @@ export const adminGetEvent = (id: string) =>
     },
   });
 
-export const adminListOrders = () =>
+export const adminListOrders = (cityIds?: string[]) =>
   prisma.order.findMany({
+    where: cityIds ? { showtime: { event: { cityId: { in: cityIds } } } } : undefined,
     orderBy: { createdAt: "desc" },
     include: {
       user: true,

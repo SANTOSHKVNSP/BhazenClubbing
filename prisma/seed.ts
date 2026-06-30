@@ -12,6 +12,7 @@ async function main() {
   await prisma.refund.deleteMany();
   await prisma.invoice.deleteMany();
   await prisma.checkinEvent.deleteMany();
+  await prisma.staffMembership.deleteMany();
   await prisma.eventBand.deleteMany();
   await prisma.ticket.deleteMany();
   await prisma.order.deleteMany();
@@ -205,8 +206,15 @@ async function main() {
   );
   await prisma.seat.createMany({ data: seatRows });
 
+  // Staff / RBAC (ADR-004)
+  const superPhone = process.env.SUPER_ADMIN_PHONE ?? "+919999999999";
+  const superUser = await prisma.user.upsert({ where: { phone: superPhone }, update: { name: "Super Admin" }, create: { phone: superPhone, name: "Super Admin" } });
+  await prisma.staffMembership.create({ data: { userId: superUser.id, role: "super_admin" } });
+  const cityAdmin = await prisma.user.upsert({ where: { phone: "+918888888888" }, update: { name: "Vizag Admin" }, create: { phone: "+918888888888", name: "Vizag Admin" } });
+  await prisma.staffMembership.create({ data: { userId: cityAdmin.id, role: "city_admin", cityId: city.id } });
+
   console.log(
-    `Seeded: city=${city.slug}, event=/e/${event.slug}, band=${band.name}, seats=${seatRows.length}`
+    `Seeded: city=${city.slug}, event=/e/${event.slug}, seats=${seatRows.length}; superAdmin=${superPhone}, cityAdmin=+918888888888`
   );
 }
 

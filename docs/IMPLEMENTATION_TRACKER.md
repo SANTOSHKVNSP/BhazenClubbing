@@ -63,10 +63,10 @@
 **DoD:** TS-NOTIF, TS-SCAN (all), real-device offline drill pass.
 **Pending input:** WhatsApp BSP + templates; email domain/DNS.
 
-## Phase 5 — Admin completion & governance  ⬜
+## Phase 5 — Admin completion & governance  🟦
 **Goal:** Self-serve, governed operations.
-- ⬜ Full RBAC (super/city/scanner) + tenant scoping everywhere
-- ⬜ Publish-approval workflow (draft→pending→live, reject+reason)
+- ✅ RBAC: Auth.js + **middleware** session gate (`/admin`·`/account`·`/checkout`·`/ticket`); StaffMembership roles (super/city) in layout; events/orders scoped by city; cities/venues/bands super-only. Scanner via token (role-login later)
+- ✅ Approval workflow: city-admin draft → submit (pending) → super approve (live) / reject (+reason); status clamped for city admins; audit logged
 - ⬜ Analytics dashboard (revenue, sold, occupancy, refunds) + CSV/GST/settlement export
 - ⬜ Promo codes, comp tickets, guest list
 - ⬜ Audit logs for sensitive actions; admin notification settings
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 5 RBAC + approval: replaced temp HTTP-Basic gate with Auth.js session gating via **middleware** (split Edge-safe `auth.config.ts`) on /admin·/account·/checkout·/ticket + StaffMembership roles (super/city), city scoping, and the approval workflow (draft→pending→live/reject, audited). **Fixed an auth gap** — layout/page `redirect()` didn't reliably block document GETs; added `trustHost`. Verified `/admin`→302 `/login`. Seeded super `+919999999999` + city admin `+918888888888`.
 - **2026-06-30** — Phase 4 scanner + delivery: offline scanner PWA (`/scan`) — token-gated sync API (allowlist + Ed25519 public key) → IndexedDB, offline validate (hash membership + used-set), manual + camera (BarcodeDetector) entry, idempotent check-in sync with cross-device duplicate flagging; manifest + service worker. Notify module (email/WhatsApp, dev-console fallback) sends confirmation on fulfillment. Server flow verified: sync → admit → duplicate → resync. Deferred: PDF ticket, T-2 reminder, real-device camera/offline-reload QA.
 - **2026-06-30** — Phase 4 start: Ed25519-signed QR tickets — keypair, `lib/tickets/qr` (sign/verify/hash), sign per ticket on fulfillment, owner ticket page `/ticket/[id]` with rendered QR + confirmation links. QR test passes (roundtrip, tamper rejected, PNG). Next: delivery + offline scanner.
 - **2026-06-30** — Phase 3 tail: refund engine (per-event policy gate, dev-aware Razorpay refund, seat release sold→refunded, Refund + AuditLog, admin + self-service) + GST invoice (gap-free Counter numbering + viewable invoice page) generated on payment. Refund test passes (seats freed; invoice SB/2026/00001). Phase 3 account-free scaffolding complete. → Phase 4.

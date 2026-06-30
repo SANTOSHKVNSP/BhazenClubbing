@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { adminListEvents } from "@/lib/admin/queries";
 import { deleteEvent } from "@/lib/admin/actions";
+import { requireAdmin } from "@/lib/admin/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function EventsList() {
-  const events = await adminListEvents();
+  const staff = await requireAdmin();
+  const events = await adminListEvents(staff.isSuper ? undefined : staff.cityIds);
   return (
     <>
       <div className="flex items-center justify-between">

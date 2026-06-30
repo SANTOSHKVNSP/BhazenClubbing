@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { materializeSeats } from "@/lib/seatmap/materialize";
 import { refundOrder } from "@/lib/booking/refunds";
+import { assertAdmin, assertSuper } from "@/lib/admin/auth";
 
 // ---- FormData helpers ----
 const str = (fd: FormData, k: string) => {
@@ -46,6 +47,7 @@ const enText = (fd: FormData, k: string) => (str(fd, k) ? { en: str(fd, k) } : u
 
 // ---- City ----
 export async function saveCity(fd: FormData) {
+  await assertSuper();
   const id = opt(fd, "id");
   const data = {
     slug: str(fd, "slug"),
@@ -60,12 +62,14 @@ export async function saveCity(fd: FormData) {
   redirect("/admin/cities");
 }
 export async function deleteCity(fd: FormData) {
+  await assertSuper();
   await prisma.city.delete({ where: { id: str(fd, "id") } });
   revalidatePath("/admin/cities");
 }
 
 // ---- Venue ----
 export async function saveVenue(fd: FormData) {
+  await assertSuper();
   const id = opt(fd, "id");
   const template = str(fd, "template") as VenueTemplate;
   const data = {
@@ -83,6 +87,7 @@ export async function saveVenue(fd: FormData) {
   redirect("/admin/venues");
 }
 export async function deleteVenue(fd: FormData) {
+  await assertSuper();
   await prisma.venue.delete({ where: { id: str(fd, "id") } });
   revalidatePath("/admin/venues");
 }
@@ -90,6 +95,7 @@ export async function deleteVenue(fd: FormData) {
 // ---- Band (members via JSON: [{ role, photoUrl }]) ----
 type MemberInput = { role?: string; name?: string; photoUrl?: string };
 export async function saveBand(fd: FormData) {
+  await assertSuper();
   const id = opt(fd, "id");
   const bio = enText(fd, "bio");
   const members = json(fd, "members") as MemberInput[] | null;
@@ -116,20 +122,31 @@ export async function saveBand(fd: FormData) {
   redirect("/admin/bands");
 }
 export async function deleteBand(fd: FormData) {
+  await assertSuper();
   await prisma.band.delete({ where: { id: str(fd, "id") } });
   revalidatePath("/admin/bands");
 }
 
 // ---- Event ----
 export async function saveEvent(fd: FormData) {
+  const staff = await assertAdmin();
   const id = opt(fd, "id");
+  const cityId = str(fd, "cityId");
+  if (!staff.isSuper && !staff.cityIds.includes(cityId)) throw new Error("Not authorized for this city");
   const bandIds = fd.getAll("bandIds").map(String).filter(Boolean);
+
+  // Non-super admins cannot set status directly — they use the approval workflow.
+  let status: ContentStatus;
+  if (staff.isSuper) status = str(fd, "status") as ContentStatus;
+  else if (id) status = (await prisma.event.findUnique({ where: { id } }))?.status ?? "draft";
+  else status = "draft";
+
   const data = {
     slug: str(fd, "slug"),
     title: str(fd, "title"),
-    cityId: str(fd, "cityId"),
+    cityId,
     venueId: opt(fd, "venueId"),
-    status: str(fd, "status") as ContentStatus,
+    status,
     description: enText(fd, "description"),
     heroMediaUrl: opt(fd, "heroMediaUrl"),
     galleryJson: json(fd, "galleryJson") ?? undefined,
@@ -228,8 +245,41 @@ export async function generateSeats(fd: FormData) {
   revalidatePath(`/admin/events/${eventId}`);
 }
 
-// Admin refund (bypasses per-event policy; ADR-008).
+// Admin refund (bypasses per-event policy; ADR-008). Scoped to the admin's city.
 export async function adminRefundOrder(fd: FormData) {
-  await refundOrder(str(fd, "id"), { isAdmin: true, actorId: "admin" });
+  const staff = await assertAdmin();
+  const id = str(fd, "id");
+  if (!staff.isSuper) {
+    const order = await prisma.order.findUnique({ where: { id }, include: { showtime: { include: { event: true } } } });
+    if (!order || !staff.cityIds.includes(order.showtime.event.cityId)) throw new Error("Not authorized");
+  }
+  await refundOrder(id, { isAdmin: true, actorId: staff.userId });
   revalidatePath("/admin/orders");
+}
+
+// Approval workflow (ADR-004): draft → pending → live / rejected.
+export async function submitEvent(fd: FormData) {
+  const staff = await assertAdmin();
+  const id = str(fd, "id");
+  const event = await prisma.event.findUnique({ where: { id } });
+  if (!event || (!staff.isSuper && !staff.cityIds.includes(event.cityId))) throw new Error("Not authorized");
+  await prisma.event.update({ where: { id }, data: { status: "pending", submittedById: staff.userId, rejectedReason: null } });
+  await prisma.auditLog.create({ data: { actorId: staff.userId, action: "submit", entity: "Event", entityId: id } });
+  revalidatePath(`/admin/events/${id}`);
+}
+export async function approveEvent(fd: FormData) {
+  const staff = await assertSuper();
+  const id = str(fd, "id");
+  await prisma.event.update({ where: { id }, data: { status: "live", approvedById: staff.userId, rejectedReason: null } });
+  await prisma.auditLog.create({ data: { actorId: staff.userId, action: "approve", entity: "Event", entityId: id } });
+  revalidatePath(`/admin/events/${id}`);
+  revalidatePath("/");
+}
+export async function rejectEvent(fd: FormData) {
+  const staff = await assertSuper();
+  const id = str(fd, "id");
+  const reason = str(fd, "reason") || "Rejected";
+  await prisma.event.update({ where: { id }, data: { status: "draft", rejectedReason: reason } });
+  await prisma.auditLog.create({ data: { actorId: staff.userId, action: "reject", entity: "Event", entityId: id, after: { reason } } });
+  revalidatePath(`/admin/events/${id}`);
 }
