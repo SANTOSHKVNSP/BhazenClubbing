@@ -28,8 +28,7 @@ export default async function AdminHome() {
         ))}
       </div>
       <p className="mt-8 text-sm text-muted">
-        ⚠️ Temporary password gate is active. Real auth (phone OTP) + roles (Super/City admin) arrive
-        in Phase 3/5.
+        Manage events, review orders, and track sales from the menu. City admins see only their city.
       </p>
     </>
   );

@@ -21,13 +21,14 @@ async function deliverOtp(_phone: string, _code: string): Promise<boolean> {
   return false;
 }
 
-export async function sendOtp(phone: string): Promise<void> {
+export async function sendOtp(phone: string): Promise<string> {
   const code = String(randomInt(0, 1_000_000)).padStart(6, "0");
   const expiresAt = new Date(Date.now() + TTL_MIN * 60 * 1000);
   await prisma.otpChallenge.deleteMany({ where: { phone } });
   await prisma.otpChallenge.create({ data: { phone, codeHash: hashCode(phone, code), expiresAt } });
   const sent = await deliverOtp(phone, code);
   if (!sent) console.log(`\n[DEV OTP] ${phone} → ${code}\n`);
+  return code;
 }
 
 export async function verifyOtp(phone: string, code: string): Promise<boolean> {

@@ -12,6 +12,7 @@ export function LoginForm() {
   const [step, setStep] = useState<"phone" | "otp">("phone");
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [devCode, setDevCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -24,6 +25,7 @@ export function LoginForm() {
       const r = await requestOtp(phone);
       if (!r.ok) return setError(r.error);
       setPhone(r.phone);
+      if (r.devCode) { setCode(r.devCode); setDevCode(r.devCode); }
       setStep("otp");
     });
   }
@@ -78,7 +80,7 @@ export function LoginForm() {
               required
             />
           </label>
-          <p className="text-xs text-muted">Sent to {phone}. In dev, the code is printed to the server console.</p>
+          <p className="text-xs text-muted">Sent to {phone}.{devCode ? ` Dev mode — code auto-filled (${devCode}).` : " In dev, the code is printed to the server console."}</p>
           <button
             type="submit"
             disabled={pending}
