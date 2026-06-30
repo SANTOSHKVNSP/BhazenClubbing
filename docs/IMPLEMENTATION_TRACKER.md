@@ -63,13 +63,13 @@
 **DoD:** TS-NOTIF, TS-SCAN (all), real-device offline drill pass.
 **Pending input:** WhatsApp BSP + templates; email domain/DNS.
 
-## Phase 5 — Admin completion & governance  🟦
+## Phase 5 — Admin completion & governance  ✅ _(admin notification settings deferred)_
 **Goal:** Self-serve, governed operations.
 - ✅ RBAC: Auth.js + **middleware** session gate (`/admin`·`/account`·`/checkout`·`/ticket`); StaffMembership roles (super/city) in layout; events/orders scoped by city; cities/venues/bands super-only. Scanner via token (role-login later)
 - ✅ Approval workflow: city-admin draft → submit (pending) → super approve (live) / reject (+reason); status clamped for city admins; audit logged
-- ⬜ Analytics dashboard (revenue, sold, occupancy, refunds) + CSV/GST/settlement export
-- ⬜ Promo codes, comp tickets, guest list
-- ⬜ Audit logs for sensitive actions; admin notification settings
+- ✅ Analytics dashboard (revenue, paid orders, tickets sold, comps, occupancy, refunds; per-event) + orders CSV export (`/api/admin/export`), city-scoped
+- ✅ Promo codes (%/flat, max-uses, expiry) applied at checkout (discount → fee/GST recompute) + comps/guest list (auto-assign + block seats, signed QR under a ₹0 paid order). Verified: 10% promo, comps signed + seats blocked + no double-book
+- ✅ Audit-log viewer (`/admin/audit`, super-only); entries written on approve/reject/refund/comp. Admin notification settings deferred
 **DoD:** TS-ADMIN, TS-PROMO, TS-ANALYTICS pass; RBAC/IDOR security tests pass.
 
 ## Phase 6 — Hardening & launch  ⬜
@@ -93,6 +93,8 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 5 close: audit-log viewer (`/admin/audit`, super-only) listing approve/reject/refund/comp actions with actor + details. **Phase 5 governance complete** (admin notification settings deferred). → Phase 6 (hardening) + account-gated activations.
+- **2026-06-30** — Phase 5 analytics + promo/comps: analytics dashboard (KPIs + per-event, city-scoped) + orders CSV export; promo codes (CRUD in event editor; apply at checkout recomputes discount→fee/GST); comps/guest list (auto-assign + block seats, signed QR under a ₹0 paid order, phone login to view). Added `Order.discount`. Verified via script: 10% promo (₹2998→₹2698.20), 2 comps signed + seats blocked + comped seat unholdable.
 - **2026-06-30** — Phase 5 RBAC + approval: replaced temp HTTP-Basic gate with Auth.js session gating via **middleware** (split Edge-safe `auth.config.ts`) on /admin·/account·/checkout·/ticket + StaffMembership roles (super/city), city scoping, and the approval workflow (draft→pending→live/reject, audited). **Fixed an auth gap** — layout/page `redirect()` didn't reliably block document GETs; added `trustHost`. Verified `/admin`→302 `/login`. Seeded super `+919999999999` + city admin `+918888888888`.
 - **2026-06-30** — Phase 4 scanner + delivery: offline scanner PWA (`/scan`) — token-gated sync API (allowlist + Ed25519 public key) → IndexedDB, offline validate (hash membership + used-set), manual + camera (BarcodeDetector) entry, idempotent check-in sync with cross-device duplicate flagging; manifest + service worker. Notify module (email/WhatsApp, dev-console fallback) sends confirmation on fulfillment. Server flow verified: sync → admit → duplicate → resync. Deferred: PDF ticket, T-2 reminder, real-device camera/offline-reload QA.
 - **2026-06-30** — Phase 4 start: Ed25519-signed QR tickets — keypair, `lib/tickets/qr` (sign/verify/hash), sign per ticket on fulfillment, owner ticket page `/ticket/[id]` with rendered QR + confirmation links. QR test passes (roundtrip, tamper rejected, PNG). Next: delivery + offline scanner.

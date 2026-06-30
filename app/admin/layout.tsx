@@ -14,6 +14,7 @@ const NAV = [
   { href: "/admin/cities", label: "Cities", super: true },
   { href: "/admin/venues", label: "Venues", super: true },
   { href: "/admin/bands", label: "Bands", super: true },
+  { href: "/admin/audit", label: "Audit", super: true },
 ];
 
 async function logout() {
