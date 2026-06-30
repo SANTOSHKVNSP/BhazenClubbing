@@ -28,7 +28,7 @@
 - ✅ Templated DB-driven event page (hero+countdown, about, counter, band, tickets, gallery, FAQ, contact, footer)
 - ✅ Seed **BhaZen Clubbing (Vizag)** — city/venue/band+members/event/showtime/categories; images copied to `public/images/bhazen/`
 - 🟦 AOL Trust CTA (external redirect) done; per-event partners section on event page pending
-- ⬜ Minimal admin: content CRUD (super admin), media upload (Blob)
+- ✅ Admin (super-admin): dashboard + CRUD for Cities/Venues/Bands/Events (+ inline showtimes/ticket-categories/partners), server actions, JSON editors; temp HTTP-Basic gate (`middleware.ts`). Media via image URLs for now — Vercel Blob upload deferred to account.
 **DoD:** BhaZen event fully renders via the platform; only `live` content public; TS-PUB/TS-CITY pass.
 **Pending input:** Sattvick Beats logo (or approve text wordmark); AOL Trust URL.
 
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Content admin (super-admin): password-gated (`middleware.ts`, temp HTTP Basic) dashboard + CRUD for Cities/Venues/Bands/Events incl. inline showtimes/categories/partners + status publish; server actions; JSON editors for flexible content. Verified via screenshots. Remaining Phase 1: Vercel Blob media upload, sitemap/robots, public partners section.
 - **2026-06-30** — Phase 1 slice: DB-driven public site. Seeded BhaZen; data-access layer (`lib/queries`); templated event page `/e/bhazen-clubbing` ported from the static site (reads Postgres) + countdown client component; dynamic home + `/[city]` with EventCard; per-page SEO. Verified via screenshots. Pending: sitemap/robots, partners section, content admin.
 - **2026-06-30** — Phase 0 wrap (no-account items): next-intl i18n (en), design-system primitives + branded 404/loading, Auth.js v5 skeleton (builds on Next 16), CI workflow (lint+build), npm `db:*`/`postinstall` scripts. Remaining Phase 0 (Vercel deploy, Sentry) gated on accounts. Next: Phase 1.
 - **2026-06-30** — Prisma data model landed: 22-model schema, init migration + raw-SQL partial unique index (`ticket_active_seat_unique`) for the seat-hold concurrency guard, verified in Postgres. Pinned **Prisma 6** (v7 dropped in-schema `url` + mandates driver adapters — deferred; see ADR-018). Dev DB on Docker `:5433`.
