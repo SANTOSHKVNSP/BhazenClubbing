@@ -106,9 +106,11 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 **Decision:** Maintain four living documents (Decisions, Architecture, Testing Scope, Implementation Tracker) **in sync with every change**. A detailed Testing Scope is produced and kept current so QA can author test cases and stakeholders gain confidence before launch.
 
 ## ADR-018 — ORM choice
-**Status:** Pending input (will default to **Prisma** unless you prefer Drizzle)
-**Context:** Need type-safe DB access + migrations. **Prisma** = mature, great DX, easy migrations. **Drizzle** = lighter, SQL-first, fine-grained control (helpful for the `FOR UPDATE` / partial-index seat logic).
-**Default if no objection:** **Prisma** for schema/migrations + raw SQL for the few hot concurrency paths.
+**Status:** Accepted — **Prisma, pinned to v6.x**
+**Context:** Need type-safe DB access + migrations. **Prisma** = mature, great DX, easy migrations. **Drizzle** = lighter, SQL-first.
+**Decision:** **Prisma 6** for schema/migrations + raw SQL for the few hot concurrency paths (e.g. the partial unique index in migration `*_seat_active_unique`).
+**Why pin v6:** Prisma 7 removed the in-schema datasource `url` and **mandates driver adapters + `prisma.config.ts`** — extra moving parts on a foundational layer. We defer the v7 driver-adapter migration to a later hardening task.
+**Consequences:** Classic `datasource { url = env("DATABASE_URL") }`; simple `new PrismaClient()` in `lib/db.ts`. Revisit v7 upgrade post-MVP.
 
 ---
 

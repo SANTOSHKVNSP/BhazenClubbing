@@ -11,7 +11,7 @@
 **Goal:** A running, deployable Next.js skeleton with DB, auth shell, design tokens, CI, and docs wired in.
 - ✅ Scaffold Next.js (App Router, TS, ESLint, Tailwind) at repo root — Next 16.2.9 / React 19.2.4 / Tailwind 4.3.2; builds clean
 - ✅ Port BhaZen design tokens (colors, Big Shoulders + Open Sans fonts) into Tailwind `@theme`; branded landing shell renders
-- ⬜ Add Postgres (Neon) + Prisma; initial migration; `.env` template; DB connect util
+- ✅ Add Postgres + Prisma 6 — schema (22 models), initial migration + partial-index guard (ADR-009) applied & verified; `.env`/`.env.example` + `lib/db.ts`. Dev DB = local Docker Postgres on **:5433** (host :5432 was taken); Neon for prod later.
 - ⬜ Auth.js skeleton (session plumbing; providers stubbed for Phase 3)
 - ⬜ i18n scaffolding (next-intl) with `en` catalog
 - 🟦 Base layout, design-system components, 404, loading states (root layout + landing shell done; component library + 404/loading pending)
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Prisma data model landed: 22-model schema, init migration + raw-SQL partial unique index (`ticket_active_seat_unique`) for the seat-hold concurrency guard, verified in Postgres. Pinned **Prisma 6** (v7 dropped in-schema `url` + mandates driver adapters — deferred; see ADR-018). Dev DB on Docker `:5433`.
 - **2026-06-30** — Phase 0 in progress: Next.js app scaffolded at repo root (Next 16 / React 19 / Tailwind 4), BhaZen design tokens + fonts ported, branded landing shell building & rendering. Note: Google merged "Big Shoulders Display" → "Big Shoulders" (variable) — `next/font` export is `Big_Shoulders`.
 - **2026-06-30** — Initial plan created from discovery Q&A (ADR-001…017). Added offline-first scanner (ADR-014) + Ed25519 QR (ADR-015) after stakeholder input. Phase 0 started.
 

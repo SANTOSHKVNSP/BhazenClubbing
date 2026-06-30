@@ -1,0 +1,455 @@
+// Sattvick Beats — data model
+// See docs/ARCHITECTURE.md §5 and docs/DECISIONS.md (ADRs).
+// Conventions: money stored as integer paise; percents as basis-ish ints
+// (e.g. gstRate 1800 = 18.00%); translatable text stored as Json {en, ...}.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------- Enums -----------------------------
+enum ContentStatus {
+  draft
+  pending
+  live
+  archived
+}
+
+enum VenueTemplate {
+  theatre
+  stadium
+}
+
+enum StaffRole {
+  super_admin
+  city_admin
+  scanner
+}
+
+enum OrderStatus {
+  pending
+  paid
+  failed
+  refunded
+  partially_refunded
+  cancelled
+}
+
+enum TicketState {
+  held
+  sold
+  refunded
+  comp
+}
+
+enum CheckinStatus {
+  unused
+  used
+}
+
+enum FeeType {
+  none
+  flat
+  percent
+}
+
+enum RefundPolicyType {
+  none
+  self_service
+  admin_only
+}
+
+enum PromoType {
+  percent
+  flat
+}
+
+enum RefundStatus {
+  pending
+  processed
+  failed
+}
+
+enum CheckinSource {
+  online
+  offline_sync
+}
+
+// ----------------------------- Content -----------------------------
+model City {
+  id        String        @id @default(cuid())
+  slug      String        @unique
+  name      String
+  state     String?
+  heroMedia String?
+  intro     Json?
+  status    ContentStatus @default(draft)
+  seo       Json?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  venues      Venue[]
+  events      Event[]
+  memberships StaffMembership[]
+}
+
+model Venue {
+  id         String        @id @default(cuid())
+  name       String
+  cityId     String
+  city       City          @relation(fields: [cityId], references: [id])
+  address    String?
+  lat        Float?
+  lng        Float?
+  mapsEmbed  String?
+  template   VenueTemplate
+  layoutJson Json // sections/rows/seats with category, blocked, accessible
+  capacity   Int           @default(0)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  events Event[]
+
+  @@index([cityId])
+}
+
+model Band {
+  id        String   @id @default(cuid())
+  name      String
+  bio       Json?
+  photoUrl  String?
+  socials   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members BandMember[]
+  events  EventBand[]
+}
+
+model BandMember {
+  id        String  @id @default(cuid())
+  bandId    String
+  band      Band    @relation(fields: [bandId], references: [id], onDelete: Cascade)
+  name      String
+  role      String?
+  photoUrl  String?
+  sortOrder Int     @default(0)
+
+  @@index([bandId])
+}
+
+model Event {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  title        String
+  cityId       String
+  city         City          @relation(fields: [cityId], references: [id])
+  venueId      String?
+  venue        Venue?        @relation(fields: [venueId], references: [id])
+  description  Json?
+  heroMediaUrl String?
+  galleryJson  Json?
+  status       ContentStatus @default(draft)
+
+  // Pricing & policy (ADR-005, ADR-008)
+  feeType          FeeType          @default(none)
+  feeValue         Int              @default(0) // paise (flat) or percent*100 (percent)
+  gstRate          Int              @default(0) // percent*100 (1800 = 18%)
+  gstInclusive     Boolean          @default(false)
+  refundPolicyType RefundPolicyType @default(none)
+  refundWindowDays Int?
+  refundFeePct     Int? // percent*100
+
+  onSaleAt DateTime?
+  doorsAt  DateTime?
+  seo      Json?
+
+  // Approval workflow (ADR-004) — actor ids (no FK to keep User relations simple)
+  submittedById  String?
+  approvedById   String?
+  rejectedReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  showtimes  Showtime[]
+  partners   Partner[]
+  categories TicketCategory[]
+  promos     Promo[]
+  comps      Comp[]
+  bands      EventBand[]
+
+  @@index([cityId])
+  @@index([status])
+}
+
+model EventBand {
+  eventId String
+  bandId  String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  band    Band   @relation(fields: [bandId], references: [id], onDelete: Cascade)
+
+  @@id([eventId, bandId])
+}
+
+model Showtime {
+  id        String        @id @default(cuid())
+  eventId   String
+  event     Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  startsAt  DateTime
+  endsAt    DateTime?
+  status    ContentStatus @default(draft)
+  createdAt DateTime      @default(now())
+
+  seats   Seat[]
+  orders  Order[]
+  tickets Ticket[]
+
+  @@index([eventId])
+}
+
+model TicketCategory {
+  id        String  @id @default(cuid())
+  eventId   String
+  event     Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name      String
+  color     String?
+  basePrice Int     @default(0) // paise
+
+  @@unique([eventId, name])
+}
+
+model Seat {
+  id         String   @id @default(cuid())
+  showtimeId String
+  showtime   Showtime @relation(fields: [showtimeId], references: [id], onDelete: Cascade)
+  section    String
+  row        String
+  number     String
+  category   String
+  accessible Boolean  @default(false)
+  blocked    Boolean  @default(false)
+
+  tickets Ticket[]
+
+  @@unique([showtimeId, section, row, number])
+  @@index([showtimeId])
+}
+
+// ----------------------------- Users & staff -----------------------------
+model User {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  name      String?
+  email     String?
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+
+  memberships StaffMembership[]
+  orders      Order[]
+}
+
+model StaffMembership {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      StaffRole
+  cityId    String?
+  city      City?     @relation(fields: [cityId], references: [id])
+  eventId   String? // event-scoped (e.g. scanner); no FK to keep it flexible
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, role, cityId, eventId])
+  @@index([userId])
+}
+
+// ----------------------------- Orders, tickets, money -----------------------------
+model Order {
+  id                String      @id @default(cuid())
+  userId            String
+  user              User        @relation(fields: [userId], references: [id])
+  showtimeId        String
+  showtime          Showtime    @relation(fields: [showtimeId], references: [id])
+  status            OrderStatus @default(pending)
+  subtotal          Int         @default(0)
+  fee               Int         @default(0)
+  gst               Int         @default(0)
+  total             Int         @default(0)
+  currency          String      @default("INR")
+  razorpayOrderId   String?     @unique
+  razorpayPaymentId String?
+  promoId           String?
+  promo             Promo?      @relation(fields: [promoId], references: [id])
+  createdAt         DateTime    @default(now())
+  paidAt            DateTime?
+
+  tickets Ticket[]
+  refunds Refund[]
+  invoice Invoice?
+
+  @@index([userId])
+  @@index([showtimeId])
+  @@index([status])
+}
+
+model Ticket {
+  id              String        @id @default(cuid())
+  orderId         String?
+  order           Order?        @relation(fields: [orderId], references: [id])
+  showtimeId      String
+  showtime        Showtime      @relation(fields: [showtimeId], references: [id])
+  seatId          String
+  seat            Seat          @relation(fields: [seatId], references: [id])
+  category        String
+  price           Int           @default(0)
+  state           TicketState   @default(held)
+  qrToken         String?       @unique
+  checkinStatus   CheckinStatus @default(unused)
+  checkinAt       DateTime?
+  scannerDeviceId String?
+  expiresAt       DateTime?
+  createdAt       DateTime      @default(now())
+
+  // CONCURRENCY GUARD (ADR-009): a PARTIAL unique index on
+  // (showtimeId, seatId) WHERE state IN ('held','sold') is added via raw SQL
+  // in the migration — Prisma can't express partial unique indexes in-schema.
+  @@index([showtimeId, seatId])
+  @@index([orderId])
+  @@index([expiresAt])
+}
+
+// ----------------------------- Partners, promos, comps -----------------------------
+model Partner {
+  id        String  @id @default(cuid())
+  eventId   String
+  event     Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name      String
+  logoUrl   String?
+  tier      String?
+  url       String?
+  sortOrder Int     @default(0)
+
+  @@index([eventId])
+}
+
+model Promo {
+  id           String    @id @default(cuid())
+  code         String
+  eventId      String
+  event        Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  type         PromoType
+  value        Int // paise (flat) or percent*100 (percent)
+  maxUses      Int?
+  perUserLimit Int?
+  startsAt     DateTime?
+  endsAt       DateTime?
+  usedCount    Int       @default(0)
+  createdAt    DateTime  @default(now())
+
+  orders Order[]
+
+  @@unique([eventId, code])
+}
+
+model Comp {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name      String
+  phone     String?
+  qty       Int      @default(1)
+  createdAt DateTime @default(now())
+
+  @@index([eventId])
+}
+
+// ----------------------------- Finance & ops -----------------------------
+model Refund {
+  id               String       @id @default(cuid())
+  orderId          String
+  order            Order        @relation(fields: [orderId], references: [id])
+  amount           Int
+  reason           String?
+  status           RefundStatus @default(pending)
+  razorpayRefundId String?
+  actorId          String?
+  createdAt        DateTime     @default(now())
+
+  @@index([orderId])
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  orderId   String   @unique
+  order     Order    @relation(fields: [orderId], references: [id])
+  number    String   @unique
+  gstin     String?
+  sac       String?
+  pdfUrl    String?
+  breakdown Json
+  createdAt DateTime @default(now())
+}
+
+model WebhookEvent {
+  id          String    @id @default(cuid())
+  provider    String
+  externalId  String    @unique // idempotency key
+  type        String?
+  payload     Json
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+model CheckinEvent {
+  id         String        @id @default(cuid())
+  ticketId   String
+  showtimeId String
+  deviceId   String?
+  scannedAt  DateTime
+  source     CheckinSource @default(online)
+  flagged    Boolean       @default(false)
+  flagReason String?
+  createdAt  DateTime      @default(now())
+
+  @@index([showtimeId])
+  @@index([ticketId])
+}
+
+model ScannerDevice {
+  id            String    @id @default(cuid())
+  eventId       String?
+  showtimeId    String?
+  label         String
+  authTokenHash String
+  lastSyncAt    DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  action    String
+  entity    String
+  entityId  String?
+  before    Json?
+  after     Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  type      String?
+  alt       String?
+  ownerType String?
+  ownerId   String?
+  createdAt DateTime @default(now())
+}
