@@ -3,7 +3,7 @@
 > Durable, detailed phase/task plan. The harness task list mirrors the **current** phase; this file holds the full plan, definition-of-done (DoD), dependencies, and changelog. Update statuses here whenever work moves.
 
 **Status keys:** ⬜ todo · 🟦 in progress · ✅ done · ⛔ blocked
-**Current focus:** Phase 3 — Accounts & payments _(Phase 2 done; rate-limit/visual-builder/GA deferred; Razorpay/WhatsApp/Vercel/Neon need accounts)_
+**Current focus:** Phase 4 — Tickets, delivery & offline check-in _(Phase 3 account-free scaffolding done; live payments/OTP-send need keys)_
 
 ---
 
@@ -42,13 +42,13 @@
 - ✅ Concurrency proof (`scripts/hold-concurrency.ts`): 25 simultaneous holds → 1 winner, no double-book
 **DoD:** TS-SEAT, TS-SEATBLD, TS-HOLD, TS-PERF-02 pass.
 
-## Phase 3 — Accounts & payments  🟦 _(account-free scaffolding now; live when Razorpay/WhatsApp/email keys provided)_
+## Phase 3 — Accounts & payments  ✅ _(account-free scaffolding done; live Razorpay widget + WhatsApp/email send + reconciliation activate with keys/accounts)_
 **Goal:** Login + real money.
 - ✅ Auth.js phone OTP (dev-console code; WhatsApp/email send wired in Phase 4) + account/booking history + 5-attempt lockout. Rate-limit deferred (Upstash)
 - ✅ Pricing engine: per-event fee + GST (additive/inclusive), ₹0 events; 7 vitest unit tests; CI runs `npm test`. Promo later
 - 🟦 Razorpay REST client + signature-verified idempotent **webhook** + idempotent fulfillment (held→sold). Dev-pay simulates capture; live Checkout widget wires when keys provided
-- ⬜ GST invoice (numbering, GSTIN, SAC, PDF) 
-- ⬜ Refund engine: per-event policy, Razorpay refunds, seat release, audit; event-cancel bulk refund
+- ✅ GST invoice: gap-free numbering (Counter), GSTIN/SAC, breakdown + viewable invoice page (PDF/delivery in Phase 4) 
+- ✅ Refund engine: per-event policy gate, Razorpay refund (dev-aware), seat release (sold→refunded), Refund + AuditLog, admin + self-service (bulk event-cancel later)
 - ⬜ Reconciliation job for stuck `pending` orders
 **DoD:** TS-AUTH, TS-CART, TS-PAY, TS-ORD, TS-REF pass (Razorpay test mode).
 **Pending input:** Razorpay keys + KYC; GSTIN/SAC/invoice series.
@@ -93,6 +93,7 @@
 ---
 
 ## Changelog
+- **2026-06-30** — Phase 3 tail: refund engine (per-event policy gate, dev-aware Razorpay refund, seat release sold→refunded, Refund + AuditLog, admin + self-service) + GST invoice (gap-free Counter numbering + viewable invoice page) generated on payment. Refund test passes (seats freed; invoice SB/2026/00001). Phase 3 account-free scaffolding complete. → Phase 4.
 - **2026-06-30** — Phase 3 auth + checkout (account-free): phone OTP login (dev-console code) + account/booking history; hold→Order→pricing→idempotent fulfillment (held→sold) with dev-pay simulation; Razorpay REST client + signature-verified idempotent webhook (inert until keys). Money-path test passes (paid, 2 seats sold, idempotent). Remaining P3: GST invoice, refund engine, live Razorpay widget.
 - **2026-06-30** — Phase 3 start (account-free): pricing engine (fee + GST, additive/inclusive, free events) with 7 vitest unit tests; CI now runs `npm test`. Next: dev-mode OTP auth, checkout flow, Razorpay/webhook scaffolding.
 - **2026-06-30** — Phase 2 complete (seat engine): atomic seat-hold service (8-min holds on the partial unique index), interactive tier-colored seat-selection UI, reserve→hold-countdown flow (payment placeholder for Phase 3). Concurrency proof passes (25 holds → 1 winner, no double-book). Rate limiting + visual drag builder + GA zone deferred. → Phase 3.

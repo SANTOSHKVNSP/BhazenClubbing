@@ -467,3 +467,9 @@ model OtpChallenge {
 
   @@index([phone])
 }
+
+// Atomic sequential counters (e.g. gap-free GST invoice numbering).
+model Counter {
+  key   String @id
+  value Int    @default(0)
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth, signOut } from "@/auth";
 import { prisma } from "@/lib/db";
+import { selfRefund } from "@/lib/booking/checkout-actions";
 
 export const dynamic = "force-dynamic";
 const rupees = (p: number) => (p / 100).toLocaleString("en-IN");
@@ -13,7 +14,7 @@ export default async function AccountPage() {
   const orders = await prisma.order.findMany({
     where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
-    include: { tickets: { include: { seat: true } }, showtime: { include: { event: true } } },
+    include: { invoice: true, tickets: { include: { seat: true } }, showtime: { include: { event: true } } },
   });
 
   return (
@@ -43,6 +44,17 @@ export default async function AccountPage() {
                   </div>
                   <p className="mt-1 text-sm text-muted">Seats: {seats.join(", ") || "—"}</p>
                   <p className="mt-1 text-sm font-semibold text-ink">₹{rupees(o.total)}</p>
+                  <div className="mt-3 flex gap-4 text-sm">
+                    {o.invoice && <Link href={`/invoice/${o.id}`} className="text-orange-2 hover:underline">Invoice</Link>}
+                    {o.status === "paid" &&
+                      o.showtime.event.refundPolicyType === "self_service" &&
+                      Date.now() < o.showtime.startsAt.getTime() - (o.showtime.event.refundWindowDays ?? 0) * 86_400_000 && (
+                        <form action={selfRefund}>
+                          <input type="hidden" name="orderId" value={o.id} />
+                          <button className="text-red-600 hover:underline">Cancel &amp; refund</button>
+                        </form>
+                      )}
+                  </div>
                 </div>
               );
             })}

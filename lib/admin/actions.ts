@@ -10,6 +10,7 @@ import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { materializeSeats } from "@/lib/seatmap/materialize";
+import { refundOrder } from "@/lib/booking/refunds";
 
 // ---- FormData helpers ----
 const str = (fd: FormData, k: string) => {
@@ -225,4 +226,10 @@ export async function generateSeats(fd: FormData) {
   const eventId = str(fd, "eventId");
   await materializeSeats(str(fd, "showtimeId"));
   revalidatePath(`/admin/events/${eventId}`);
+}
+
+// Admin refund (bypasses per-event policy; ADR-008).
+export async function adminRefundOrder(fd: FormData) {
+  await refundOrder(str(fd, "id"), { isAdmin: true, actorId: "admin" });
+  revalidatePath("/admin/orders");
 }

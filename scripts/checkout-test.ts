@@ -38,6 +38,7 @@ async function main() {
   console.log(pass ? "✅ PASS — money path works (idempotent)" : "❌ FAIL");
 
   // cleanup
+  await prisma.invoice.deleteMany({ where: { orderId: order.id } });
   await prisma.ticket.deleteMany({ where: { orderId: order.id } });
   await prisma.order.delete({ where: { id: order.id } });
   if (!pass) process.exitCode = 1;

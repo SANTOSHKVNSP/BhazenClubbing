@@ -22,6 +22,24 @@ export async function createRazorpayOrder(
   return { id: data.id, dev: false };
 }
 
+export async function createRazorpayRefund(
+  paymentId: string,
+  amountPaise: number
+): Promise<{ id: string; dev: boolean }> {
+  if (!razorpayConfigured() || paymentId.startsWith("dev_")) {
+    return { id: `dev_refund_${paymentId}`, dev: true };
+  }
+  const auth = Buffer.from(`${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_KEY_SECRET}`).toString("base64");
+  const res = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}/refund`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Basic ${auth}` },
+    body: JSON.stringify({ amount: amountPaise }),
+  });
+  if (!res.ok) throw new Error(`Razorpay refund failed: ${res.status}`);
+  const data = (await res.json()) as { id: string };
+  return { id: data.id, dev: false };
+}
+
 export function verifyWebhookSignature(body: string, signature: string): boolean {
   const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
   if (!secret) return false;

@@ -50,6 +50,17 @@ export const adminGetEvent = (id: string) =>
     },
   });
 
+export const adminListOrders = () =>
+  prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: true,
+      showtime: { include: { event: true } },
+      invoice: true,
+      _count: { select: { tickets: true } },
+    },
+  });
+
 // Select options
 export const optionCities = () => prisma.city.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } });
 export const optionVenues = () => prisma.venue.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } });

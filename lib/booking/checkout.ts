@@ -53,5 +53,21 @@ export async function fulfillOrder(orderId: string, razorpayPaymentId?: string):
       where: { orderId, state: "held" },
       data: { state: "sold", holdToken: null, expiresAt: null },
     });
+
+    // GST invoice with a gap-free number (Counter incremented in this txn).
+    const c = await tx.counter.upsert({
+      where: { key: "invoice" },
+      create: { key: "invoice", value: 1 },
+      update: { value: { increment: 1 } },
+    });
+    await tx.invoice.create({
+      data: {
+        orderId,
+        number: `SB/${new Date().getFullYear()}/${String(c.value).padStart(5, "0")}`,
+        gstin: process.env.AOL_GSTIN ?? "GSTIN-PENDING",
+        sac: process.env.INVOICE_SAC ?? "998554",
+        breakdown: { subtotal: order.subtotal, fee: order.fee, gst: order.gst, total: order.total },
+      },
+    });
   });
 }
