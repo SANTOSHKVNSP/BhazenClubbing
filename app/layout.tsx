@@ -1,0 +1,43 @@
+import type { Metadata, Viewport } from "next";
+import { Big_Shoulders, Open_Sans } from "next/font/google";
+import "./globals.css";
+
+// Brand typography (ADR-011). Variable fonts → weight omitted (full range).
+const display = Big_Shoulders({
+  subsets: ["latin"],
+  variable: "--font-big-shoulders",
+  display: "swap",
+});
+
+const sans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Sattvick Beats — Live Concerts by Art of Living",
+    template: "%s · Sattvick Beats",
+  },
+  description:
+    "Sattvick Beats — live concerts across India, presented by Art of Living. Book tickets for events in your city.",
+  metadataBase: new URL("https://www.sattvickbeats.com"),
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1d0541",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
+  );
+}

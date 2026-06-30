@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Sattvick Beats — design tokens (ported from BhaZen, ADR-011)
+   Tailwind v4 @theme: these generate utilities (bg-primary, text-orange,
+   font-display, etc.)
+   ========================================================================== */
+@theme {
+    --color-primary: #1d0541;
+    --color-purple: #2d0a4e;
+    --color-purple-deep: #1a0530;
+    --color-orange: #ff8c00;
+    --color-orange-2: #ff6b00;
+    --color-cyan: #00ced1;
+    --color-magenta: #ff1493;
+
+    --color-ink: #17121f;
+    --color-muted: #5d5769;
+    --color-cream: #f8f9fa;
+
+    --font-display: var(--font-big-shoulders), "Arial Narrow", Impact, sans-serif;
+    --font-sans: var(--font-open-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+    color-scheme: light;
+}
+
+body {
+    background: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+    line-height: 1.05;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+    }
+}
