@@ -1,4 +1,4 @@
-# Sattvick Beats — Operational Runbooks
+# Sattvik Beats — Operational Runbooks
 
 Practical procedures for ops / on-call during events. Keep alongside the other
 living docs (see [README](./README.md)). Account-gated steps (Razorpay, Neon,

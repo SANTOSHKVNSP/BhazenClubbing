@@ -1,8 +1,8 @@
 /**
- * Dev seed — Sattvick Beats. Seeds 3 events showcasing all admission styles:
+ * Dev seed — Sattvik Beats. Seeds 3 events showcasing all admission styles:
  *  1. BhaZen Jamming (Vizag, Port Stadium) — HYBRID: Premium reserved + General/Student GA.
- *  2. Sattvick Strings (Hyderabad) — THEATRE (reserved).
- *  3. Sattvick Rhythms (Bengaluru) — STADIUM (reserved).
+ *  2. Sattvik Strings (Hyderabad) — THEATRE (reserved).
+ *  3. Sattvik Rhythms (Bengaluru) — STADIUM (reserved).
  * Re-runnable: clears content, recreates. Run: `npx tsx prisma/seed.ts`.
  */
 import { PrismaClient, Prisma } from "@prisma/client";
@@ -44,7 +44,7 @@ const faqs = [
 ];
 
 const heroLogos = { aol: "/images/bhazen/AOL_LogoWhite.png", event: "/images/bhazen/bhazenclubbing.png" };
-const contact = { phone: "+91 97030 46062", phoneLabel: "Support", instagram: "https://www.instagram.com/bhazen_clubbing", instagramHandle: "@sattvickbeats", email: "hello@sattvickbeats.com" };
+const contact = { phone: "+91 97030 46062", phoneLabel: "Support", instagram: "https://www.instagram.com/bhazen_clubbing", instagramHandle: "@sattvikbeats", email: "hello@sattvikbeats.com" };
 const gallery = ["/images/bhazen/edit-8.jpg", "/images/bhazen/nirvana-17.jpg", "/images/bhazen/nirvana-18.jpg", "/images/bhazen/nirvana-19.jpg", "/images/bhazen/nirvana-2.jpg", "/images/bhazen/edit-5.jpg"];
 const hero = "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80";
 const trustUrl = "https://www.artofliving.org";
@@ -86,7 +86,7 @@ async function main() {
     asJson({ presents: "Art of Living", heroLogos, tagline, about: { image: "/images/bhazen/nirvana-8.jpg", video: "https://www.youtube-nocookie.com/embed/Lh1Cg1RCDTA" }, features: ["Live Band", "Photo Booth", "Merchandise"], stats, faqs, contact, trustUrl });
 
   // ===== 1. BhaZen Jamming — HYBRID (Vizag, Port Stadium 4500) =====
-  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Premium" }] });
+  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Premium Pass" }] });
   const portStadium = await prisma.venue.create({ data: { name: "Port Stadium", cityId: vizag.id, address: "Akkayapalem, Visakhapatnam, Andhra Pradesh", template: "stadium", capacity: 4500, layoutJson: asJson(jammingMap) } });
   const jamming = await prisma.event.create({
     data: {
@@ -95,30 +95,31 @@ async function main() {
       heroMediaUrl: hero, galleryJson: asJson(gallery),
       contentJson: content("An open-air night of music under the stars", [{ value: 8, label: "Band Members" }, { value: 4500, suffix: "+", label: "Capacity" }, { value: 3, label: "Hours of Music" }, { value: 1, label: "Epic Night" }]),
       feeType: "percent", feeValue: 300, gstRate: 1800, refundPolicyType: "self_service", refundWindowDays: 3, refundFeePct: 1000,
-      doorsAt: new Date("2026-09-20T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
+      doorsAt: new Date("2026-07-16T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
       seo: { en: { title: "BhaZen Jamming — Nirvana Station Live", description: "Nirvana Station live at Port Stadium, Visakhapatnam." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
       partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 1 }] },
     },
   });
-  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-09-20T18:00:00+05:30"), status: "live" } });
-  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium", color: "#f9d464", basePrice: 299900, admission: "reserved" } });
-  const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "General", color: "#00acee", basePrice: 99900, admission: "general", capacity: 3000 } });
-  const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Student", color: "#fc097c", basePrice: 49900, admission: "general", capacity: 1000 } });
-  const jSeats = await materialize(jSt.id, jammingMap, [{ id: jGen.id, capacity: 3000 }, { id: jStu.id, capacity: 1000 }]);
+  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-16T18:00:00+05:30"), status: "live" } });
+  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium Pass", color: "#f9d464", basePrice: 299900, admission: "reserved" } });
+  const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "General Pass", color: "#00acee", basePrice: 59900, admission: "general", capacity: 3000 } });
+  const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Student Pass", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 700 } });
+  const jFam = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Family Pack", color: "#554bb9", basePrice: 199900, admission: "general", capacity: 300 } });
+  const jSeats = await materialize(jSt.id, jammingMap, [{ id: jGen.id, capacity: 3000 }, { id: jStu.id, capacity: 700 }, { id: jFam.id, capacity: 300 }]);
 
-  // ===== 2. Sattvick Strings — THEATRE (Hyderabad) =====
+  // ===== 2. Sattvik Strings — THEATRE (Hyderabad) =====
   const theatreMap = generateTheatre({ rows: 12, seatsPerRow: 20, tiers: [{ category: "Gold", rows: 4 }, { category: "Silver", rows: 4 }, { category: "Bronze", rows: 4 }], sectionLabel: "Auditorium" });
   const ravindra = await prisma.venue.create({ data: { name: "Ravindra Bharathi", cityId: hyd.id, address: "Lakdikapul, Hyderabad, Telangana", template: "theatre", capacity: 240, layoutJson: asJson(theatreMap) } });
   const strings = await prisma.event.create({
     data: {
-      slug: "sattvick-strings", title: "Sattvick Strings", cityId: hyd.id, venueId: ravindra.id, status: "live",
+      slug: "sattvik-strings", title: "Sattvik Strings", cityId: hyd.id, venueId: ravindra.id, status: "live",
       description: { en: "An intimate evening of classical fusion — fully reserved theatre seating. (Demo event.)" },
       heroMediaUrl: hero, galleryJson: asJson(gallery),
       contentJson: content("An intimate evening of classical fusion", [{ value: 8, label: "Musicians" }, { value: 240, label: "Seats" }, { value: 2, label: "Hours" }]),
       feeType: "flat", feeValue: 3000, gstRate: 1800, refundPolicyType: "self_service", refundWindowDays: 2,
       doorsAt: new Date("2026-08-15T18:30:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
-      seo: { en: { title: "Sattvick Strings — Hyderabad", description: "Classical fusion, reserved theatre seating." } },
+      seo: { en: { title: "Sattvik Strings — Hyderabad", description: "Classical fusion, reserved theatre seating." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
       partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }] },
     },
@@ -131,7 +132,7 @@ async function main() {
   ] });
   const sSeats = await materialize(sSt.id, theatreMap, []);
 
-  // ===== 3. Sattvick Rhythms — STADIUM (Bengaluru) =====
+  // ===== 3. Sattvik Rhythms — STADIUM (Bengaluru) =====
   const stadiumMap = generateStadium({ sections: [
     { id: "vip", label: "VIP Block", rows: 8, seatsPerRow: 25, category: "VIP" },
     { id: "north", label: "North Stand", rows: 12, seatsPerRow: 25, category: "Standard" },
@@ -140,13 +141,13 @@ async function main() {
   const kanteerava = await prisma.venue.create({ data: { name: "Kanteerava Indoor Stadium", cityId: blr.id, address: "Kanteerava Stadium, Bengaluru, Karnataka", template: "stadium", capacity: 800, layoutJson: asJson(stadiumMap) } });
   const rhythms = await prisma.event.create({
     data: {
-      slug: "sattvick-rhythms", title: "Sattvick Rhythms", cityId: blr.id, venueId: kanteerava.id, status: "live",
+      slug: "sattvik-rhythms", title: "Sattvik Rhythms", cityId: blr.id, venueId: kanteerava.id, status: "live",
       description: { en: "A high-energy stadium night — reserved seating across VIP and standard blocks. (Demo event.)" },
       heroMediaUrl: hero, galleryJson: asJson(gallery),
       contentJson: content("A high-energy stadium night", [{ value: 8, label: "Band Members" }, { value: 800, label: "Seats" }, { value: 3, label: "Hours" }]),
       feeType: "percent", feeValue: 250, gstRate: 1800, refundPolicyType: "admin_only",
       doorsAt: new Date("2026-08-30T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
-      seo: { en: { title: "Sattvick Rhythms — Bengaluru", description: "Stadium concert, reserved seating." } },
+      seo: { en: { title: "Sattvik Rhythms — Bengaluru", description: "Stadium concert, reserved seating." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
       partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }] },
     },
@@ -166,9 +167,9 @@ async function main() {
   await prisma.staffMembership.create({ data: { userId: cityAdmin.id, role: "city_admin", cityId: vizag.id } });
 
   console.log(`Seeded 3 events:`);
-  console.log(`  1. /e/bhazen-jamming (HYBRID @ Port Stadium) — ${jSeats} premium seats + 4000 GA`);
-  console.log(`  2. /e/sattvick-strings (THEATRE @ Hyderabad) — ${sSeats} seats`);
-  console.log(`  3. /e/sattvick-rhythms (STADIUM @ Bengaluru) — ${rSeats} seats`);
+  console.log(`  1. /e/bhazen-jamming (HYBRID @ Port Stadium, Jul 16) — ${jSeats} Premium seats + 4000 GA (General/Student/Family)`);
+  console.log(`  2. /e/sattvik-strings (THEATRE @ Hyderabad) — ${sSeats} seats`);
+  console.log(`  3. /e/sattvik-rhythms (STADIUM @ Bengaluru) — ${rSeats} seats`);
   console.log(`superAdmin=${superPhone}, cityAdmin=+918888888888`);
 }
 

@@ -1,7 +1,7 @@
 # CLAUDE.md - Project Context for AI Assistants
 
-> ## ⚡ Current direction: Sattvick Beats platform
-> This project is being transformed from the single BhaZen Clubbing page into **Sattvick Beats** — a national, multi-city Art of Living concert **ticketing platform** (Next.js + Postgres + Razorpay, reserved seating, offline check-in).
+> ## ⚡ Current direction: Sattvik Beats platform
+> This project is being transformed from the single BhaZen Clubbing page into **Sattvik Beats** — a national, multi-city Art of Living concert **ticketing platform** (Next.js + Postgres + Razorpay, reserved seating, offline check-in).
 > **Source of truth lives in [`docs/`](./docs/):** [DECISIONS](./docs/DECISIONS.md) · [ARCHITECTURE](./docs/ARCHITECTURE.md) · [TESTING_SCOPE](./docs/TESTING_SCOPE.md) · [IMPLEMENTATION_TRACKER](./docs/IMPLEMENTATION_TRACKER.md). **Keep all four in sync with every change.**
 > BhaZen Clubbing (Vizag) becomes **event #1** under the platform; the static site below is its content source. The sections that follow describe that legacy static site.
 
@@ -9,7 +9,7 @@
 
 **BhaZen Clubbing** - Official event website for a live concert featuring **Nirvana Station** band, presented by **Art of Living**.
 
-The site is a **single-page, hand-built static website** — no framework, no build step. It was rebuilt from scratch in January 2026 to replace a heavyweight multi-page template (Meeta), cutting the deployed directory from ~71 MB to ~3 MB. _(Now the content source for Sattvick Beats event #1 — see `docs/`.)_
+The site is a **single-page, hand-built static website** — no framework, no build step. It was rebuilt from scratch in January 2026 to replace a heavyweight multi-page template (Meeta), cutting the deployed directory from ~71 MB to ~3 MB. _(Now the content source for Sattvik Beats event #1 — see `docs/`.)_
 
 ## Event Details
 

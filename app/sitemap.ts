@@ -5,7 +5,7 @@ import { listLiveEvents, listLiveCities } from "@/lib/queries";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.sattvickbeats.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.sattvikbeats.com";
   const entries: MetadataRoute.Sitemap = [
     { url: base, changeFrequency: "daily", priority: 1 },
   ];

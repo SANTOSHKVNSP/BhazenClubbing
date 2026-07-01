@@ -7,7 +7,7 @@ async function sendEmail(to: string, subject: string, body: string): Promise<boo
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: process.env.EMAIL_FROM ?? "tickets@sattvickbeats.com", to, subject, text: body }),
+    body: JSON.stringify({ from: process.env.EMAIL_FROM ?? "tickets@sattvikbeats.com", to, subject, text: body }),
   });
   return res.ok;
 }

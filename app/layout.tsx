@@ -19,12 +19,12 @@ const sans = Open_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sattvick Beats — Live Concerts by Art of Living",
-    template: "%s · Sattvick Beats",
+    default: "Sattvik Beats — Live Concerts by Art of Living",
+    template: "%s · Sattvik Beats",
   },
   description:
-    "Sattvick Beats — live concerts across India, presented by Art of Living. Book tickets for events in your city.",
-  metadataBase: new URL("https://www.sattvickbeats.com"),
+    "Sattvik Beats — live concerts across India, presented by Art of Living. Book tickets for events in your city.",
+  metadataBase: new URL("https://www.sattvikbeats.com"),
   manifest: "/manifest.json",
 };
 

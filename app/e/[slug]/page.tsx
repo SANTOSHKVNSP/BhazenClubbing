@@ -43,7 +43,7 @@ export default async function EventPage({ params }: Params) {
       <header className="absolute inset-x-0 top-0 z-20">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <Link href="/" className="font-display text-xl font-extrabold tracking-wide text-white">
-            SATTVICK&nbsp;<span className="text-orange">BEATS</span>
+            SATTVIK&nbsp;<span className="text-orange">BEATS</span>
           </Link>
           <a href={`/e/${event.slug}/seats`} className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
             Buy Ticket Now
@@ -288,7 +288,7 @@ export default async function EventPage({ params }: Params) {
           )}
         </div>
         <p className="mx-auto mt-10 max-w-6xl border-t border-white/10 pt-6 text-center text-sm text-white/50">
-          © 2026 Sattvick Beats · {event.title}. All rights reserved.
+          © 2026 Sattvik Beats · {event.title}. All rights reserved.
         </p>
       </footer>
     </>

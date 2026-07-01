@@ -1,4 +1,4 @@
-# Implementation Tracker — Sattvick Beats
+# Implementation Tracker — Sattvik Beats
 
 > Durable, detailed phase/task plan. The harness task list mirrors the **current** phase; this file holds the full plan, definition-of-done (DoD), dependencies, and changelog. Update statuses here whenever work moves.
 
@@ -30,7 +30,7 @@
 - ✅ AOL Trust CTA (external redirect) + per-event Partners section on the public event page
 - ✅ Admin (super-admin): dashboard + CRUD for Cities/Venues/Bands/Events (+ inline showtimes/ticket-categories/partners), server actions, JSON editors; temp HTTP-Basic gate (`middleware.ts`). Media via image URLs for now — Vercel Blob upload deferred to account.
 **DoD:** BhaZen event fully renders via the platform; only `live` content public; TS-PUB/TS-CITY pass.
-**Pending input:** Sattvick Beats logo (or approve text wordmark); AOL Trust URL.
+**Pending input:** Sattvik Beats logo (or approve text wordmark); AOL Trust URL.
 
 ## Phase 2 — Seat-map engine  ✅  ★high-risk _(visual drag builder, GA zone, rate-limit deferred)_
 **Goal:** Reserved seating end-to-end except payment.
@@ -79,7 +79,7 @@
 - 🟦 Accessibility: focus-visible ring, seat aria-labels/pressed + live regions, login alert role (lang + reduced-motion present). Full AA audit (TS-A11Y) + compat matrix at UAT
 - 🟦 Runbooks (on-sale, refunds, scanner, incidents) → `docs/RUNBOOKS.md`. Monitoring (Sentry) + backups (Neon PITR) account-gated
 - 🟦 Legal pages (terms/privacy/refund — draft) + `/api/health` (DB ping) + error/404 boundaries done. Content seeding for launch cities pending
-- ⬜ DNS cutover to Vercel (`sattvickbeats.com`); `bhazenclubbing.com` redirect
+- ⬜ DNS cutover to Vercel (`sattvikbeats.com`); `bhazenclubbing.com` redirect
 - ⬜ UAT sign-off (content/finance/ops); launch checklist (TESTING_SCOPE §10)
 **DoD:** launch sign-off checklist complete.
 
@@ -97,8 +97,8 @@
 
 **Events seeded (2026-07-01):**
 - **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium) — **Hybrid:** Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000. *(Renamed BhaZen Clubbing.)*
-- **Sattvick Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
-- **Sattvick Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
+- **Sattvik Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
+- **Sattvik Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
 
 ## Deferred / future
 - Virtual waiting room (queue) for viral on-sales (hooks reserved in Phase 2).
@@ -110,8 +110,8 @@
 ---
 
 ## Changelog
-- **2026-07-01** — **Phase 7 deployed to production**: `admission_modes` migration applied to Supabase (via `vercel-build`) + prod reseeded with the 3 events (BhaZen Jamming hybrid + Sattvick Strings theatre + Sattvick Rhythms stadium); new event logo optimized (6250² 16 MB → 900² 516 KB) and live. Verified: health ok, all 3 events + hybrid booking live at sattvick-beats.vercel.app; old `/e/bhazen-clubbing` now soft-404s (renamed).
-- **2026-07-01** — **Phase 7 built** (admission modes / GA / hybrid): migration `admission_modes` (admission+capacity, `GaInventory`, nullable seatId); unified `reserveTickets` (reserved+GA in one txn); GA oversell via atomic counter; seatless tickets throughout; GA steppers + hybrid booking UI; admin admission/capacity + GA analytics. Seeded 3 events (BhaZen Jamming hybrid + Sattvick Strings theatre + Sattvick Rhythms stadium). Verified: `ga-test` (12 vs cap 5 → exactly 5, no drift), `hybrid-test` (mixed order → sold w/ QR each → refund frees GA), hybrid booking page screenshot. **Local only — prod deploy (Supabase migrate + reseed) pending.**
+- **2026-07-01** — **Phase 7 deployed to production**: `admission_modes` migration applied to Supabase (via `vercel-build`) + prod reseeded with the 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium); new event logo optimized (6250² 16 MB → 900² 516 KB) and live. Verified: health ok, all 3 events + hybrid booking live at sattvick-beats.vercel.app; old `/e/bhazen-clubbing` now soft-404s (renamed).
+- **2026-07-01** — **Phase 7 built** (admission modes / GA / hybrid): migration `admission_modes` (admission+capacity, `GaInventory`, nullable seatId); unified `reserveTickets` (reserved+GA in one txn); GA oversell via atomic counter; seatless tickets throughout; GA steppers + hybrid booking UI; admin admission/capacity + GA analytics. Seeded 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium). Verified: `ga-test` (12 vs cap 5 → exactly 5, no drift), `hybrid-test` (mixed order → sold w/ QR each → refund frees GA), hybrid booking page screenshot. **Local only — prod deploy (Supabase migrate + reseed) pending.**
 - **2026-07-01** — Planned **Phase 7 — Admission modes & hybrid ticketing** (docs-only): designed reserved-vs-general admission, `GaInventory` atomic-counter oversell guard, seatless tickets, hybrid orders (ADR-019/020/021 + ARCHITECTURE §16 + TS-GA). Real event → **BhaZen Jamming** @ Port Stadium (4500): Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000; + 2 test events (theatre + stadium). Implementation pending.
 - **2026-07-01** — Deployed to production: Vercel (`satvik-beats/sattvick-beats`, region bom1) + Supabase (pooled runtime / direct migrations). Perf fix: functions co-located with DB, `connection_limit=5`, public reads deduped via React `cache()` — event page 9s→~0.3s, fixed the connection-pool-timeout "Oops". Live at https://sattvick-beats.vercel.app.
 - **2026-06-30** — Deploy prep: `vercel-build` (migrate deploy + build) so Vercel auto-applies migrations; cleaned `.env.example` (required ✅ vs optional; dropped legacy ADMIN_USER/PASSWORD; added SUPER_ADMIN_PHONE); `docs/DEPLOYMENT.md` (Vercel + Neon, env table, seed-once, domain). Plus self-serve dev login (dev-only OTP auto-fill) + demo tooling.

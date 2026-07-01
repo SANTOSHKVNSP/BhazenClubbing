@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const metadata = { title: "Refund & Cancellation Policy — Sattvick Beats" };
+export const metadata = { title: "Refund & Cancellation Policy — Sattvik Beats" };
 
 export default function RefundPolicyPage() {
   return (
@@ -8,7 +8,7 @@ export default function RefundPolicyPage() {
       <div className="mx-auto max-w-3xl px-6 py-16 text-ink">
         <Link href="/" className="text-sm font-semibold text-orange-2 hover:underline">← Home</Link>
         <h1 className="mt-4 font-display text-4xl font-bold">Refund &amp; Cancellation Policy</h1>
-        <p className="mt-2 text-sm text-muted">Sattvick Beats (Art of Living) · <span className="italic">Draft — pending legal review</span></p>
+        <p className="mt-2 text-sm text-muted">Sattvik Beats (Art of Living) · <span className="italic">Draft — pending legal review</span></p>
         <div className="mt-8 space-y-3 text-[15px] leading-relaxed text-ink/80">
           <h2 className="pt-4 font-display text-xl font-bold text-ink">Per-event policy</h2>
           <p>Each event sets its own refund policy, shown at checkout and on your booking. It may be non-refundable, self-service (within a stated window, possibly minus a fee), or refundable on request to the organiser.</p>

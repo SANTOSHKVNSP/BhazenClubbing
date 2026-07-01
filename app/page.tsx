@@ -15,7 +15,7 @@ export default async function Home() {
       <header className="absolute inset-x-0 top-0 z-10">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <span className="font-display text-2xl font-extrabold tracking-wide text-white">
-            SATTVICK&nbsp;<span className="text-orange">BEATS</span>
+            SATTVIK&nbsp;<span className="text-orange">BEATS</span>
           </span>
           <nav className="hidden gap-8 text-sm font-semibold text-white/90 sm:flex">
             <a href="#events" className="hover:text-orange">{t("nav.events")}</a>
@@ -68,7 +68,7 @@ export default async function Home() {
 
       {/* Footer */}
       <footer id="about" className="mt-auto bg-purple-deep px-6 py-10 text-center text-sm text-white/70">
-        <p className="font-display text-lg font-bold tracking-wide text-white">SATTVICK BEATS</p>
+        <p className="font-display text-lg font-bold tracking-wide text-white">SATTVIK BEATS</p>
         <p className="mt-2">{t("footer.tagline")}</p>
         <p className="mt-4 text-white/50">{t("footer.rights")}</p>
       </footer>

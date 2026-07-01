@@ -1,10 +1,10 @@
-# Architecture — Sattvick Beats
+# Architecture — Sattvik Beats
 
 > Cross-references decisions in [DECISIONS.md](./DECISIONS.md) (ADR-NNN).
 
 ## 1. Overview
 
-Sattvick Beats is a national, multi-city concert ticketing platform for Art of Living. One generic engine powers many cities/events; content is customized via a custom admin (ADR-004). Buyers browse → pick city/event/showtime → select reserved seats → log in (phone) → pay (Razorpay) → receive ticket+QR by email/WhatsApp → enter via an offline-capable QR scanner.
+Sattvik Beats is a national, multi-city concert ticketing platform for Art of Living. One generic engine powers many cities/events; content is customized via a custom admin (ADR-004). Buyers browse → pick city/event/showtime → select reserved seats → log in (phone) → pay (Razorpay) → receive ticket+QR by email/WhatsApp → enter via an offline-capable QR scanner.
 
 ## 2. Stack (ADR-001)
 

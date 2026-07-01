@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!c) return {};
   const seo = (c.seo as { en?: { title?: string; description?: string } } | null)?.en ?? {};
   return {
-    title: seo.title ?? `${c.name} — Sattvick Beats`,
+    title: seo.title ?? `${c.name} — Sattvik Beats`,
     description: seo.description,
   };
 }
@@ -28,7 +28,7 @@ export default async function CityPage({ params }: Params) {
       <header className="absolute inset-x-0 top-0 z-10">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <Link href="/" className="font-display text-2xl font-extrabold tracking-wide text-white">
-            SATTVICK&nbsp;<span className="text-orange">BEATS</span>
+            SATTVIK&nbsp;<span className="text-orange">BEATS</span>
           </Link>
         </div>
       </header>
@@ -36,7 +36,7 @@ export default async function CityPage({ params }: Params) {
       {/* Hero */}
       <section className="flex min-h-[40vh] items-center justify-center bg-gradient-to-br from-primary via-purple to-purple-deep px-6 pt-24 text-center">
         <div>
-          <p className="text-sm font-light uppercase tracking-[0.35em] text-white/70">Sattvick Beats in</p>
+          <p className="text-sm font-light uppercase tracking-[0.35em] text-white/70">Sattvik Beats in</p>
           <h1 className="mt-2 font-display text-5xl font-extrabold text-white sm:text-6xl">{c.name}</h1>
           {c.state && <p className="mt-2 text-white/70">{c.state}</p>}
         </div>
@@ -59,8 +59,8 @@ export default async function CityPage({ params }: Params) {
 
       {/* Footer */}
       <footer className="mt-auto bg-purple-deep px-6 py-10 text-center text-sm text-white/70">
-        <p className="font-display text-lg font-bold tracking-wide text-white">SATTVICK BEATS</p>
-        <p className="mt-4 text-white/50">© 2026 Sattvick Beats. All rights reserved.</p>
+        <p className="font-display text-lg font-bold tracking-wide text-white">SATTVIK BEATS</p>
+        <p className="mt-4 text-white/50">© 2026 Sattvik Beats. All rights reserved.</p>
       </footer>
     </>
   );

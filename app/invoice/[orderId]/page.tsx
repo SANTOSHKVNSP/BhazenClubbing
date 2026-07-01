@@ -33,7 +33,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ orderI
         <div className="flex items-start justify-between">
           <div>
             <h1 className="font-display text-2xl font-bold text-ink">Tax Invoice</h1>
-            <p className="mt-1 text-sm text-muted">Sattvick Beats · Art of Living</p>
+            <p className="mt-1 text-sm text-muted">Sattvik Beats · Art of Living</p>
             <p className="text-xs text-muted">GSTIN: {inv.gstin} · SAC: {inv.sac}</p>
           </div>
           <div className="text-right text-sm">

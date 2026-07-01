@@ -1,6 +1,6 @@
-# Sattvick Beats — Project Documentation
+# Sattvik Beats — Project Documentation
 
-This folder holds the **single source of truth** for the Sattvick Beats platform. The first four are **kept continuously in sync** — every phase / significant change updates all of the relevant ones in the same change set.
+This folder holds the **single source of truth** for the Sattvik Beats platform. The first four are **kept continuously in sync** — every phase / significant change updates all of the relevant ones in the same change set.
 
 | Document | Purpose | Audience |
 |---|---|---|

@@ -1,4 +1,4 @@
-# Decisions Log (ADRs) — Sattvick Beats
+# Decisions Log (ADRs) — Sattvik Beats
 
 Architecture Decision Records. Each entry is immutable once **Accepted**; to change a decision, add a new ADR that **supersedes** the old one (and mark the old one `Superseded by ADR-NNN`).
 
@@ -66,9 +66,9 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 **Decision:** One domain, **path-based** routing: `/` (national landing), `/[city]` (e.g. `/vizag`), `/e/[event-slug]` (event). **BhaZen Clubbing (Vizag)** migrated as the first live event using existing content/images.
 **Alternatives:** Subdomain per city (rejected: wildcard SSL + routing complexity, SEO split).
 
-## ADR-011 — Evolve the BhaZen design system into Sattvick Beats
+## ADR-011 — Evolve the BhaZen design system into Sattvik Beats
 **Status:** Accepted
-**Decision:** Reuse the BhaZen palette (deep purple / orange / cyan / magenta), Big Shoulders Display + Open Sans typography, and component styles as the Sattvick Beats design system (ported to the app's styling layer). Single national brand (no per-city theming initially).
+**Decision:** Reuse the BhaZen palette (deep purple / orange / cyan / magenta), Big Shoulders Display + Open Sans typography, and component styles as the Sattvik Beats design system (ported to the app's styling layer). Single national brand (no per-city theming initially).
 **Alternatives:** Fresh brand (deferred — needs assets/design round); per-city accents (deferred).
 
 ## ADR-012 — English now, i18n-ready
@@ -99,7 +99,7 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 
 ## ADR-016 — Repo layout & cutover
 **Status:** Accepted
-**Decision:** Build the Next.js app in **this repository**; keep the legacy static site under `Meeta_HTML/` as the **content source** for the BhaZen migration (and in git history). Static site remains live on Cloudflare until the platform is production-ready, then **DNS cutover** to Vercel on `sattvickbeats.com`; `bhazenclubbing.com` redirects to the BhaZen event page.
+**Decision:** Build the Next.js app in **this repository**; keep the legacy static site under `Meeta_HTML/` as the **content source** for the BhaZen migration (and in git history). Static site remains live on Cloudflare until the platform is production-ready, then **DNS cutover** to Vercel on `sattvikbeats.com`; `bhazenclubbing.com` redirects to the BhaZen event page.
 
 ## ADR-017 — QA / documentation discipline
 **Status:** Accepted
@@ -144,8 +144,8 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 ## Pending inputs (needed before the phases that use them)
 - Razorpay keys + KYC + AOL GSTIN/SAC/invoice series (Phase 3).
 - WhatsApp BSP access + approved templates; email sending domain + DNS (Phase 3–4).
-- `sattvickbeats.com` DNS access; `bhazenclubbing.com` redirect decision (Phase 6).
-- Sattvick Beats logo/wordmark (or approve text wordmark) (Phase 1).
+- `sattvikbeats.com` DNS access; `bhazenclubbing.com` redirect decision (Phase 6).
+- Sattvik Beats logo/wordmark (or approve text wordmark) (Phase 1).
 - AOL Trust donation URL (Phase 1).
 - Owner of Vercel + Neon accounts (Phase 0).
 

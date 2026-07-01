@@ -47,7 +47,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className="flex min-h-screen bg-cream text-ink">
       <aside className="flex w-56 shrink-0 flex-col bg-primary p-5 text-white">
         <Link href="/admin" className="font-display text-lg font-extrabold tracking-wide">
-          SATTVICK <span className="text-orange">ADMIN</span>
+          SATTVIK <span className="text-orange">ADMIN</span>
         </Link>
         <p className="mt-1 text-xs text-white/50">{staff.isSuper ? "Super Admin" : "City Admin"}</p>
         <nav className="mt-6 flex flex-col gap-1 text-sm">

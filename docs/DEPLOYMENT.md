@@ -1,4 +1,4 @@
-# Sattvick Beats — Deployment (Vercel + Neon)
+# Sattvik Beats — Deployment (Vercel + Neon)
 
 Next.js app on **Vercel**, Postgres on **Supabase**. Migrations apply automatically on
 every deploy (`vercel-build` = `prisma migrate deploy && next build`); the Prisma
@@ -38,8 +38,8 @@ npx tsx prisma/seed.ts
 ```
 
 ### 5. Domain
-- Vercel → Domains: add `sattvickbeats.com` + `www`; point DNS as instructed.
-- Set `NEXT_PUBLIC_SITE_URL=https://www.sattvickbeats.com`.
+- Vercel → Domains: add `sattvikbeats.com` + `www`; point DNS as instructed.
+- Set `NEXT_PUBLIC_SITE_URL=https://www.sattvikbeats.com`.
 
 ## Environment variables
 | Var | Required | Notes |
@@ -50,7 +50,7 @@ npx tsx prisma/seed.ts
 | `QR_SIGNING_PRIVATE_KEY` / `QR_SIGNING_PUBLIC_KEY` | ✅ | Ed25519 base64 PEM (fresh) |
 | `SCANNER_TOKEN` | ✅ | gate for `/api/scan` |
 | `SUPER_ADMIN_PHONE` | ✅ | seeded super admin, `+91…` |
-| `NEXT_PUBLIC_SITE_URL` | ✅ | `https://www.sattvickbeats.com` |
+| `NEXT_PUBLIC_SITE_URL` | ✅ | `https://www.sattvikbeats.com` |
 | `RAZORPAY_*` | ⛔ optional | blank → checkout simulated |
 | `RESEND_API_KEY` / `EMAIL_FROM` | ⛔ optional | blank → console |
 | `WHATSAPP_*` | ⛔ optional | blank → console |

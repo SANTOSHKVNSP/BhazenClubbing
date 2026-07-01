@@ -1,4 +1,4 @@
-# Testing Scope — Sattvick Beats
+# Testing Scope — Sattvik Beats
 
 > Hand this to QA to author detailed test cases. Kept in sync with [ARCHITECTURE.md](./ARCHITECTURE.md) and [DECISIONS.md](./DECISIONS.md) (ADR-NNN). Each area lists **scope**, **happy-path scenarios**, **negative/edge cases**, and **acceptance criteria**. IDs (e.g. `TS-HOLD-03`) are stable handles for traceability.
 
