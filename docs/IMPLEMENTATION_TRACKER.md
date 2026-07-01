@@ -96,7 +96,7 @@
 **DoD:** GA never oversells (proven); hybrid orders atomic; counter reconciles; **3 events live in production**.
 
 **Events seeded (2026-07-01):**
-- **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium) — **Hybrid:** Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000. *(Renamed BhaZen Clubbing.)*
+- **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium; **Jul 16 2026**) — **Hybrid:** Premium Pass ₹2999 reserved ×500 + General Pass ₹599 ×3000 + Student Pass ₹399 ×700 + Family Pack ₹1999 ×300 (GA). *(Renamed BhaZen Clubbing.)*
 - **Sattvik Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
 - **Sattvik Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
 
@@ -110,6 +110,7 @@
 ---
 
 ## Changelog
+- **2026-07-01** — **Rebrand + tier update deployed to prod**: renamed Sattvick→**Sattvik Beats** everywhere (code/docs/seed/manifest; vercel.app URL kept; domain→sattvikbeats.com); added **favicon** (`app/icon.png`+`app/apple-icon.png` from the logo; logo optimized 16 MB→516 KB); **BhaZen Jamming** → **Jul 16 2026** with tiers Premium Pass ₹2999 reserved ×500 + General ₹599 ×3000 + Student ₹399 ×700 + Family Pack ₹1999 ×300 (GA); hybrid booking page now **tabs Passes | Premium seats**. Redeployed + reseeded prod; verified live (wordmark=Sattvik, favicon, tabs, tiers).
 - **2026-07-01** — **Phase 7 deployed to production**: `admission_modes` migration applied to Supabase (via `vercel-build`) + prod reseeded with the 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium); new event logo optimized (6250² 16 MB → 900² 516 KB) and live. Verified: health ok, all 3 events + hybrid booking live at sattvick-beats.vercel.app; old `/e/bhazen-clubbing` now soft-404s (renamed).
 - **2026-07-01** — **Phase 7 built** (admission modes / GA / hybrid): migration `admission_modes` (admission+capacity, `GaInventory`, nullable seatId); unified `reserveTickets` (reserved+GA in one txn); GA oversell via atomic counter; seatless tickets throughout; GA steppers + hybrid booking UI; admin admission/capacity + GA analytics. Seeded 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium). Verified: `ga-test` (12 vs cap 5 → exactly 5, no drift), `hybrid-test` (mixed order → sold w/ QR each → refund frees GA), hybrid booking page screenshot. **Local only — prod deploy (Supabase migrate + reseed) pending.**
 - **2026-07-01** — Planned **Phase 7 — Admission modes & hybrid ticketing** (docs-only): designed reserved-vs-general admission, `GaInventory` atomic-counter oversell guard, seatless tickets, hybrid orders (ADR-019/020/021 + ARCHITECTURE §16 + TS-GA). Real event → **BhaZen Jamming** @ Port Stadium (4500): Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000; + 2 test events (theatre + stadium). Implementation pending.
