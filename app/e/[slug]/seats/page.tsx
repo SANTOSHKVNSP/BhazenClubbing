@@ -20,7 +20,7 @@ export default async function SeatsPage({ params }: { params: Promise<{ slug: st
         <Link href={`/e/${slug}`} className="text-sm text-white/60 hover:text-white">
           ← Back to {event.title}
         </Link>
-        <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">Choose your tickets</h1>
+        <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">Select Your Seat — Reserve your spot.</h1>
         <p className="mt-1 text-sm text-white/60">
           {event.title} · {event.city.name}
           {seating ? ` · ${seating.available} available` : ""}

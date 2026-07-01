@@ -35,7 +35,6 @@ const roles = [
 ];
 
 const faqs = [
-  { q: "How do I purchase tickets?", a: "Tap “Buy Ticket Now”, choose your tickets (reserved seats or general admission), and complete your booking securely." },
   { q: "How will I enter the venue?", a: "You will receive a QR Code before the event. Show it at the gate to collect your wristband for entry." },
   { q: "What time should I arrive?", a: "Gates open a couple of hours before showtime. Arrive early to collect your wristband." },
   { q: "Can I get a refund?", a: "Refund terms are shown at checkout and depend on the event's policy." },
@@ -43,7 +42,7 @@ const faqs = [
   { q: "How can I contact support?", a: "Call +91 97030 46062 or DM us on Instagram." },
 ];
 
-const heroLogos = { aol: "/images/bhazen/AOL_LogoWhite.png", event: "/images/bhazen/bhazenclubbing.png" };
+const heroLogos = { aol: "/images/bhazen/AOL_LogoWhite.png", event: "/images/bhazen/bhazenclubbing.png", wafc: "/images/partners/world-forum.png" };
 const contact = { phone: "+91 97030 46062", phoneLabel: "Support", instagram: "https://www.instagram.com/bhazen_clubbing", instagramHandle: "@sattvikbeats", email: "hello@sattvikbeats.com" };
 const gallery = ["/images/bhazen/edit-8.jpg", "/images/bhazen/nirvana-17.jpg", "/images/bhazen/nirvana-18.jpg", "/images/bhazen/nirvana-19.jpg", "/images/bhazen/nirvana-2.jpg", "/images/bhazen/edit-5.jpg"];
 const hero = "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80";

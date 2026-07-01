@@ -59,7 +59,7 @@ export const listLiveCities = cache(async () => {
 
 export type EventContent = {
   presents?: string;
-  heroLogos?: { aol?: string; event?: string };
+  heroLogos?: { aol?: string; event?: string; wafc?: string };
   tagline?: string;
   about?: { image?: string; video?: string };
   features?: string[];

@@ -59,8 +59,11 @@ export default async function EventPage({ params }: Params) {
         }}
       >
         <div className="mx-auto flex max-w-3xl flex-col items-center">
-          {c.heroLogos?.aol && (
-            <img src={c.heroLogos.aol} alt={c.presents ?? "Presented by"} className="mb-3 w-44 max-w-[60%]" />
+          {(c.heroLogos?.aol || c.heroLogos?.wafc) && (
+            <div className="mb-4 flex flex-wrap items-center justify-center gap-5">
+              {c.heroLogos?.aol && <img src={c.heroLogos.aol} alt="Art of Living" className="h-14 w-auto object-contain sm:h-16" />}
+              {c.heroLogos?.wafc && <img src={c.heroLogos.wafc} alt="World Forum for Art & Culture" className="h-14 w-auto rounded-lg bg-white/90 p-2 object-contain sm:h-16" />}
+            </div>
           )}
           {c.presents && (
             <p className="mb-4 text-sm font-light uppercase tracking-[0.35em] text-white/80">presents</p>
@@ -165,8 +168,8 @@ export default async function EventPage({ params }: Params) {
       {/* Tickets */}
       <section id="tickets" className="bg-gradient-to-br from-primary to-purple-deep px-6 py-24">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Buy Ticket Now</h2>
-          <p className="mt-3 text-center text-sm text-white/60">Reserved seating — choose your seats by tier. Secure checkout opens soon.</p>
+          <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Buy Tickets — Reserve Your Spot.</h2>
+          <p className="mt-3 text-center text-sm text-white/60">Secure your spot — pick a premium seat or a general-admission pass below.</p>
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {event.categories.map((cat, i) => (
               <div key={cat.id} className={`rounded-2xl bg-white p-8 shadow-xl ${i === event.categories.length - 1 ? "ring-2 ring-orange" : ""}`}>
@@ -174,7 +177,7 @@ export default async function EventPage({ params }: Params) {
                 <div className="mt-3 text-center font-display text-5xl font-extrabold text-ink">
                   <sup className="top-[-1.1rem] text-2xl">₹</sup>{rupees(cat.basePrice)}
                 </div>
-                <p className="mt-6 text-center text-xs font-semibold uppercase tracking-wide text-muted">Reserved seating</p>
+                <p className="mt-6 text-center text-xs font-semibold uppercase tracking-wide text-muted">{cat.admission === "general" ? "General admission" : "Reserved seat"}</p>
               </div>
             ))}
           </div>
