@@ -95,13 +95,13 @@ async function main() {
       heroMediaUrl: hero, galleryJson: asJson(gallery),
       contentJson: content("An open-air night of music under the stars", [{ value: 8, label: "Band Members" }, { value: 4500, suffix: "+", label: "Capacity" }, { value: 3, label: "Hours of Music" }, { value: 1, label: "Epic Night" }]),
       feeType: "percent", feeValue: 300, gstRate: 1800, refundPolicyType: "self_service", refundWindowDays: 3, refundFeePct: 1000,
-      doorsAt: new Date("2026-07-16T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
+      doorsAt: new Date("2026-07-18T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
       seo: { en: { title: "BhaZen Jamming — Nirvana Station Live", description: "Nirvana Station live at Port Stadium, Visakhapatnam." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
       partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 1 }] },
     },
   });
-  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-16T18:00:00+05:30"), status: "live" } });
+  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-18T18:00:00+05:30"), status: "live" } });
   await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium Pass", color: "#f9d464", basePrice: 299900, admission: "reserved" } });
   const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "General Pass", color: "#00acee", basePrice: 59900, admission: "general", capacity: 3000 } });
   const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Student Pass", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 700 } });
@@ -167,7 +167,7 @@ async function main() {
   await prisma.staffMembership.create({ data: { userId: cityAdmin.id, role: "city_admin", cityId: vizag.id } });
 
   console.log(`Seeded 3 events:`);
-  console.log(`  1. /e/bhazen-jamming (HYBRID @ Port Stadium, Jul 16) — ${jSeats} Premium seats + 4000 GA (General/Student/Family)`);
+  console.log(`  1. /e/bhazen-jamming (HYBRID @ Port Stadium, Jul 18) — ${jSeats} Premium seats + 4000 GA (General/Student/Family)`);
   console.log(`  2. /e/sattvik-strings (THEATRE @ Hyderabad) — ${sSeats} seats`);
   console.log(`  3. /e/sattvik-rhythms (STADIUM @ Bengaluru) — ${rSeats} seats`);
   console.log(`superAdmin=${superPhone}, cityAdmin=+918888888888`);

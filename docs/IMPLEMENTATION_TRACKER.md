@@ -96,7 +96,7 @@
 **DoD:** GA never oversells (proven); hybrid orders atomic; counter reconciles; **3 events live in production**.
 
 **Events seeded (2026-07-01):**
-- **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium; **Jul 16 2026**) — **Hybrid:** Premium Pass ₹2999 reserved ×500 + General Pass ₹599 ×3000 + Student Pass ₹399 ×700 + Family Pack ₹1999 ×300 (GA). *(Renamed BhaZen Clubbing.)*
+- **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium; **Jul 18 2026**) — **Hybrid:** Premium Pass ₹2999 reserved ×500 + General Pass ₹599 ×3000 + Student Pass ₹399 ×700 + Family Pack ₹1999 ×300 (GA). *(Renamed BhaZen Clubbing.)*
 - **Sattvik Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
 - **Sattvik Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
 
