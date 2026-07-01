@@ -159,7 +159,7 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
             <ul className="mt-3 divide-y divide-black/5 text-sm">
               {event!.categories.map((c) => (
                 <li key={c.id} className="flex items-center justify-between py-2">
-                  <span><span className="mr-2 inline-block h-3 w-3 rounded-full align-middle" style={{ background: c.color ?? "#999" }} />{c.name} — ₹{(c.basePrice / 100).toLocaleString("en-IN")}</span>
+                  <span><span className="mr-2 inline-block h-3 w-3 rounded-full align-middle" style={{ background: c.color ?? "#999" }} />{c.name} — ₹{(c.basePrice / 100).toLocaleString("en-IN")} <span className="text-muted">· {c.admission}{c.admission === "general" && c.capacity != null ? ` (cap ${c.capacity})` : ""}</span></span>
                   <form action={deleteCategory}><input type="hidden" name="id" value={c.id} /><input type="hidden" name="eventId" value={event!.id} /><button className="text-xs text-red-600 hover:underline">Remove</button></form>
                 </li>
               ))}
@@ -170,6 +170,8 @@ export default async function EventForm({ params }: { params: Promise<{ id: stri
               <Field label="Name" name="name" required />
               <Field label="Color" name="color" defaultValue="#ff8c00" />
               <Field label="Price (₹)" name="price" type="number" required />
+              <SelectField label="Admission" name="admission" defaultValue="reserved"><option value="reserved">reserved (seats)</option><option value="general">general (GA)</option></SelectField>
+              <Field label="GA capacity" name="capacity" type="number" />
               <Submit>Add category</Submit>
             </form>
           </Card>

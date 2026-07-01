@@ -19,11 +19,13 @@ export async function getAnalytics(cityIds?: string[]) {
   const events = await prisma.event.findMany({ where: eventScope, include: { city: true }, orderBy: { createdAt: "desc" } });
   const perEvent = await Promise.all(
     events.map(async (e) => {
-      const [evSold, capacity, rev] = await Promise.all([
-        prisma.ticket.count({ where: { state: "sold", showtime: { eventId: e.id } } }),
+      const [evSold, seatCap, gaCap, rev] = await Promise.all([
+        prisma.ticket.count({ where: { state: { in: ["sold", "comp"] }, showtime: { eventId: e.id } } }),
         prisma.seat.count({ where: { showtime: { eventId: e.id } } }),
+        prisma.gaInventory.aggregate({ where: { showtime: { eventId: e.id } }, _sum: { capacity: true } }),
         prisma.order.aggregate({ where: { status: "paid", showtime: { eventId: e.id } }, _sum: { total: true } }),
       ]);
+      const capacity = seatCap + (gaCap._sum.capacity ?? 0);
       return {
         id: e.id, title: e.title, city: e.city.name, status: e.status,
         sold: evSold, capacity, occ: capacity ? Math.round((evSold / capacity) * 100) : 0,

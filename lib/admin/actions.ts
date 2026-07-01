@@ -220,8 +220,16 @@ export async function deleteShowtime(fd: FormData) {
 export async function addCategory(fd: FormData) {
   const eventId = str(fd, "eventId");
   await assertEventCity(await assertAdmin(), eventId);
+  const admission = str(fd, "admission") === "general" ? "general" : "reserved";
   await prisma.ticketCategory.create({
-    data: { eventId, name: str(fd, "name"), color: opt(fd, "color"), basePrice: paise(fd, "price") },
+    data: {
+      eventId,
+      name: str(fd, "name"),
+      color: opt(fd, "color"),
+      basePrice: paise(fd, "price"),
+      admission,
+      capacity: admission === "general" ? int(fd, "capacity") : null,
+    },
   });
   revalidatePath(`/admin/events/${eventId}`);
 }

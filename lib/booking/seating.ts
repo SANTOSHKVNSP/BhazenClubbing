@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { releaseExpiredHolds } from "@/lib/booking/holds";
+import { releaseExpiredHolds, MAX_SEATS_PER_HOLD } from "@/lib/booking/holds";
 
 export type SeatStatus = "available" | "held" | "sold" | "blocked";
 export type UISeat = {
@@ -11,10 +11,19 @@ export type UISeat = {
   accessible: boolean;
 };
 export type UICategory = { name: string; color: string | null; price: number };
+export type UIGa = {
+  categoryId: string;
+  name: string;
+  color: string | null;
+  price: number;
+  available: number;
+  maxPerOrder: number;
+};
 export type ShowtimeSeating = {
   showtimeId: string;
   sections: { id: string; label: string; rows: { label: string; seats: UISeat[] }[] }[];
   categories: UICategory[];
+  ga: UIGa[];
   available: number;
 };
 
@@ -27,9 +36,8 @@ export async function getShowtimeSeating(showtimeId: string): Promise<ShowtimeSe
   });
   if (!showtime) return null;
 
+  // --- Reserved seats ---
   const seats = await prisma.seat.findMany({ where: { showtimeId } });
-  if (seats.length === 0) return null;
-
   const active = await prisma.ticket.findMany({
     where: {
       showtimeId,
@@ -65,8 +73,30 @@ export async function getShowtimeSeating(showtimeId: string): Promise<ShowtimeSe
   }));
 
   const categories: UICategory[] = showtime.event.categories
+    .filter((c) => c.admission === "reserved")
     .map((c) => ({ name: c.name, color: c.color, price: c.basePrice }))
     .sort((a, b) => b.price - a.price);
 
-  return { showtimeId, sections, categories, available };
+  // --- General admission ---
+  const generalCats = showtime.event.categories.filter((c) => c.admission === "general");
+  const inv = generalCats.length ? await prisma.gaInventory.findMany({ where: { showtimeId } }) : [];
+  const invByCat = new Map(inv.map((i) => [i.ticketCategoryId, i]));
+  const ga: UIGa[] = generalCats
+    .map((c) => {
+      const row = invByCat.get(c.id);
+      const avail = row ? Math.max(0, row.capacity - row.reserved) : 0;
+      available += avail;
+      return {
+        categoryId: c.id,
+        name: c.name,
+        color: c.color,
+        price: c.basePrice,
+        available: avail,
+        maxPerOrder: Math.min(c.maxPerOrder ?? MAX_SEATS_PER_HOLD, MAX_SEATS_PER_HOLD),
+      };
+    })
+    .sort((a, b) => b.price - a.price);
+
+  if (sections.length === 0 && ga.length === 0) return null;
+  return { showtimeId, sections, categories, ga, available };
 }
