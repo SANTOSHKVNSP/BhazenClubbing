@@ -63,10 +63,15 @@ export default async function EventPage({ params }: Params) {
             <img src={c.heroLogos.aol} alt={c.presents ?? "Presented by"} className="mb-3 w-44 max-w-[60%]" />
           )}
           {c.presents && (
-            <p className="mb-3 text-sm font-light uppercase tracking-[0.35em] text-white/80">presents</p>
+            <p className="mb-4 text-sm font-light uppercase tracking-[0.35em] text-white/80">presents</p>
           )}
+          {/* Platform brand — primary */}
+          <p className="font-display text-6xl font-extrabold uppercase tracking-wide text-white drop-shadow-[0_0_18px_rgba(0,0,0,0.5)] sm:text-7xl">
+            Sattvik&nbsp;<span className="text-orange">Beats</span>
+          </p>
+          {/* Event logo — subheading */}
           {c.heroLogos?.event && (
-            <img src={c.heroLogos.event} alt={event.title} className="mb-6 w-56 max-w-[60%] drop-shadow-[0_0_15px_rgba(0,0,0,0.4)]" />
+            <img src={c.heroLogos.event} alt={event.title} className="mt-5 mb-6 w-40 max-w-[45%] drop-shadow-[0_0_12px_rgba(0,0,0,0.4)]" />
           )}
           <p className="mb-9 text-sm font-medium tracking-wide text-white/90 sm:text-base">{metaLine}</p>
           {showtime && <Countdown target={showtime.startsAt.toISOString()} />}

@@ -98,7 +98,7 @@ async function main() {
       doorsAt: new Date("2026-07-18T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
       seo: { en: { title: "BhaZen Jamming — Nirvana Station Live", description: "Nirvana Station live at Port Stadium, Visakhapatnam." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
-      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 1 }] },
+      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "World Forum for Art & Culture", tier: "In association with", logoUrl: "/images/partners/world-forum.png", url: "https://worldforumforartandculture.com/", sortOrder: 1 }, { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 2 }] },
     },
   });
   const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-18T18:00:00+05:30"), status: "live" } });
@@ -121,7 +121,7 @@ async function main() {
       doorsAt: new Date("2026-08-15T18:30:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
       seo: { en: { title: "Sattvik Strings — Hyderabad", description: "Classical fusion, reserved theatre seating." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
-      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }] },
+      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "World Forum for Art & Culture", tier: "In association with", logoUrl: "/images/partners/world-forum.png", url: "https://worldforumforartandculture.com/", sortOrder: 1 }] },
     },
   });
   const sSt = await prisma.showtime.create({ data: { eventId: strings.id, startsAt: new Date("2026-08-15T18:30:00+05:30"), status: "live" } });
@@ -149,7 +149,7 @@ async function main() {
       doorsAt: new Date("2026-08-30T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
       seo: { en: { title: "Sattvik Rhythms — Bengaluru", description: "Stadium concert, reserved seating." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
-      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }] },
+      partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "World Forum for Art & Culture", tier: "In association with", logoUrl: "/images/partners/world-forum.png", url: "https://worldforumforartandculture.com/", sortOrder: 1 }] },
     },
   });
   const rSt = await prisma.showtime.create({ data: { eventId: rhythms.id, startsAt: new Date("2026-08-30T18:00:00+05:30"), status: "live" } });
