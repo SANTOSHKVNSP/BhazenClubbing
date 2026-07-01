@@ -85,7 +85,7 @@ async function main() {
     asJson({ presents: "Art of Living", heroLogos, tagline, about: { image: "/images/bhazen/nirvana-8.jpg", video: "https://www.youtube-nocookie.com/embed/Lh1Cg1RCDTA" }, features: ["Live Band", "Photo Booth", "Merchandise"], stats, faqs, contact, trustUrl });
 
   // ===== 1. BhaZen Jamming — HYBRID (Vizag, Port Stadium 4500) =====
-  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Premium Pass" }] });
+  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Category: Premium" }] });
   const portStadium = await prisma.venue.create({ data: { name: "Port Stadium", cityId: vizag.id, address: "Akkayapalem, Visakhapatnam, Andhra Pradesh", template: "stadium", capacity: 4500, layoutJson: asJson(jammingMap) } });
   const jamming = await prisma.event.create({
     data: {
@@ -101,10 +101,10 @@ async function main() {
     },
   });
   const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-18T18:00:00+05:30"), status: "live" } });
-  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium Pass", color: "#f9d464", basePrice: 299900, admission: "reserved" } });
-  const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "General Pass", color: "#00acee", basePrice: 59900, admission: "general", capacity: 3000 } });
-  const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Student Pass", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 700 } });
-  const jFam = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Family Pack", color: "#554bb9", basePrice: 199900, admission: "general", capacity: 300 } });
+  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Premium", color: "#f9d464", basePrice: 299900, admission: "reserved" } });
+  const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: General", color: "#00acee", basePrice: 59900, admission: "general", capacity: 3000 } });
+  const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Student", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 700 } });
+  const jFam = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Family", color: "#554bb9", basePrice: 199900, admission: "general", capacity: 300 } });
   const jSeats = await materialize(jSt.id, jammingMap, [{ id: jGen.id, capacity: 3000 }, { id: jStu.id, capacity: 700 }, { id: jFam.id, capacity: 300 }]);
 
   // ===== 2. Sattvik Strings — THEATRE (Hyderabad) =====

@@ -46,7 +46,7 @@ export default async function EventPage({ params }: Params) {
             SATTVIK&nbsp;<span className="text-orange">BEATS</span>
           </Link>
           <a href={`/e/${event.slug}/seats`} className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
-            Buy Ticket Now
+            Reserve Your Spot
           </a>
         </div>
       </header>
@@ -79,7 +79,7 @@ export default async function EventPage({ params }: Params) {
           <p className="mb-9 text-sm font-medium tracking-wide text-white/90 sm:text-base">{metaLine}</p>
           {showtime && <Countdown target={showtime.startsAt.toISOString()} />}
           <a href={`/e/${event.slug}/seats`} className="mt-10 inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
-            Buy Ticket Now
+            Reserve Your Spot
           </a>
         </div>
       </section>
@@ -168,7 +168,7 @@ export default async function EventPage({ params }: Params) {
       {/* Tickets */}
       <section id="tickets" className="bg-gradient-to-br from-primary to-purple-deep px-6 py-24">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Buy Tickets — Reserve Your Spot.</h2>
+          <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Reserve Your Spot</h2>
           <p className="mt-3 text-center text-sm text-white/60">Secure your spot — pick a premium seat or a general-admission pass below.</p>
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {event.categories.map((cat, i) => (
