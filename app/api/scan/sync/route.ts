@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
   const allowlist = tickets.map((t) => ({
     ticketId: t.id,
     qrHash: hashToken(t.qrToken!),
-    seat: `${t.seat.row}${t.seat.number}`,
+    seat: t.seat ? `${t.seat.row}${t.seat.number}` : "General Admission",
     category: t.category,
     checkedIn: t.checkinStatus === "used",
   }));

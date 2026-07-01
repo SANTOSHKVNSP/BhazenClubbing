@@ -90,7 +90,7 @@ export async function fulfillOrder(orderId: string, razorpayPaymentId?: string):
         include: { user: true, tickets: { include: { seat: true } }, showtime: { include: { event: true } } },
       });
       if (o) {
-        const seats = o.tickets.map((t) => `${t.seat.row}${t.seat.number}`).join(", ");
+        const seats = o.tickets.map((t) => (t.seat ? `${t.seat.row}${t.seat.number}` : t.category)).join(", ");
         await notify({
           email: o.user.email ?? undefined,
           phone: o.user.phone,

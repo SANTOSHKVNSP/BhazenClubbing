@@ -30,7 +30,7 @@ export default async function HoldPage({ params }: { params: Promise<{ slug: str
   const expiresAt = (tickets[0].expiresAt ?? new Date()).toISOString();
   const total = tickets.reduce((s, t) => s + t.price, 0);
   const seats = tickets
-    .map((t) => ({ label: `${t.seat.row}${t.seat.number}`, category: t.category, price: t.price }))
+    .map((t) => ({ id: t.id, label: t.seat ? `${t.seat.row}${t.seat.number}` : "General Admission", ga: !t.seat, category: t.category, price: t.price }))
     .sort((a, b) => a.label.localeCompare(b.label, undefined, { numeric: true }));
 
   return (
@@ -44,8 +44,8 @@ export default async function HoldPage({ params }: { params: Promise<{ slug: str
 
         <ul className="mt-6 divide-y divide-black/10">
           {seats.map((s) => (
-            <li key={s.label} className="flex items-center justify-between py-3 text-sm">
-              <span className="font-semibold text-ink">Seat {s.label} <span className="font-normal text-muted">· {s.category}</span></span>
+            <li key={s.id} className="flex items-center justify-between py-3 text-sm">
+              <span className="font-semibold text-ink">{s.ga ? s.label : `Seat ${s.label}`} <span className="font-normal text-muted">· {s.category}</span></span>
               <span className="font-semibold text-ink">₹{rupees(s.price)}</span>
             </li>
           ))}

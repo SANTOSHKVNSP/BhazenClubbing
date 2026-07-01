@@ -35,14 +35,17 @@ export default async function AccountPage() {
         ) : (
           <div className="mt-8 space-y-4">
             {orders.map((o) => {
-              const seats = o.tickets.map((t) => `${t.seat.row}${t.seat.number}`).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+              const reserved = o.tickets.filter((t) => t.seat).map((t) => `${t.seat?.row ?? ""}${t.seat?.number ?? ""}`).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+              const gaMap = new Map<string, number>();
+              for (const t of o.tickets) if (!t.seat) gaMap.set(t.category, (gaMap.get(t.category) ?? 0) + 1);
+              const seats = [...reserved, ...[...gaMap].map(([c, n]) => `${n} × ${c}`)];
               return (
                 <div key={o.id} className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-black/5">
                   <div className="flex items-center justify-between">
                     <h3 className="font-display text-xl font-bold text-ink">{o.showtime.event.title}</h3>
                     <span className={`rounded-full px-3 py-1 text-xs font-bold ${o.status === "paid" ? "bg-green-100 text-green-700" : "bg-black/5 text-muted"}`}>{o.status}</span>
                   </div>
-                  <p className="mt-1 text-sm text-muted">Seats: {seats.join(", ") || "—"}</p>
+                  <p className="mt-1 text-sm text-muted">Tickets: {seats.join(", ") || "—"}</p>
                   <p className="mt-1 text-sm font-semibold text-ink">₹{rupees(o.total)}</p>
                   <div className="mt-3 flex gap-4 text-sm">
                     {o.invoice && <Link href={`/invoice/${o.id}`} className="text-orange-2 hover:underline">Invoice</Link>}

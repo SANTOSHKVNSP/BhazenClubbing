@@ -31,6 +31,15 @@ export async function refundOrder(orderId: string, opts: RefundOpts) {
   }
 
   await prisma.$transaction(async (tx) => {
+    // Free GA capacity for any general-admission tickets in this order (ADR-020).
+    const gaGroups = await tx.ticket.groupBy({
+      by: ["showtimeId", "ticketCategoryId"],
+      where: { orderId, state: "sold", ticketCategoryId: { not: null } },
+      _count: { _all: true },
+    });
+    for (const g of gaGroups) {
+      await tx.$executeRaw`UPDATE "GaInventory" SET reserved = GREATEST(reserved - ${g._count._all}, 0) WHERE "showtimeId" = ${g.showtimeId} AND "ticketCategoryId" = ${g.ticketCategoryId}`;
+    }
     await tx.order.update({ where: { id: orderId }, data: { status: "refunded" } });
     await tx.ticket.updateMany({ where: { orderId, state: "sold" }, data: { state: "refunded" } });
     await tx.refund.create({

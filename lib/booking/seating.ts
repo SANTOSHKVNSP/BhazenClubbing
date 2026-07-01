@@ -33,12 +33,13 @@ export async function getShowtimeSeating(showtimeId: string): Promise<ShowtimeSe
   const active = await prisma.ticket.findMany({
     where: {
       showtimeId,
+      seatId: { not: null },
       OR: [{ state: "sold" }, { state: "comp" }, { state: "held", expiresAt: { gt: new Date() } }],
     },
     select: { seatId: true, state: true },
   });
   const taken = new Map<string, "held" | "sold">();
-  for (const t of active) taken.set(t.seatId, t.state === "held" ? "held" : "sold");
+  for (const t of active) if (t.seatId) taken.set(t.seatId, t.state === "held" ? "held" : "sold");
 
   const layout = showtime.event.venue?.layoutJson as { sections?: { id: string; label: string }[] } | null;
   const sectionLabel = new Map((layout?.sections ?? []).map((s) => [s.id, s.label]));

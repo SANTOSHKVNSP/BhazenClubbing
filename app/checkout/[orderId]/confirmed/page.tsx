@@ -18,9 +18,8 @@ export default async function ConfirmedPage({ params }: { params: Promise<{ orde
   if (!order || order.userId !== session.user.id) notFound();
 
   const event = order.showtime.event;
-  const tickets = [...order.tickets].sort((a, b) =>
-    `${a.seat.row}${a.seat.number}`.localeCompare(`${b.seat.row}${b.seat.number}`, undefined, { numeric: true })
-  );
+  const sortKey = (t: { seat: { row: string; number: string } | null }) => (t.seat ? `${t.seat.row}${t.seat.number}` : "~");
+  const tickets = [...order.tickets].sort((a, b) => sortKey(a).localeCompare(sortKey(b), undefined, { numeric: true }));
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary to-purple-deep px-6 py-16">
@@ -31,7 +30,7 @@ export default async function ConfirmedPage({ params }: { params: Promise<{ orde
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {tickets.map((t) => (
             <Link key={t.id} href={`/ticket/${t.id}`} className="rounded-full bg-cream px-4 py-1.5 text-sm font-semibold text-ink hover:bg-orange/10">
-              Seat {t.seat.row}{t.seat.number} · ticket →
+              {t.seat ? `Seat ${t.seat.row}${t.seat.number}` : "General Admission"} · ticket →
             </Link>
           ))}
         </div>

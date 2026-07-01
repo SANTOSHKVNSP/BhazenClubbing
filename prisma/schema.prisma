@@ -26,6 +26,11 @@ enum VenueTemplate {
   stadium
 }
 
+enum AdmissionType {
+  reserved
+  general
+}
+
 enum StaffRole {
   super_admin
   city_admin
@@ -209,8 +214,9 @@ model Showtime {
   createdAt DateTime      @default(now())
 
   seats   Seat[]
-  orders  Order[]
-  tickets Ticket[]
+  orders      Order[]
+  tickets     Ticket[]
+  gaInventory GaInventory[]
 
   @@index([eventId])
 }
@@ -222,6 +228,12 @@ model TicketCategory {
   name      String
   color     String?
   basePrice Int     @default(0) // paise
+  admission   AdmissionType @default(reserved) // ADR-019
+  capacity    Int? // GA pool size per showtime (general only)
+  maxPerOrder Int? // optional cap per order
+
+  gaInventory GaInventory[]
+  tickets     Ticket[]
 
   @@unique([eventId, name])
 }
@@ -240,6 +252,20 @@ model Seat {
   tickets Ticket[]
 
   @@unique([showtimeId, section, row, number])
+  @@index([showtimeId])
+}
+
+// General-admission inventory per (showtime, category) — atomic-counter oversell guard (ADR-020).
+model GaInventory {
+  id               String         @id @default(cuid())
+  showtimeId       String
+  showtime         Showtime       @relation(fields: [showtimeId], references: [id], onDelete: Cascade)
+  ticketCategoryId String
+  ticketCategory   TicketCategory @relation(fields: [ticketCategoryId], references: [id], onDelete: Cascade)
+  capacity         Int
+  reserved         Int            @default(0) // held(unexpired) + sold
+
+  @@unique([showtimeId, ticketCategoryId])
   @@index([showtimeId])
 }
 
@@ -304,28 +330,32 @@ model Ticket {
   id              String        @id @default(cuid())
   orderId         String?
   order           Order?        @relation(fields: [orderId], references: [id])
-  showtimeId      String
-  showtime        Showtime      @relation(fields: [showtimeId], references: [id])
-  seatId          String
-  seat            Seat          @relation(fields: [seatId], references: [id])
-  category        String
-  price           Int           @default(0)
-  state           TicketState   @default(held)
-  qrToken         String?       @unique
-  checkinStatus   CheckinStatus @default(unused)
-  checkinAt       DateTime?
-  scannerDeviceId String?
-  holdToken       String? // guest hold reference before login (Phase 3 attaches an Order)
-  expiresAt       DateTime?
-  createdAt       DateTime      @default(now())
+  showtimeId       String
+  showtime         Showtime        @relation(fields: [showtimeId], references: [id])
+  seatId           String? // null for General Admission (ADR-021)
+  seat             Seat?           @relation(fields: [seatId], references: [id])
+  ticketCategoryId String? // GA linkage (inventory + display)
+  ticketCategory   TicketCategory? @relation(fields: [ticketCategoryId], references: [id])
+  category         String
+  price            Int             @default(0)
+  state            TicketState     @default(held)
+  qrToken          String?         @unique
+  checkinStatus    CheckinStatus   @default(unused)
+  checkinAt        DateTime?
+  scannerDeviceId  String?
+  holdToken        String? // guest hold reference before login (Phase 3 attaches an Order)
+  expiresAt        DateTime?
+  createdAt        DateTime        @default(now())
 
   // CONCURRENCY GUARD (ADR-009): a PARTIAL unique index on
   // (showtimeId, seatId) WHERE state IN ('held','sold') is added via raw SQL
-  // in the migration — Prisma can't express partial unique indexes in-schema.
+  // in the migration. GA tickets have seatId null (NULLs distinct → no false
+  // conflict); GA oversell is guarded by GaInventory (ADR-020).
   @@index([showtimeId, seatId])
   @@index([orderId])
   @@index([expiresAt])
   @@index([holdToken])
+  @@index([ticketCategoryId])
 }
 
 // ----------------------------- Partners, promos, comps -----------------------------

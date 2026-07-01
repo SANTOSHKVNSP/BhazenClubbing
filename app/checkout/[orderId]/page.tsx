@@ -22,7 +22,7 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
 
   const event = order.showtime.event;
   const seats = order.tickets
-    .map((t) => ({ label: `${t.seat.row}${t.seat.number}`, category: t.category, price: t.price }))
+    .map((t) => ({ id: t.id, label: t.seat ? `${t.seat.row}${t.seat.number}` : "General Admission", ga: !t.seat, category: t.category, price: t.price }))
     .sort((a, b) => a.label.localeCompare(b.label, undefined, { numeric: true }));
 
   return (
@@ -33,8 +33,8 @@ export default async function CheckoutPage({ params, searchParams }: { params: P
 
         <ul className="mt-6 divide-y divide-black/10">
           {seats.map((s) => (
-            <li key={s.label} className="flex items-center justify-between py-2.5 text-sm">
-              <span className="font-semibold text-ink">Seat {s.label} <span className="font-normal text-muted">· {s.category}</span></span>
+            <li key={s.id} className="flex items-center justify-between py-2.5 text-sm">
+              <span className="font-semibold text-ink">{s.ga ? s.label : `Seat ${s.label}`} <span className="font-normal text-muted">· {s.category}</span></span>
               <span className="text-ink">₹{rupees(s.price)}</span>
             </li>
           ))}

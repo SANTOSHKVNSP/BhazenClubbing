@@ -35,7 +35,7 @@ export default async function TicketPage({ params }: { params: Promise<{ ticketI
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={qr} alt="Ticket QR" className="mx-auto h-64 w-64" />
-              <p className="mt-4 font-display text-3xl font-extrabold text-ink">Seat {ticket.seat.row}{ticket.seat.number}</p>
+              <p className="mt-4 font-display text-3xl font-extrabold text-ink">{ticket.seat ? `Seat ${ticket.seat.row}${ticket.seat.number}` : "General Admission"}</p>
               <p className="text-sm text-muted">{ticket.category} · {event.venue?.name}</p>
               <p className={`mt-4 inline-block rounded-full px-3 py-1 text-xs font-bold ${ticket.checkinStatus === "used" ? "bg-neutral-200 text-neutral-500" : "bg-green-100 text-green-700"}`}>
                 {ticket.checkinStatus === "used" ? "Already checked in" : "Valid · show at gate"}
