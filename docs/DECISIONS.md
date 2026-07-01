@@ -132,6 +132,21 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 **Consequences:** Nullable seat threads through checkout, refund, the scanner allowlist, and the account/ticket pages. Postgres treats NULLs as distinct, so seatless tickets never collide on the seat index. Offline-scanner guarantees (ADR-014/015) apply to GA unchanged.
 **Alternatives:** A separate GA order type/table (rejected: duplicates the checkout/refund/scanner paths).
 
+## ADR-022 — Interim external ticketing (per-event redirect until Razorpay is live)
+**Status:** Accepted (temporary — to be superseded once Razorpay/AOL merchant KYC is live)
+**Context:** The internal checkout (holds → order → Razorpay → QR) is built and verified, but the **AOL Razorpay merchant account is not yet live**, so real money cannot be collected in-app. BhaZen Jamming (Jul 18 2026) needs to sell **now** via AOL's existing `aolt.in` ticketing links, without ripping out the internal flow that other/test events still use.
+**Decision:** Ticketing channel is a per-event property: **`Event.ticketingMode`** = **`internal`** (default — native seat/GA checkout) or **`external`**. In external mode each `TicketCategory` carries a **`bookingUrl`** (`aolt.in/...`); the public event page hides the internal "Select your seats" CTA and instead renders a per-tier **"Reserve →"** button that opens the category's `bookingUrl` in a new tab. All CTAs read **"Reserve Your Spot"** (not "Buy Tickets") platform-wide while external. No seat map, hold, order, or payment runs for external events.
+**Consequences:** Purely additive & data-driven — flipping one event to `internal` (and clearing `bookingUrl`s) re-enables native checkout with zero code change once Razorpay is live. Inventory/analytics for external events live in `aolt.in`, not our DB (accepted for the interim). Admin edit fields for `ticketingMode` + `bookingUrl` are a follow-up (seeded for now).
+**Alternatives:** A global site-wide "external mode" flag (rejected: test/other events must keep exercising the internal flow); one shared external URL per event (rejected: each tier has its own `aolt.in` link).
+
+## ADR-023 — Launch scope: single live event + go-live hardening
+**Status:** Accepted (launch posture; revisit as more events onboard)
+**Context:** Connecting the custom domain (**sattvikbeats.com**) makes the site public. The seed previously shipped **2 demo events** (Sattvik Strings, Sattvik Rhythms) beside the real one; per go-live review, *nothing test* may be public.
+**Decision:** The production seed contains **exactly one live event — BhaZen Jamming** (+ its city Visakhapatnam, venue Port Stadium, band Nirvana Station). The two demo events and the Hyderabad/Bengaluru cities are **removed** (kept in git history; re-addable via admin any time). Contact Instagram is the real **@bhazen_jamming** (`instagram.com/bhazen_jamming`). The event copy reflects the **indoor stadium** (not "open-air"). The **favicon** is the brand mark — a stale default `app/favicon.ico` (from the scaffold) was overriding the logo and was replaced with a multi-size ICO built from the logo. An **Admin Guide** (`docs/ADMIN_GUIDE.md`) documents event authoring for AOL staff.
+**Known gap (flagged):** automatic **OTP delivery is not wired** (`lib/auth/otp.ts` → `deliverOtp` returns false; the code is only logged server-side). **Buyers are unaffected** (Jamming uses external `aolt.in`, no login). **Admin login** in production currently means reading the 6-digit code from Vercel logs — connect a WhatsApp/email OTP channel before handing the panel to non-technical staff.
+**Consequences:** Public surface = one event; unknown/removed event slugs render the 404 page (proper 404 status on Vercel's runtime; local `next start` shows a soft-404/200 for `notFound()`). New events are added via the admin panel (dynamic — no redeploy).
+**Alternatives:** Hide demo events via `status=draft` (rejected: DB clutter + accidental-publish risk); `dynamicParams=false` + SSG for a hard local 404 (rejected: would break admin-driven event creation without a redeploy).
+
 ---
 
 ## Assumptions (confirm/adjust)

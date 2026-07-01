@@ -16,7 +16,7 @@ const rupees = (paise: number) => (paise / 100).toLocaleString("en-IN");
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
-  if (!event) return {};
+  if (!event) notFound(); // hard 404 (not a soft-404 with 200 status) for unknown/removed events
   const seo = (event.seo as { en?: { title?: string; description?: string } } | null)?.en ?? {};
   return { title: seo.title ?? event.title, description: seo.description };
 }
@@ -37,6 +37,11 @@ export default async function EventPage({ params }: Params) {
     ? `${fmtDate(showtime.startsAt)} | ${fmtTime(showtime.startsAt)} Onwards | ${event.venue?.name ?? ""}, ${event.city.name}`
     : `${event.venue?.name ?? ""}, ${event.city.name}`;
 
+  // Interim external ticketing (until Razorpay): CTAs scroll to the tickets section,
+  // where each tier links out to its booking page. Flip event.ticketingMode to switch.
+  const external = event.ticketingMode === "external";
+  const ctaHref = external ? "#tickets" : `/e/${event.slug}/seats`;
+
   return (
     <>
       {/* Header */}
@@ -45,7 +50,7 @@ export default async function EventPage({ params }: Params) {
           <Link href="/" className="font-display text-xl font-extrabold tracking-wide text-white">
             SATTVIK&nbsp;<span className="text-orange">BEATS</span>
           </Link>
-          <a href={`/e/${event.slug}/seats`} className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
+          <a href={ctaHref} className="rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange/40">
             Reserve Your Spot
           </a>
         </div>
@@ -78,7 +83,7 @@ export default async function EventPage({ params }: Params) {
           )}
           <p className="mb-9 text-sm font-medium tracking-wide text-white/90 sm:text-base">{metaLine}</p>
           {showtime && <Countdown target={showtime.startsAt.toISOString()} />}
-          <a href={`/e/${event.slug}/seats`} className="mt-10 inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
+          <a href={ctaHref} className="mt-10 inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
             Reserve Your Spot
           </a>
         </div>
@@ -169,7 +174,7 @@ export default async function EventPage({ params }: Params) {
       <section id="tickets" className="bg-gradient-to-br from-primary to-purple-deep px-6 py-24">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center font-display text-4xl font-bold text-white sm:text-5xl">Reserve Your Spot</h2>
-          <p className="mt-3 text-center text-sm text-white/60">Secure your spot — pick a premium seat or a general-admission pass below.</p>
+          <p className="mt-3 text-center text-sm text-white/60">{external ? "Choose your category and reserve your spot." : "Secure your spot — pick a premium seat or a general-admission pass below."}</p>
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {event.categories.map((cat, i) => (
               <div key={cat.id} className={`rounded-2xl bg-white p-8 shadow-xl ${i === event.categories.length - 1 ? "ring-2 ring-orange" : ""}`}>
@@ -178,14 +183,19 @@ export default async function EventPage({ params }: Params) {
                   <sup className="top-[-1.1rem] text-2xl">₹</sup>{rupees(cat.basePrice)}
                 </div>
                 <p className="mt-6 text-center text-xs font-semibold uppercase tracking-wide text-muted">{cat.admission === "general" ? "General admission" : "Reserved seat"}</p>
+                {external && cat.bookingUrl && (
+                  <a href={cat.bookingUrl} target="_blank" rel="noopener" className="mt-4 block rounded-full bg-gradient-to-br from-orange to-orange-2 px-6 py-2.5 text-center text-sm font-bold text-white transition-transform hover:-translate-y-0.5">Reserve →</a>
+                )}
               </div>
             ))}
           </div>
-          <div className="mt-10 text-center">
-            <a href={`/e/${event.slug}/seats`} className="inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
-              Select your seats →
-            </a>
-          </div>
+          {!external && (
+            <div className="mt-10 text-center">
+              <a href={`/e/${event.slug}/seats`} className="inline-flex rounded-full bg-gradient-to-br from-orange to-orange-2 px-9 py-4 text-base font-bold text-white shadow-lg shadow-orange/40 transition-transform hover:-translate-y-0.5">
+                Select your seats →
+              </a>
+            </div>
+          )}
         </div>
       </section>
 

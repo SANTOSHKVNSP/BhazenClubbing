@@ -181,5 +181,31 @@ Tables (key fields; PK `id`, plus `created_at/updated_at`; soft-delete where use
 
 **The three booking "styles"** = **Theatre** (reserved + theatre map) · **Stadium** (reserved + stadium map) · **General Admission** (general). **Hybrid** = premium reserved + GA (the real event). Cross-cutting concerns (QR ADR-015, offline scanner ADR-014, analytics occupancy = `reserved/capacity`) apply to GA unchanged.
 
+## 17. Interim external ticketing (ADR-022)
+
+**Why:** the native checkout is built but the AOL Razorpay merchant account is not yet live, so BhaZen Jamming sells via AOL's existing `aolt.in` links in the meantime — without disturbing the internal flow other/test events still exercise.
+
+**Model (data-driven, per event):**
+- **`Event.ticketingMode`** — `internal` (default) | `external`.
+- **`TicketCategory.bookingUrl`** — the external `aolt.in/...` link for that tier (external mode only).
+
+**Public event page (`app/e/[slug]/page.tsx`):**
+- `const external = event.ticketingMode === "external"`.
+- Header + hero CTAs read **"Reserve Your Spot"**; when external, `ctaHref = "#tickets"` (anchor to the tiers) instead of `/e/{slug}/seats`.
+- Tickets section: each tier shows its price + admission label (`General admission` / `Reserved seat`); when external, a per-tier **"Reserve →"** `<a target="_blank">` opens `cat.bookingUrl`. The internal "Select your seats →" CTA is rendered only when `!external`.
+- Seat map, holds, orders, and payments **do not run** for external events (no route change — the seats page is simply never linked).
+
+**Reversibility:** flipping an event to `internal` (and clearing `bookingUrl`s) restores native checkout with **zero code change** — the switch is entirely in seed/admin data. Inventory & sales analytics for external events live in `aolt.in`, not our DB, for the interim.
+
+**Current data (launch, ADR-023):** the production seed holds **one live event** — BhaZen Jamming = `external` with Premium→`aolt.in/1034073` (₹2999, reserved) · Family→`/1034075` (₹1999) · General→`/1034076` (₹599) · Student→`/1034077` (₹399). Demo events removed.
+
+## 18. Operations & go-live (ADR-023)
+
+- **Admin authoring:** see **`docs/ADMIN_GUIDE.md`** — login, step-by-step event creation, field-by-field reference, money-unit cheat-sheet, publish workflow.
+- **Runbooks:** see `docs/RUNBOOKS.md`.
+- **Launch scope:** single live event (BhaZen Jamming) + Visakhapatnam only; unknown event slugs → 404 page.
+- **⚠️ OTP delivery gap:** `deliverOtp()` is a stub (returns false) — the OTP is only logged server-side. Buyers don't log in (external ticketing), but **admin login needs the code from Vercel logs** until a WhatsApp/email channel is wired. Tracked in ADR-023.
+- **Favicon:** file-based (`app/icon.png`, `app/apple-icon.png`, `app/favicon.ico`) — all built from the brand logo. Regenerate the ICO with `node scripts/make-favicon.mjs`.
+
 ---
 _Last updated: 2026-07-01_

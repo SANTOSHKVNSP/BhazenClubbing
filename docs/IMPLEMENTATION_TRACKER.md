@@ -100,7 +100,31 @@
 - **Sattvik Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
 - **Sattvik Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
 
+## Phase 8 — Interim external ticketing (ADR-022)  ✅ built & verified locally
+**Goal:** Sell BhaZen Jamming via AOL's existing `aolt.in` links until the Razorpay merchant account is live — without disturbing the internal checkout other/test events use.
+- ✅ Schema: `Event.ticketingMode` (`internal`|`external`, default internal) + `TicketCategory.bookingUrl` (migration `ticketing_mode`)
+- ✅ Public event page: `external` branch — CTAs → "Reserve Your Spot" / `#tickets`; per-tier **"Reserve →"** opens `bookingUrl` in a new tab; internal "Select your seats" CTA hidden when external
+- ✅ Seed: BhaZen Jamming → `external` with 4 `aolt.in` links per tier; both test events stay `internal`
+- ⏳ Admin edit fields for `ticketingMode` + `bookingUrl` — **follow-up** (seeded for now)
+- ⏳ Prod deploy + reseed — **pending user's local-review sign-off**
+**DoD:** External event redirects each tier to its `aolt.in` link; internal events unchanged; flipping back to `internal` needs no code change.
+**Verified locally (2026-07-01):** Jamming tickets section shows "Reserve Your Spot" + 4 tiers (Category: Student ₹399 / General ₹599 / Family ₹1,999 / Premium ₹2,999) each with a correct **Reserve →** link (Premium→1034073, Family→1034075, General→1034076, Student→1034077); test events `sattvik-strings`/`sattvik-rhythms` still show "Select your seats", zero external links.
+
+## Phase 9 — Go-live hardening (ADR-023)  ✅ built & verified locally
+**Goal:** Make the site safe to point a public custom domain at — nothing test, real details, correct branding.
+- ✅ Seed → **single live event** (BhaZen Jamming only); removed 2 demo events + Hyderabad/Bengaluru cities
+- ✅ Contact **Instagram → @bhazen_jamming** (`instagram.com/bhazen_jamming`)
+- ✅ Event copy → **indoor stadium** (replaced "open-air"/"under the stars")
+- ✅ **Favicon** fixed — replaced stale default `app/favicon.ico` with a multi-size ICO from the logo (`scripts/make-favicon.mjs`)
+- ✅ **Admin Guide** written (`docs/ADMIN_GUIDE.md`) — login, create-event walkthrough, field reference, money units, publish flow
+- ✅ Hardened unknown-slug handling (`notFound()` in `generateMetadata`); homepage lists only the one event/city
+- ⏳ **OTP delivery** still a stub — flagged (admin login via server logs until WhatsApp/email wired). ADR-023.
+- ⏳ Prod deploy + reseed + **custom domain** — pending user sign-off.
+**DoD:** Only BhaZen Jamming is public; contact/branding/favicon correct; admin documented; OTP gap flagged.
+**Verified locally (2026-07-01):** `/e/bhazen-jamming` 200 (indoor copy, @bhazen_jamming, Jul 18, external tiers); demo slugs show the 404 page; homepage shows 1 event + Visakhapatnam only; `/favicon.ico` serves the logo ICO.
+
 ## Deferred / future
+- **Wire OTP delivery** (WhatsApp Business or email) — currently a stub; required for smooth admin/buyer login (ADR-023).
 - Virtual waiting room (queue) for viral on-sales (hooks reserved in Phase 2).
 - Additional languages (Hindi/regional) — scaffolding ready (ADR-012).
 - National/city-level partners; per-city theming.
@@ -110,6 +134,8 @@
 ---
 
 ## Changelog
+- **2026-07-01** — **Phase 9 — Go-live hardening built** (ADR-023): production seed cut to **one live event** (BhaZen Jamming; removed 2 demo events + Hyd/Blr cities); contact Instagram → **@bhazen_jamming**; event copy → **indoor stadium**; **favicon** fixed (stale default ICO replaced with logo via `scripts/make-favicon.mjs`); **`docs/ADMIN_GUIDE.md`** added; unknown-slug 404 hardening; homepage shows only the one event/city. Flagged: **OTP delivery is a stub** (admin login via Vercel logs until a channel is wired). Verified locally. **Prod deploy + reseed + custom domain pending sign-off.**
+- **2026-07-01** — **Phase 8 — Interim external ticketing built** (ADR-022): added `Event.ticketingMode` (`internal`|`external`) + `TicketCategory.bookingUrl` (migration `ticketing_mode`); public event page redirects each tier to its `aolt.in` link ("Reserve →") and hides the internal seat CTA when external; all CTAs read "Reserve Your Spot". Seeded **BhaZen Jamming** as `external` (Premium→1034073 · Family→1034075 · General→1034076 · Student→1034077); both test events stay `internal`. Verified locally (per-tier links correct; test events unchanged). **Prod deploy + reseed pending local-review sign-off.**
 - **2026-07-01** — **Rebrand + tier update deployed to prod**: renamed Sattvick→**Sattvik Beats** everywhere (code/docs/seed/manifest; vercel.app URL kept; domain→sattvikbeats.com); added **favicon** (`app/icon.png`+`app/apple-icon.png` from the logo; logo optimized 16 MB→516 KB); **BhaZen Jamming** → **Jul 16 2026** with tiers Premium Pass ₹2999 reserved ×500 + General ₹599 ×3000 + Student ₹399 ×700 + Family Pack ₹1999 ×300 (GA); hybrid booking page now **tabs Passes | Premium seats**. Redeployed + reseeded prod; verified live (wordmark=Sattvik, favicon, tabs, tiers).
 - **2026-07-01** — **Phase 7 deployed to production**: `admission_modes` migration applied to Supabase (via `vercel-build`) + prod reseeded with the 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium); new event logo optimized (6250² 16 MB → 900² 516 KB) and live. Verified: health ok, all 3 events + hybrid booking live at sattvick-beats.vercel.app; old `/e/bhazen-clubbing` now soft-404s (renamed).
 - **2026-07-01** — **Phase 7 built** (admission modes / GA / hybrid): migration `admission_modes` (admission+capacity, `GaInventory`, nullable seatId); unified `reserveTickets` (reserved+GA in one txn); GA oversell via atomic counter; seatless tickets throughout; GA steppers + hybrid booking UI; admin admission/capacity + GA analytics. Seeded 3 events (BhaZen Jamming hybrid + Sattvik Strings theatre + Sattvik Rhythms stadium). Verified: `ga-test` (12 vs cap 5 → exactly 5, no drift), `hybrid-test` (mixed order → sold w/ QR each → refund frees GA), hybrid booking page screenshot. **Local only — prod deploy (Supabase migrate + reseed) pending.**

@@ -31,6 +31,11 @@ enum AdmissionType {
   general
 }
 
+enum TicketingMode {
+  internal // built-in seat/GA + checkout flow
+  external // interim: link out to an external booking page (until Razorpay)
+}
+
 enum StaffRole {
   super_admin
   city_admin
@@ -162,6 +167,7 @@ model Event {
   galleryJson  Json?
   contentJson  Json? // flexible per-event sections: intro, features, stats, faqs, contact, hero media
   status       ContentStatus @default(draft)
+  ticketingMode TicketingMode @default(internal) // external = interim booking links until Razorpay
 
   // Pricing & policy (ADR-005, ADR-008)
   feeType          FeeType          @default(none)
@@ -231,6 +237,7 @@ model TicketCategory {
   admission   AdmissionType @default(reserved) // ADR-019
   capacity    Int? // GA pool size per showtime (general only)
   maxPerOrder Int? // optional cap per order
+  bookingUrl  String? // external booking link (interim, when event.ticketingMode = external)
 
   gaInventory GaInventory[]
   tickets     Ticket[]

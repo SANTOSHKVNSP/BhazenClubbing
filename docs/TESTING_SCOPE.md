@@ -136,6 +136,25 @@
   - `TS-GA-09` **Hybrid event page:** reserved sections render a seat map, GA categories render quantity steppers; totals/pricing correct across the mix.
 - **Acceptance:** **GA never oversells** under any concurrency; the counter always reconciles with ticket states; hybrid orders are all-or-nothing.
 
+### TS-EXT — Interim external ticketing (ADR-022)
+- **Scope:** per-event `ticketingMode` = `external` redirects each tier to its `aolt.in` `bookingUrl`; internal events unaffected; reversibility.
+- **Scenarios:**
+  - `TS-EXT-01` External event: tickets section shows every tier with a **"Reserve →"** link pointing to that tier's `bookingUrl` (correct per-tier mapping), opening in a new tab.
+  - `TS-EXT-02` External event: header + hero CTAs read **"Reserve Your Spot"** and anchor to `#tickets`; the internal "Select your seats" CTA is **not** rendered; the seats route is never linked.
+  - `TS-EXT-03` Internal event (test events) unchanged: "Select your seats" flow present, **no** `aolt.in` links, native checkout intact.
+  - `TS-EXT-04` **Reversibility:** flipping an event to `internal` (clearing `bookingUrl`s) restores native checkout with no code change.
+- **Acceptance:** each tier links to the right external URL; internal flow untouched; the switch is data-only.  *(Verified locally 2026-07-01: BhaZen Jamming links Premium→1034073 · Family→1034075 · General→1034076 · Student→1034077; test events internal.)*
+
+### TS-GOLIVE — Launch readiness (ADR-023) ★
+- **Scope:** the public surface at launch = exactly one real event; branding/contact correct; no test content.
+- **Scenarios:**
+  - `TS-GOLIVE-01` **Only one event public:** `/e/bhazen-jamming` = 200; homepage/landing lists only it + Visakhapatnam; no demo events/cities anywhere.
+  - `TS-GOLIVE-02` **Unknown/removed slug** (e.g. old demo slugs, typos) → the **404 page** (proper 404 status on Vercel's runtime).
+  - `TS-GOLIVE-03` **Branding:** wordmark "Sattvik Beats"; **favicon** = logo in the browser tab (not the framework default); AOL + WAFC hero logos present.
+  - `TS-GOLIVE-04` **Details:** date **Jul 18 2026**, **Port Stadium / indoor** copy (no "open-air"), contact **@bhazen_jamming**.
+  - `TS-GOLIVE-05` **Admin login:** staff can reach `/admin` after OTP (interim: code from server logs — see ADR-023); non-staff phone → "Not authorized".
+- **Acceptance:** nothing test is reachable; branding/details correct; admin reachable by staff only.
+
 ### TS-PROMO — Promo codes, comps, guest list
 - **Scope:** create/limit codes; comp/free tickets; guest list invites.
 - **Happy:** create % / flat codes with limits/expiry; comp tickets issue valid QR; guest list entry produces scannable ticket.
