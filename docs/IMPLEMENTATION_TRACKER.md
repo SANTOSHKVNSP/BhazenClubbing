@@ -83,22 +83,22 @@
 - ⬜ UAT sign-off (content/finance/ops); launch checklist (TESTING_SCOPE §10)
 **DoD:** launch sign-off checklist complete.
 
-## Phase 7 — Admission modes & hybrid ticketing (GA)  ⬜  ★ design done (ADR-019/020/021)
+## Phase 7 — Admission modes & hybrid ticketing (GA)  ✅ built & verified locally (ADR-019/020/021)
 **Goal:** Support reserved + General Admission + hybrid events; ship 3 events (1 real + 2 test).
-- ⬜ Schema: `TicketCategory.admission`+`capacity`; new `GaInventory(showtime, category, capacity, reserved)`; `Ticket.seatId` **nullable** + `ticketCategoryId` (migration)
-- ⬜ GA inventory service: atomic reserve/release/refund counter (ADR-020); `materializeSeats` creates `GaInventory` for general categories
-- ⬜ GA + hybrid holds: `createGaHold`; mix reserved + GA under one `holdToken` in one transaction; expiry/release decrements the counter
-- ⬜ Checkout / fulfillment / refund handle **seatless** tickets; sign a QR per GA ticket
-- ⬜ Booking UI: quantity steppers for GA + seat map for reserved (hybrid page); "General Admission" labels on account/ticket/scanner
-- ⬜ Admin: category admission + capacity fields; analytics occupancy for GA (`reserved/capacity`)
-- ⬜ Seed the 3 events (below)
-- ⬜ Tests: **TS-GA** (oversell under load, expiry/refund counter, hybrid atomicity, seatless scan)
-**DoD:** GA never oversells (load-tested); hybrid orders atomic; counter reconciles with ticket states; 3 events live.
+- ✅ Schema: `TicketCategory.admission`+`capacity`; `GaInventory(showtime, category, capacity, reserved)`; `Ticket.seatId` nullable + `ticketCategoryId` (migration `admission_modes`)
+- ✅ GA inventory: atomic reserve/release/refund counter (ADR-020); `materializeSeats` creates `GaInventory` for general categories
+- ✅ Unified `reserveTickets`: reserved seats + GA under one `holdToken` in one transaction; expiry/release/refund decrement the counter
+- ✅ Checkout / fulfillment / refund handle seatless tickets; QR per GA ticket; all seat labels seatless-safe
+- ✅ Booking UI: GA quantity steppers + reserved seat map (hybrid page); "General Admission" labels on account/ticket/scanner
+- ✅ Admin: category admission + capacity fields; analytics occupancy includes GA capacity
+- ✅ Seeded 3 events (below). ⬜ **Prod deploy** (Supabase migrate + reseed) pending
+- ✅ Tests: `scripts/ga-test` (12 vs cap 5 → no oversell, no drift) · `scripts/hybrid-test` (mixed hold→sold→refund frees GA). Full k6 load at UAT
+**DoD:** GA never oversells (proven); hybrid orders atomic; counter reconciles; 3 events live locally. Prod deploy pending.
 
-**Events to seed (confirmed 2026-07-01):**
-- **Real — BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (cap 4500, stadium). **Hybrid:** Premium **₹2999** reserved ×500 (premium block) + General **₹999** GA ×3000 + Student **₹499** GA ×1000 (ID required). *(Renames BhaZen Clubbing.)*
-- **Test A — Theatre demo** (reserved, theatre map) — invented demo content.
-- **Test B — Stadium demo** (reserved, stadium map) — invented demo content.
+**Events seeded (2026-07-01):**
+- **BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (4500, stadium) — **Hybrid:** Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000. *(Renamed BhaZen Clubbing.)*
+- **Sattvick Strings** @ Ravindra Bharathi, Hyderabad — **Theatre** (Gold/Silver/Bronze, 240 seats).
+- **Sattvick Rhythms** @ Kanteerava, Bengaluru — **Stadium** (VIP/Standard, 800 seats).
 
 ## Deferred / future
 - Virtual waiting room (queue) for viral on-sales (hooks reserved in Phase 2).
@@ -110,6 +110,7 @@
 ---
 
 ## Changelog
+- **2026-07-01** — **Phase 7 built** (admission modes / GA / hybrid): migration `admission_modes` (admission+capacity, `GaInventory`, nullable seatId); unified `reserveTickets` (reserved+GA in one txn); GA oversell via atomic counter; seatless tickets throughout; GA steppers + hybrid booking UI; admin admission/capacity + GA analytics. Seeded 3 events (BhaZen Jamming hybrid + Sattvick Strings theatre + Sattvick Rhythms stadium). Verified: `ga-test` (12 vs cap 5 → exactly 5, no drift), `hybrid-test` (mixed order → sold w/ QR each → refund frees GA), hybrid booking page screenshot. **Local only — prod deploy (Supabase migrate + reseed) pending.**
 - **2026-07-01** — Planned **Phase 7 — Admission modes & hybrid ticketing** (docs-only): designed reserved-vs-general admission, `GaInventory` atomic-counter oversell guard, seatless tickets, hybrid orders (ADR-019/020/021 + ARCHITECTURE §16 + TS-GA). Real event → **BhaZen Jamming** @ Port Stadium (4500): Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000; + 2 test events (theatre + stadium). Implementation pending.
 - **2026-07-01** — Deployed to production: Vercel (`satvik-beats/sattvick-beats`, region bom1) + Supabase (pooled runtime / direct migrations). Perf fix: functions co-located with DB, `connection_limit=5`, public reads deduped via React `cache()` — event page 9s→~0.3s, fixed the connection-pool-timeout "Oops". Live at https://sattvick-beats.vercel.app.
 - **2026-06-30** — Deploy prep: `vercel-build` (migrate deploy + build) so Vercel auto-applies migrations; cleaned `.env.example` (required ✅ vs optional; dropped legacy ADMIN_USER/PASSWORD; added SUPER_ADMIN_PHONE); `docs/DEPLOYMENT.md` (Vercel + Neon, env table, seed-once, domain). Plus self-serve dev login (dev-only OTP auto-fill) + demo tooling.
