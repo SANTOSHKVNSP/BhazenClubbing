@@ -112,12 +112,32 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 **Why pin v6:** Prisma 7 removed the in-schema datasource `url` and **mandates driver adapters + `prisma.config.ts`** — extra moving parts on a foundational layer. We defer the v7 driver-adapter migration to a later hardening task.
 **Consequences:** Classic `datasource { url = env("DATABASE_URL") }`; simple `new PrismaClient()` in `lib/db.ts`. Revisit v7 upgrade post-MVP.
 
+## ADR-019 — Admission modes: reserved vs general
+**Status:** Accepted — **supersedes** the "GA as a non-numbered seat zone" aspect of ADR-002 and Assumption A-3
+**Context:** Real events mix a small premium **reserved** block with a large **General Admission** crowd (e.g. BhaZen Jamming — 4500 cap: Premium ₹2999 reserved + General/Student GA). Rendering and holding thousands of pickable seats is impractical, and forcing GA into fake seats does not scale for an on-sale rush.
+**Decision:** Admission is a property of each **`TicketCategory`**: **`reserved`** (buyer picks specific `Seat`s) or **`general`** (buyer picks a **quantity** against a capacity pool; no seat). An event/showtime may carry **both** (hybrid). Venue templates (theatre/stadium) apply to reserved categories only; GA needs only a capacity.
+**Consequences:** GA is a first-class mode. The booking UI renders a seat map for reserved sections and quantity steppers for GA. Threads through holds, checkout, refunds, scanner, analytics (see ADR-020/021).
+**Alternatives:** GA as auto-assigned "virtual seats" reusing the seat index (rejected: thousands of rows + hold-retry contention under rush); GA-only events (rejected: hybrid required).
+
+## ADR-020 — GA inventory & oversell prevention (atomic counter)
+**Status:** Accepted
+**Context:** GA has no per-seat unique index to stop oversell, and a 4500 on-sale can stampede.
+**Decision:** A per-**(showtime, category)** **`GaInventory`** row `{capacity, reserved}`. Reservation is a **single atomic statement**: `UPDATE "GaInventory" SET reserved = reserved + :qty WHERE id = :id AND reserved + :qty <= capacity RETURNING reserved`. A returned row ⇒ quota secured (create :qty seatless held tickets, 8-min expiry); no row ⇒ **sold out**. `reserved` = held(unexpired) + sold; it is **decremented on hold-expiry/release and on refund**. A reconciliation job can self-heal any drift.
+**Consequences:** Oversell-safe at scale with one row-lock (no retries, no MVCC race). The counter must move in lockstep with the ticket lifecycle. Reserved seating keeps the partial unique index (ADR-009) unchanged.
+**Alternatives:** `count(*)`-in-`INSERT` guard (rejected: races under MVCC); advisory locks (rejected: heavier, still needs bookkeeping); virtual seats + index (rejected: retry thrash under rush).
+
+## ADR-021 — Seatless tickets & hybrid orders
+**Status:** Accepted
+**Decision:** `Ticket.seatId` becomes **nullable**; GA tickets are seatless and carry **`ticketCategoryId`** (for inventory + display). A single hold/order may mix reserved seats and GA quantities under **one `holdToken`**, created in **one transaction** (roll back everything on partial failure). Every ticket — reserved or GA — still gets its **own Ed25519-signed QR**, scanned once; scanner/account/ticket UI shows **"General Admission · &lt;tier&gt;"** when there is no seat.
+**Consequences:** Nullable seat threads through checkout, refund, the scanner allowlist, and the account/ticket pages. Postgres treats NULLs as distinct, so seatless tickets never collide on the seat index. Offline-scanner guarantees (ADR-014/015) apply to GA unchanged.
+**Alternatives:** A separate GA order type/table (rejected: duplicates the checkout/refund/scanner paths).
+
 ---
 
 ## Assumptions (confirm/adjust)
 - **A-1:** One Razorpay/AOL merchant account for all cities (single settlement), not per-city.
 - **A-2:** Venues are reusable (authored once from a template, reused across events).
-- **A-3:** General Admission supported as a special non-numbered zone within the reserved-seating engine.
+- **A-3:** ~~General Admission as a non-numbered zone within the reserved-seating engine~~ — **superseded by ADR-019/020/021**: GA is a first-class capacity-counter admission mode (not fake seats); events may be hybrid (reserved premium + GA).
 - **A-4:** Scanner devices get **at least one** online window before doors to pre-sync the allowlist.
 - **A-5:** English content authored by AOL teams; legal pages (T&C, privacy, refund text) provided by AOL.
 
@@ -130,4 +150,4 @@ Architecture Decision Records. Each entry is immutable once **Accepted**; to cha
 - Owner of Vercel + Neon accounts (Phase 0).
 
 ---
-_Last updated: 2026-06-30_
+_Last updated: 2026-07-01_

@@ -1,8 +1,10 @@
+import { cache } from "react";
 import { prisma } from "@/lib/db";
 
-// Public reads — live content only.
+// Public reads — live content only. Wrapped in React cache() so multiple calls
+// within one request (e.g. generateMetadata + the page) dedupe to a single query.
 
-export async function getEventBySlug(slug: string) {
+export const getEventBySlug = cache(async (slug: string) => {
   return prisma.event.findFirst({
     where: { slug, status: "live" },
     include: {
@@ -18,9 +20,9 @@ export async function getEventBySlug(slug: string) {
       },
     },
   });
-}
+});
 
-export async function listLiveEvents() {
+export const listLiveEvents = cache(async () => {
   return prisma.event.findMany({
     where: { status: "live" },
     orderBy: { doorsAt: "asc" },
@@ -30,9 +32,9 @@ export async function listLiveEvents() {
       showtimes: { orderBy: { startsAt: "asc" }, take: 1 },
     },
   });
-}
+});
 
-export async function getCityBySlug(slug: string) {
+export const getCityBySlug = cache(async (slug: string) => {
   return prisma.city.findFirst({
     where: { slug, status: "live" },
     include: {
@@ -46,14 +48,14 @@ export async function getCityBySlug(slug: string) {
       },
     },
   });
-}
+});
 
-export async function listLiveCities() {
+export const listLiveCities = cache(async () => {
   return prisma.city.findMany({
     where: { status: "live" },
     orderBy: { name: "asc" },
   });
-}
+});
 
 export type EventContent = {
   presents?: string;

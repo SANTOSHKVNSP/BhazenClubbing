@@ -83,6 +83,23 @@
 - ⬜ UAT sign-off (content/finance/ops); launch checklist (TESTING_SCOPE §10)
 **DoD:** launch sign-off checklist complete.
 
+## Phase 7 — Admission modes & hybrid ticketing (GA)  ⬜  ★ design done (ADR-019/020/021)
+**Goal:** Support reserved + General Admission + hybrid events; ship 3 events (1 real + 2 test).
+- ⬜ Schema: `TicketCategory.admission`+`capacity`; new `GaInventory(showtime, category, capacity, reserved)`; `Ticket.seatId` **nullable** + `ticketCategoryId` (migration)
+- ⬜ GA inventory service: atomic reserve/release/refund counter (ADR-020); `materializeSeats` creates `GaInventory` for general categories
+- ⬜ GA + hybrid holds: `createGaHold`; mix reserved + GA under one `holdToken` in one transaction; expiry/release decrements the counter
+- ⬜ Checkout / fulfillment / refund handle **seatless** tickets; sign a QR per GA ticket
+- ⬜ Booking UI: quantity steppers for GA + seat map for reserved (hybrid page); "General Admission" labels on account/ticket/scanner
+- ⬜ Admin: category admission + capacity fields; analytics occupancy for GA (`reserved/capacity`)
+- ⬜ Seed the 3 events (below)
+- ⬜ Tests: **TS-GA** (oversell under load, expiry/refund counter, hybrid atomicity, seatless scan)
+**DoD:** GA never oversells (load-tested); hybrid orders atomic; counter reconciles with ticket states; 3 events live.
+
+**Events to seed (confirmed 2026-07-01):**
+- **Real — BhaZen Jamming** @ **Port Stadium, Akkayapalem, Visakhapatnam** (cap 4500, stadium). **Hybrid:** Premium **₹2999** reserved ×500 (premium block) + General **₹999** GA ×3000 + Student **₹499** GA ×1000 (ID required). *(Renames BhaZen Clubbing.)*
+- **Test A — Theatre demo** (reserved, theatre map) — invented demo content.
+- **Test B — Stadium demo** (reserved, stadium map) — invented demo content.
+
 ## Deferred / future
 - Virtual waiting room (queue) for viral on-sales (hooks reserved in Phase 2).
 - Additional languages (Hindi/regional) — scaffolding ready (ADR-012).
@@ -93,6 +110,8 @@
 ---
 
 ## Changelog
+- **2026-07-01** — Planned **Phase 7 — Admission modes & hybrid ticketing** (docs-only): designed reserved-vs-general admission, `GaInventory` atomic-counter oversell guard, seatless tickets, hybrid orders (ADR-019/020/021 + ARCHITECTURE §16 + TS-GA). Real event → **BhaZen Jamming** @ Port Stadium (4500): Premium ₹2999 reserved ×500 + General ₹999 GA ×3000 + Student ₹499 GA ×1000; + 2 test events (theatre + stadium). Implementation pending.
+- **2026-07-01** — Deployed to production: Vercel (`satvik-beats/sattvick-beats`, region bom1) + Supabase (pooled runtime / direct migrations). Perf fix: functions co-located with DB, `connection_limit=5`, public reads deduped via React `cache()` — event page 9s→~0.3s, fixed the connection-pool-timeout "Oops". Live at https://sattvick-beats.vercel.app.
 - **2026-06-30** — Deploy prep: `vercel-build` (migrate deploy + build) so Vercel auto-applies migrations; cleaned `.env.example` (required ✅ vs optional; dropped legacy ADMIN_USER/PASSWORD; added SUPER_ADMIN_PHONE); `docs/DEPLOYMENT.md` (Vercel + Neon, env table, seed-once, domain). Plus self-serve dev login (dev-only OTP auto-fill) + demo tooling.
 - **2026-06-30** — Phase 6 (a11y + runbooks): accessibility pass — global focus-visible ring, seat-map aria-labels/aria-pressed + live regions, login error `role=alert` (lang + reduced-motion already present); `docs/RUNBOOKS.md` (on-sale, refunds, offline scanner, incidents). **Account-free Phase 6 hardening complete**; remaining items account-gated (Sentry/Neon/Vercel/DNS) + load/UAT.
 - **2026-06-30** — Phase 6 (rate-limit + ops pages): in-memory rate limiter (Upstash later) on OTP (5/10min per phone) + holds (20/min per IP); `/api/health` (DB ping); global error boundary; legal pages (terms/privacy/refund, draft). Verified: limiter blocks 6th call, health ok, legal pages 200.

@@ -5,7 +5,7 @@
 ## 1. How to use this document
 - QA expands each scenario into concrete test cases (steps, data, expected result).
 - Every feature must have functional + relevant non-functional coverage before its phase is "done."
-- **Critical modules** (must not ship with open Sev-1/2): Seat Hold/Concurrency (TS-HOLD), Payments (TS-PAY), Offline Scanner (TS-SCAN), Security (TS-SEC).
+- **Critical modules** (must not ship with open Sev-1/2): Seat Hold/Concurrency (TS-HOLD), General Admission (TS-GA), Payments (TS-PAY), Offline Scanner (TS-SCAN), Security (TS-SEC).
 
 ## 2. Test levels & types
 - **Unit** (Vitest): pricing/fee/GST, hold state machine, QR sign/verify, RBAC checks, refund policy.
@@ -122,6 +122,20 @@
 - **Edge:** duplicate seat labels prevented; capacity recomputed; editing a venue used by a **live** event (guardrails — no breaking sold seats); blocked/accessible seats persist; GA zone definition; very large layouts.
 - **Acceptance:** published inventory matches builder exactly; cannot corrupt seats already sold; reuse works.
 
+### TS-GA — General admission & hybrid ticketing  ★CRITICAL (oversell) (ADR-019/020/021)
+- **Scope:** GA quantity purchase, capacity/oversell guard, seatless tickets, hybrid (reserved + GA) orders, GA hold/refund counter consistency.
+- **Scenarios:**
+  - `TS-GA-01` Buy N GA tickets → N **seatless** tickets issued; `GaInventory.reserved` increases by exactly N.
+  - `TS-GA-02` **Oversell under concurrency:** capacity C, many buyers concurrently requesting > C total → total sold **≤ C exactly**; the rest get "sold out". Verified by load test (TS-PERF-02).
+  - `TS-GA-03` GA hold **expires** unpaid → held tickets released **and** `reserved` decremented (counter matches ticket states).
+  - `TS-GA-04` GA **refund** → ticket refunded and `reserved` decremented (capacity freed for resale).
+  - `TS-GA-05` **Hybrid order:** premium reserved seat(s) + GA quantity in one order → both held/sold **atomically**; a partial failure rolls back both (no orphan seat hold, no phantom GA quota).
+  - `TS-GA-06` **GA QR/scan:** each GA ticket has its own signed QR; admits once; second scan blocked; scanner shows "General Admission · &lt;tier&gt;" (TS-SCAN rules apply, `seat_id` null).
+  - `TS-GA-07` **Quantity limits:** per-order max enforced; buying the **last** available unit succeeds, one more fails cleanly.
+  - `TS-GA-08` **Counter reconciliation:** `reserved` == count(held-unexpired + sold) per GA category after churn (holds, expiries, refunds).
+  - `TS-GA-09` **Hybrid event page:** reserved sections render a seat map, GA categories render quantity steppers; totals/pricing correct across the mix.
+- **Acceptance:** **GA never oversells** under any concurrency; the counter always reconciles with ticket states; hybrid orders are all-or-nothing.
+
 ### TS-PROMO — Promo codes, comps, guest list
 - **Scope:** create/limit codes; comp/free tickets; guest list invites.
 - **Happy:** create % / flat codes with limits/expiry; comp tickets issue valid QR; guest list entry produces scannable ticket.
@@ -204,4 +218,4 @@
 - [ ] Docs (all four) up to date
 
 ---
-_Last updated: 2026-06-30_
+_Last updated: 2026-07-01_

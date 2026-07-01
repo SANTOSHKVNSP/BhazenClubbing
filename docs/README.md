@@ -21,7 +21,7 @@ This folder holds the **single source of truth** for the Sattvick Beats platform
 
 ## Quick status
 
-- **Phase:** Phases 0–5 complete; Phase 6 hardening — account-free items done (security, rate-limit, ops pages, a11y, runbooks); remaining items account-gated + UAT.
+- **Phase:** Phases 0–6 built & **deployed** (Vercel + Supabase, live at sattvick-beats.vercel.app); **Phase 7 — admission modes / GA / hybrid** designed (ADR-019/020/021), implementation pending.
 - **Stack:** Next.js (App Router, TS) · Postgres (Neon) · Vercel · Razorpay · Resend + WhatsApp BSP
 - **First event to migrate:** BhaZen Clubbing (Vizag) — content already in `Meeta_HTML/` (legacy static site, kept as content source).
 

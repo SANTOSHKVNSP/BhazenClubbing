@@ -60,12 +60,13 @@ Tables (key fields; PK `id`, plus `created_at/updated_at`; soft-delete where use
 - **Band** — name, bio, photo, socials. **BandMember** — band_id, name, role, photo. (Band ↔ Event many-to-many.)
 - **Event** — slug, title, city_id, venue_id, description, hero_media, gallery_json, status, `fee_config`(none|flat|percent + value), `gst_config`(rate, inclusive?), `refund_policy`(type, window_days, fee_pct), on_sale_at, doors_at, seo, approval fields (submitted_by, approved_by, rejected_reason).
 - **Showtime** — event_id, starts_at, ends_at, status. Owns seat inventory.
-- **TicketCategory** — event_id (or showtime_id), name, color, base_price; maps to seat `category` in layout.
+- **TicketCategory** — event_id, name, color, base_price, **admission(reserved|general)**, **capacity?** (GA pool size); `reserved` maps to seat `category` in the layout, `general` uses `GaInventory` (ADR-019).
 - **Seat** — showtime_id, section, row, number, category, accessible(bool), blocked(bool). (Materialized per showtime from the venue layout at publish time.)
 - **SeatHold** — showtime_id, seat_id, owner_token/user_id, expires_at. (Implemented as `BookingItem` rows in state `held`; see §6.)
 - **User** — phone(unique), name, email, status. **StaffMembership** — user_id, role(super_admin|city_admin|scanner), scope_city_id?, scope_event_id?.
 - **Order** — user_id, showtime_id, status(pending|paid|failed|refunded|partially_refunded|cancelled), subtotal, fee, gst, total, currency, razorpay_order_id, razorpay_payment_id, promo_id, invoice_id.
-- **BookingItem / Ticket** — order_id, showtime_id, seat_id, category, price, state(held|sold|refunded), `qr_token`(Ed25519-signed), checkin_status(unused|used), checkin_at, scanner_device_id.
+- **BookingItem / Ticket** — order_id, showtime_id, **seat_id (nullable — null for GA)**, **ticket_category_id (GA linkage)**, category, price, state(held|sold|refunded|comp), `qr_token`(Ed25519-signed), checkin_status(unused|used), checkin_at, scanner_device_id.
+- **GaInventory** — showtime_id, ticket_category_id, capacity, reserved (held+sold counter); `@@unique(showtime_id, ticket_category_id)`; atomic reserve/release (ADR-020).
 - **Promo** — code, scope(event), type(percent|flat), value, max_uses, per_user_limit, starts/ends, used_count.
 - **Comp / GuestList** — event_id, name, phone, qty, issued tickets.
 - **Refund** — order_id, amount, reason, status, razorpay_refund_id, actor_id.
@@ -76,11 +77,12 @@ Tables (key fields; PK `id`, plus `created_at/updated_at`; soft-delete where use
 - **AuditLog** — actor_id, action, entity, entity_id, before/after(json), ip, ts.
 - **Media** — owner ref, blob_url, type, alt.
 
-**Critical constraint:** partial unique index `UNIQUE (showtime_id, seat_id) WHERE state IN ('held','sold')` → a seat cannot be held/sold twice (ADR-009).
+**Critical constraint:** partial unique index `UNIQUE (showtime_id, seat_id) WHERE state IN ('held','sold')` → a seat cannot be held/sold twice (ADR-009). For **GA** (`seat_id` null) oversell is prevented by the atomic `GaInventory` counter (ADR-020), not the index.
 
 ## 6. Booking & seat-hold concurrency (ADR-009)
 
-1. **Select seats:** `BEGIN; INSERT booking_items(state='held', expires_at=now()+8min) ... ON CONFLICT (showtime_id,seat_id) WHERE state IN('held','sold') DO NOTHING; COMMIT;` Compare inserted vs requested → report any lost seats; UI re-prompts.
+1. **Select seats (reserved):** `BEGIN; INSERT booking_items(state='held', expires_at=now()+8min) ... ON CONFLICT (showtime_id,seat_id) WHERE state IN('held','sold') DO NOTHING; COMMIT;` Compare inserted vs requested → report any lost seats; UI re-prompts.
+1b. **Select quantity (general):** atomic `UPDATE "GaInventory" SET reserved = reserved + :qty WHERE reserved + :qty <= capacity RETURNING reserved` → on a returned row create :qty seatless held items; else "sold out" (ADR-020). Reserved + GA may be combined in one transaction under one hold (ADR-021).
 2. **Login** if needed (phone OTP).
 3. **Price:** subtotal (Σ seat prices) + fee (per-event) + GST → store breakdown; apply promo if valid.
 4. **Pay:** create Razorpay **order** for `total`; open Checkout.
@@ -163,5 +165,21 @@ Tables (key fields; PK `id`, plus `created_at/updated_at`; soft-delete where use
 
 - Indexed hot paths (showtime seats, holds). Read-replicas if needed. Static/ISR for public content; dynamic for seat availability. Load-tested on-sale simulation (k6) proving **no double-booking** under concurrency. Waiting-room interface reserved for future.
 
+## 16. Admission modes & hybrid ticketing (ADR-019, 020, 021)
+
+**Two admission modes per `TicketCategory`:**
+- **Reserved** — buyer picks specific `Seat`s from the venue map (theatre/stadium). Inventory = `Seat` rows; no-oversell = the partial unique index (§6, ADR-009). Unchanged.
+- **General admission (GA)** — buyer picks a **quantity** against a capacity pool. Inventory = one `GaInventory` row per (showtime, category); no-oversell = the **atomic counter** (ADR-020). Tickets are **seatless** (`seat_id` null).
+
+**Hybrid events** carry both (e.g. BhaZen Jamming: Premium reserved block + General/Student GA). One order/hold may mix them (ADR-021), created in a single transaction (all-or-nothing).
+
+**Materialization:** `materializeSeats(showtime)` creates `Seat` rows for reserved categories (from the venue layout) **and** a `GaInventory` row (capacity from the category) for each general category.
+
+**GA lifecycle:** *hold* = atomic reserve(+qty) → N seatless held tickets (8-min expiry); *expire/release* = delete held GA tickets **and** decrement `reserved`; *fulfill* = held→sold + sign a QR per ticket; *refund* = sold→refunded and decrement `reserved` (frees capacity).
+
+**UX:** the booking page renders a **seat map** for reserved sections and **quantity steppers** for GA categories; hybrid shows both. Checkout sums reserved seat prices + Σ(GA qty × price) → the existing pricing engine (§7). Account/ticket/scanner show "General Admission · &lt;tier&gt;" when `seat_id` is null.
+
+**The three booking "styles"** = **Theatre** (reserved + theatre map) · **Stadium** (reserved + stadium map) · **General Admission** (general). **Hybrid** = premium reserved + GA (the real event). Cross-cutting concerns (QR ADR-015, offline scanner ADR-014, analytics occupancy = `reserved/capacity`) apply to GA unchanged.
+
 ---
-_Last updated: 2026-06-30_
+_Last updated: 2026-07-01_
