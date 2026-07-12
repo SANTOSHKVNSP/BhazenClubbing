@@ -1,7 +1,8 @@
 /**
  * Production seed — Sattvik Beats. Seeds the single live event:
- *  1. BhaZen Jamming (Vizag, Port Stadium) — HYBRID: Premium reserved + General/Student/Family GA.
- *     Interim external ticketing via aolt.in until Razorpay is live (ADR-022).
+ *  1. BhaZen Jamming 2.0 (Vizag, Port Indoor Stadium) — a fundraiser concert for
+ *     the Green Vizag Initiative by The Art of Living. Interim external ticketing
+ *     via aolt.in until Razorpay is live (ADR-022).
  * Re-runnable: clears content, recreates. Run: `npx tsx prisma/seed.ts`.
  */
 import { PrismaClient, Prisma } from "@prisma/client";
@@ -24,21 +25,24 @@ async function materialize(showtimeId: string, seatMap: SeatMap, ga: { id: strin
   return seatRows.length;
 }
 
-const roles = [
-  { role: "Lead Vocalist", photo: "/images/bhazen/nirvana-3.jpg" },
-  { role: "Lead Guitarist", photo: "/images/bhazen/nirvana-16.jpg" },
-  { role: "Bassist", photo: "/images/bhazen/nirvana-12.jpg" },
-  { role: "Drummer", photo: "/images/bhazen/nirvana-13.jpg" },
-  { role: "Keyboardist", photo: "/images/bhazen/nirvana-15.jpg" },
-  { role: "Flutist", photo: "/images/bhazen/nirvana-14.jpg" },
+// The Nirvana Station line-up. Real portraits can be added later via admin
+// (the page shows a gradient initials avatar until a photoUrl is set).
+const members = [
+  { name: "Anivart Jhunjhunwala", role: "Lead Vocalist" },
+  { name: "Anagha Karvir", role: "Lead Vocalist" },
+  { name: "Bryan Kharrinam", role: "Guitarist" },
+  { name: "Ram Krishna Mishra", role: "Keyboardist" },
+  { name: "Tanmay Patil", role: "Drummer" },
+  { name: "Sujit Dhananjay Jare", role: "Percussionist" },
+  { name: "Sarath Narayan", role: "Percussionist" },
+  { name: "Tigil Thomas", role: "Bassist" },
 ];
 
 const faqs = [
-  { q: "How will I enter the venue?", a: "You will receive a QR Code before the event. Show it at the gate to collect your wristband for entry." },
-  { q: "What time should I arrive?", a: "Gates open a couple of hours before showtime. Arrive early to collect your wristband." },
-  { q: "Can I get a refund?", a: "Refund terms are shown at checkout and depend on the event's policy." },
-  { q: "What items are not allowed inside?", a: "Prohibited: weapons, illegal substances, professional cameras, outside food/drinks, and laser pointers. Security checks apply." },
-  { q: "How can I contact support?", a: "Call +91 97030 46062 or DM us on Instagram." },
+  { q: "How do I enter?", a: "Your QR code will be sent before the event. Scan it at the venue to collect your wristband." },
+  { q: "What time should I arrive?", a: "Gates open early. Arrive ahead of time to enjoy the complete experience." },
+  { q: "Are tickets refundable?", a: "Please refer to the refund policy displayed during checkout." },
+  { q: "What items are prohibited?", a: "Outside food and beverages, professional cameras, laser pointers, weapons, and illegal substances are not permitted." },
 ];
 
 const heroLogos = { aol: "/images/bhazen/AOL_LogoWhite.png", event: "/images/bhazen/bhazenclubbing.png", wafc: "/images/partners/world-forum.png" };
@@ -72,37 +76,120 @@ async function main() {
 
   const band = await prisma.band.create({
     data: {
-      name: "Nirvana Station",
-      bio: { en: "An 8-member band delivering soul-stirring live performances." },
-      members: { create: roles.map((r, i) => ({ name: r.role, role: r.role, photoUrl: r.photo, sortOrder: i })) },
+      name: "The Nirvana Station",
+      bio: { en: "After setting the stage on fire with a sold-out, unforgettable performance at BhaZen Jamming 1.0, The Nirvana Station returns to Vizag by popular demand. Get ready for another evening of soulful melodies, electrifying energy, and a musical experience that promises to be even bigger." },
+      members: { create: members.map((m, i) => ({ name: m.name, role: m.role, sortOrder: i })) },
     },
   });
 
-  const content = (tagline: string, stats: { value: number; suffix?: string; label: string }[]) =>
-    asJson({ presents: "Art of Living", heroLogos, tagline, about: { image: "/images/bhazen/nirvana-8.jpg", video: "https://www.youtube-nocookie.com/embed/Lh1Cg1RCDTA" }, features: ["Live Band", "Photo Booth", "Merchandise"], stats, faqs, contact, trustUrl });
-
-  // ===== 1. BhaZen Jamming — HYBRID (Vizag, Port Stadium 4500) =====
-  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Category: Premium" }] });
-  const portStadium = await prisma.venue.create({ data: { name: "Port Stadium", cityId: vizag.id, address: "Akkayapalem, Visakhapatnam, Andhra Pradesh", template: "stadium", capacity: 4500, layoutJson: asJson(jammingMap) } });
+  // ===== BhaZen Jamming 2.0 — fundraiser concert (Vizag, Port Indoor Stadium 4500) =====
+  const jammingMap = generateStadium({ sections: [{ id: "premium", label: "Premium Stand", rows: 20, seatsPerRow: 25, category: "Premium" }] });
+  const portStadium = await prisma.venue.create({ data: { name: "Port Indoor Stadium", cityId: vizag.id, address: "Akkayapalem, Visakhapatnam, Andhra Pradesh", template: "stadium", capacity: 4500, layoutJson: asJson(jammingMap) } });
   const jamming = await prisma.event.create({
     data: {
       slug: "bhazen-jamming", title: "BhaZen Jamming", cityId: vizag.id, venueId: portStadium.id, status: "live", ticketingMode: "external",
-      description: { en: "Nirvana Station live at Port Stadium — an electrifying night inside the indoor arena. Grab a premium reserved seat up front, or join the crowd on a general-admission pass." },
+      description: { en: "BhaZen Jamming isn't just about music, it's about making a difference. Celebrate an evening of soulful performances, community, and purpose — knowing that your participation supports The Art of Living's Green Vizag Initiative, culminating in a plantation drive on 26th July 2026. Every beat you enjoy helps plant the future." },
       heroMediaUrl: hero, galleryJson: asJson(gallery),
-      contentJson: content("An electrifying indoor night of live music", [{ value: 8, label: "Band Members" }, { value: 4500, suffix: "+", label: "Capacity" }, { value: 3, label: "Hours of Music" }, { value: 1, label: "Epic Night" }]),
+      contentJson: asJson({
+        presents: "Art of Living",
+        heroLogos,
+        headline: "Where Every Beat Plants a Future",
+        heroTags: "Music • Meditation • Plantation",
+        heroAccent: "🎵 One Night. One Purpose. A Greener Tomorrow.",
+        ctaLabel: "Reserve Your Spot",
+        tagline: "More Than a Concert",
+        about: { image: "/images/bhazen/nirvana-8.jpg", video: "https://www.youtube-nocookie.com/embed/Lh1Cg1RCDTA" },
+        highlights: {
+          heading: "What Awaits You",
+          items: [
+            "🎶 Live Performance by The Nirvana Station",
+            "🌿 Support the Green Vizag Initiative",
+            "📸 Instagram-worthy Photo Booths",
+            "🛍️ Exclusive Event Merchandise",
+            "💚 A Community United for a Cause",
+            "✨ An unforgettable evening of music and celebration",
+          ],
+        },
+        impact: {
+          heading: "Your Ticket Creates Change",
+          body: "When you attend BhaZen Jamming, you're doing more than booking a concert. You're contributing to a movement dedicated to making Visakhapatnam cleaner, greener, and more sustainable. Every ticket helps support:",
+          items: ["Plantation drives", "Environmental initiatives", "Community-led green action", "A greener future for Vizag"],
+        },
+        experience: {
+          heading: "Feel the Energy",
+          body: "Thousands of voices. One stage. One purpose. Sing, celebrate, connect, and be part of an evening where music inspires action and every moment becomes a memory.",
+        },
+        ticketsHeading: "Choose Your Pass",
+        ticketsSubtext: "Reserve your seat today and be part of a night where every beat creates impact.",
+        admissionLabels: {
+          "Gallery": "General Admission",
+          "Arena (Stage Area Seating)": "General Admission",
+          "Premium (Seat Only)": "Reserved Seat",
+          "Premium + Sudarshan Kriya": "Reserved Seat",
+        },
+        ticketPerks: {
+          "Premium + Sudarshan Kriya": "✨ Includes a complimentary Happiness Program",
+        },
+        happinessProgram: {
+          heading: "Your Premium Pass Includes Sudarshan Kriya",
+          body: "The ₹2,999 Premium pass comes with a complimentary Art of Living Happiness Program — where you learn Sudarshan Kriya, the world-renowned rhythmic breathing practice followed by millions worldwide for deep calm, steady energy, and emotional balance.",
+          points: [
+            "Complimentary with every Premium (₹2,999) pass — a gift worth far more",
+            "A guided 3–4 day Happiness Program in late July 2026",
+            "Pick a time slot that suits you from the available sessions",
+            "Learn Sudarshan Kriya for lasting wellness, clarity & happiness",
+          ],
+        },
+        bulkPasses: {
+          heading: "Booking for a Group?",
+          intro: "Save more on Gallery & Arena passes. Bulk bookings go through our secure donation page.",
+          donateUrl: "https://www.artofliving.online/donate.php?nca_id=1033929",
+          steps: [
+            "Tap your bundle below — it opens our donation page in a new tab.",
+            "Choose 'Other Amount' and enter the exact amount shown on your bundle.",
+            "Complete payment — we'll confirm your passes on WhatsApp / email.",
+          ],
+          bundles: [
+            { label: "4 Gallery passes", amount: "₹1,400" },
+            { label: "10 Gallery passes", amount: "₹3,000" },
+            { label: "4 Arena passes", amount: "₹2,000" },
+            { label: "10 Arena passes", amount: "₹4,500" },
+          ],
+          note: "Bulk passes are confirmed after payment. Need help? WhatsApp +91 97030 46062.",
+        },
+        quote: {
+          lines: ["Sound stretched is music.", "Movement stretched is dance.", "Mind stretched is meditation.", "Life stretched is celebration."],
+          author: "Gurudev Sri Sri Ravi Shankar",
+        },
+        finalCta: {
+          heading: "Every Beat Plants a Future",
+          body: "Music has the power to inspire. Together, it also has the power to transform a city. Join us for an evening of music, meditation, and purpose — and help build a greener Vizag.",
+          label: "Reserve Your Spot Today",
+        },
+        stats: [
+          { value: 8, label: "Band Members" },
+          { value: 4500, suffix: "+", label: "Capacity" },
+          { value: 3, label: "Hours of Music" },
+          { value: 1, label: "Epic Night" },
+        ],
+        faqs,
+        contact,
+        trustUrl,
+      }),
       feeType: "percent", feeValue: 300, gstRate: 1800, refundPolicyType: "self_service", refundWindowDays: 3, refundFeePct: 1000,
-      doorsAt: new Date("2026-07-18T18:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
-      seo: { en: { title: "BhaZen Jamming — Nirvana Station Live", description: "Nirvana Station live at Port Stadium, Visakhapatnam." } },
+      doorsAt: new Date("2026-07-18T17:00:00+05:30"), onSaleAt: new Date("2026-07-01T00:00:00+05:30"),
+      seo: { en: { title: "BhaZen Jamming 2.0 — Live Music for a Greener Vizag", description: "The Nirvana Station live at Port Indoor Stadium, Visakhapatnam — a fundraiser concert by The Art of Living supporting the Green Vizag Initiative." } },
       bands: { create: [{ band: { connect: { id: band.id } } }] },
       partners: { create: [{ name: "Art of Living", tier: "Presented by", url: trustUrl, sortOrder: 0 }, { name: "World Forum for Art & Culture", tier: "In association with", logoUrl: "/images/partners/world-forum.png", url: "https://worldforumforartandculture.com/", sortOrder: 1 }, { name: "Sri Sri Tattva", tier: "Partner", sortOrder: 2 }] },
     },
   });
-  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-18T18:00:00+05:30"), status: "live" } });
-  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Premium", color: "#f9d464", basePrice: 299900, admission: "reserved", bookingUrl: "https://aolt.in/1034073" } });
-  const jGen = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: General", color: "#00acee", basePrice: 59900, admission: "general", capacity: 3000, bookingUrl: "https://aolt.in/1034076" } });
-  const jStu = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Student", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 700, bookingUrl: "https://aolt.in/1034077" } });
-  const jFam = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Category: Family", color: "#554bb9", basePrice: 199900, admission: "general", capacity: 300, bookingUrl: "https://aolt.in/1034075" } });
-  const jSeats = await materialize(jSt.id, jammingMap, [{ id: jGen.id, capacity: 3000 }, { id: jStu.id, capacity: 700 }, { id: jFam.id, capacity: 300 }]);
+  const jSt = await prisma.showtime.create({ data: { eventId: jamming.id, startsAt: new Date("2026-07-18T17:00:00+05:30"), status: "live" } });
+  // Tiers (external ticketing). Prices map to their aolt.in links; admission labels live in contentJson.admissionLabels.
+  const jGallery = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Gallery", color: "#fc097c", basePrice: 39900, admission: "general", capacity: 2000, bookingUrl: "https://aolt.in/1034077" } });
+  const jArena = await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Arena (Stage Area Seating)", color: "#00acee", basePrice: 59900, admission: "general", capacity: 1500, bookingUrl: "https://aolt.in/1034076" } });
+  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium (Seat Only)", color: "#554bb9", basePrice: 199900, admission: "reserved", bookingUrl: "https://aolt.in/1034075" } });
+  await prisma.ticketCategory.create({ data: { eventId: jamming.id, name: "Premium + Sudarshan Kriya", color: "#f9d464", basePrice: 299900, admission: "reserved", bookingUrl: "https://aolt.in/1034073" } });
+  const jSeats = await materialize(jSt.id, jammingMap, [{ id: jGallery.id, capacity: 2000 }, { id: jArena.id, capacity: 1500 }]);
 
   // Staff / RBAC (ADR-004)
   const superPhone = process.env.SUPER_ADMIN_PHONE ?? "+919999999999";
@@ -112,7 +199,7 @@ async function main() {
   await prisma.staffMembership.create({ data: { userId: cityAdmin.id, role: "city_admin", cityId: vizag.id } });
 
   console.log(`Seeded 1 live event:`);
-  console.log(`  1. /e/bhazen-jamming (HYBRID @ Port Stadium, Jul 18) — ${jSeats} Premium seats + 4000 GA (General/Student/Family), external ticketing (aolt.in)`);
+  console.log(`  1. /e/bhazen-jamming (BhaZen Jamming 2.0 @ Port Indoor Stadium, Jul 18, 5 PM) — ${jSeats} Premium seats + GA, external ticketing (aolt.in)`);
   console.log(`superAdmin=${superPhone}, cityAdmin=+918888888888`);
 }
 

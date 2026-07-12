@@ -9,8 +9,8 @@ const b = await puppeteer.launch({
 });
 const p = await b.newPage();
 await p.goto(url, { waitUntil: "networkidle2" });
-if (sel) await p.evaluate((s) => document.querySelector(s)?.scrollIntoView(), sel);
+if (sel && sel !== "full") await p.evaluate((s) => document.querySelector(s)?.scrollIntoView(), sel);
 await new Promise((r) => setTimeout(r, 1300));
-await p.screenshot({ path: out });
+await p.screenshot({ path: out, fullPage: sel === "full" });
 await b.close();
 console.log("shot", out);

@@ -60,8 +60,31 @@ export const listLiveCities = cache(async () => {
 export type EventContent = {
   presents?: string;
   heroLogos?: { aol?: string; event?: string; wafc?: string };
+  headline?: string;
+  heroTags?: string;
+  heroBody?: string[];
+  heroAccent?: string;
+  ctaLabel?: string;
   tagline?: string;
   about?: { image?: string; video?: string };
+  highlights?: { heading?: string; items?: string[] };
+  impact?: { heading?: string; body?: string; items?: string[] };
+  experience?: { heading?: string; body?: string };
+  ticketsHeading?: string;
+  ticketsSubtext?: string;
+  admissionLabels?: Record<string, string>;
+  ticketPerks?: Record<string, string>;
+  happinessProgram?: { heading?: string; body?: string; points?: string[] };
+  bulkPasses?: {
+    heading?: string;
+    intro?: string;
+    steps?: string[];
+    note?: string;
+    donateUrl?: string;
+    bundles?: { label: string; amount: string }[];
+  };
+  quote?: { lines?: string[]; author?: string };
+  finalCta?: { heading?: string; body?: string; label?: string };
   features?: string[];
   stats?: { value: number; suffix?: string; label: string }[];
   faqs?: { q: string; a: string }[];
