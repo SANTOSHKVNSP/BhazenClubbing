@@ -1,11 +1,11 @@
 // Screenshot helper. Usage: node scripts/shot.mjs <url> <outPath> [scrollSelector]
 import puppeteer from "puppeteer-core";
-const [, , url, out, sel] = process.argv;
+const [, , url, out, sel, w, h] = process.argv;
 const b = await puppeteer.launch({
   executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   headless: "new",
   args: ["--no-sandbox", "--hide-scrollbars"],
-  defaultViewport: { width: 1100, height: 840 },
+  defaultViewport: { width: w ? +w : 1100, height: h ? +h : 840 },
 });
 const p = await b.newPage();
 await p.goto(url, { waitUntil: "networkidle2" });

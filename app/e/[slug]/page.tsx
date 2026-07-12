@@ -56,7 +56,7 @@ export default async function EventPage({ params }: Params) {
 
       {/* Hero */}
       <section
-        className="relative flex min-h-screen items-center justify-center px-6 py-12 text-center"
+        className="relative flex min-h-screen items-center justify-center px-6 pb-12 pt-24 text-center"
         style={{
           background: `linear-gradient(135deg, rgba(29,5,65,.72), rgba(29,5,65,.6) 50%, rgba(29,5,65,.5)), url(${event.heroMediaUrl}) center/cover no-repeat`,
         }}
