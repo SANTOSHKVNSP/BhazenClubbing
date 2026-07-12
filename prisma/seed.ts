@@ -105,7 +105,6 @@ async function main() {
             "🎶 Live Performance by The Nirvana Station",
             "🌿 Support the Green Vizag Initiative",
             "📸 Instagram-worthy Photo Booths",
-            "🛍️ Exclusive Event Merchandise",
             "💚 A Community United for a Cause",
             "✨ An unforgettable evening of music and celebration",
           ],
@@ -114,10 +113,6 @@ async function main() {
           heading: "Your Ticket Creates Change",
           body: "When you attend BhaZen Jamming, you're doing more than booking a concert. You're contributing to a movement dedicated to making Visakhapatnam cleaner, greener, and more sustainable. Every ticket helps support:",
           items: ["Plantation drives", "Environmental initiatives", "Community-led green action", "A greener future for Vizag"],
-        },
-        experience: {
-          heading: "Feel the Energy",
-          body: "Thousands of voices. One stage. One purpose. Sing, celebrate, connect, and be part of an evening where music inspires action and every moment becomes a memory.",
         },
         ticketsHeading: "Choose Your Pass",
         ticketsSubtext: "Reserve your seat today and be part of a night where every beat creates impact.",

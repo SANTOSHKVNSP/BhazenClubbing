@@ -41,7 +41,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${display.variable} ${sans.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} h-full scroll-pt-20 antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
