@@ -20,7 +20,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const event = await getEventBySlug(slug);
   if (!event) notFound(); // hard 404 (not a soft-404 with 200 status) for unknown/removed events
   const seo = (event.seo as { en?: { title?: string; description?: string } } | null)?.en ?? {};
-  return { title: seo.title ?? event.title, description: seo.description };
+  return {
+    title: seo.title ?? event.title,
+    description: seo.description,
+    alternates: { canonical: `/e/${slug}` },
+  };
 }
 
 export default async function EventPage({ params }: Params) {

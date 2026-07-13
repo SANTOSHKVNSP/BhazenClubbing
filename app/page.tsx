@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { listLiveEvents } from "@/lib/queries";
 import { EventCard } from "@/components/event/event-card";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 // Reflect content/admin changes without a rebuild (revisit caching in Phase 6).
 export const dynamic = "force-dynamic";
