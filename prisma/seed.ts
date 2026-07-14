@@ -25,17 +25,17 @@ async function materialize(showtimeId: string, seatMap: SeatMap, ga: { id: strin
   return seatRows.length;
 }
 
-// The Nirvana Station line-up. Real portraits can be added later via admin
-// (the page shows a gradient initials avatar until a photoUrl is set).
+// The Nirvana Station line-up. Portraits live in public/images/bhazen/members/
+// (the page falls back to a gradient initials avatar when photoUrl is empty).
 const members = [
-  { name: "Anivart Jhunjhunwala", role: "Lead Vocalist" },
-  { name: "Anagha Karvir", role: "Lead Vocalist" },
-  { name: "Bryan Kharrinam", role: "Guitarist" },
-  { name: "Ram Krishna Mishra", role: "Keyboardist" },
-  { name: "Tanmay Patil", role: "Drummer" },
-  { name: "Sujit Dhananjay Jare", role: "Percussionist" },
-  { name: "Sarath Narayan", role: "Percussionist" },
-  { name: "Tigil Thomas", role: "Bassist" },
+  { name: "Anivart Jhunjhunwala", role: "Lead Vocalist", photoUrl: "/images/bhazen/members/anivart.jpeg" },
+  { name: "Anagha Karvir", role: "Lead Vocalist", photoUrl: "/images/bhazen/members/anagha.jpeg" },
+  { name: "Bryan Kharrinam", role: "Guitarist", photoUrl: "/images/bhazen/members/bryan.jpeg" },
+  { name: "Ram Krishna Mishra", role: "Keyboardist", photoUrl: "/images/bhazen/members/ram-krishna.jpeg" },
+  { name: "Tanmay Patil", role: "Drummer", photoUrl: "/images/bhazen/members/tanmay.jpeg" },
+  { name: "Sujit Dhananjay Jare", role: "Percussionist", photoUrl: "/images/bhazen/members/sujit.jpeg" },
+  { name: "Sarath Narayan", role: "Percussionist", photoUrl: "/images/bhazen/members/sarath.jpeg" },
+  { name: "Tigil Thomas", role: "Bassist", photoUrl: "/images/bhazen/members/tigil.jpeg" },
 ];
 
 const faqs = [
@@ -78,7 +78,7 @@ async function main() {
     data: {
       name: "The Nirvana Station",
       bio: { en: "After setting the stage on fire with a sold-out, unforgettable performance at BhaZen Jamming 1.0, The Nirvana Station returns to Vizag by popular demand. Get ready for another evening of soulful melodies, electrifying energy, and a musical experience that promises to be even bigger." },
-      members: { create: members.map((m, i) => ({ name: m.name, role: m.role, sortOrder: i })) },
+      members: { create: members.map((m, i) => ({ name: m.name, role: m.role, photoUrl: m.photoUrl, sortOrder: i })) },
     },
   });
 
