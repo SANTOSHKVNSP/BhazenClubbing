@@ -125,6 +125,9 @@ async function main() {
         ticketPerks: {
           "Premium + Sudarshan Kriya": "✨ Includes a complimentary Happiness Program",
         },
+        ticketBadges: {
+          "Arena (Stage Area Seating)": "Fast Filling",
+        },
         happinessProgram: {
           heading: "Your Premium Pass Includes Sudarshan Kriya",
           body: "The ₹2,999 Premium pass comes with a complimentary Art of Living Happiness Program — where you learn Sudarshan Kriya, the world-renowned rhythmic breathing practice followed by millions worldwide for deep calm, steady energy, and emotional balance.",
