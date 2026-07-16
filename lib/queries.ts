@@ -74,6 +74,7 @@ export type EventContent = {
   ticketsSubtext?: string;
   admissionLabels?: Record<string, string>;
   ticketPerks?: Record<string, string>;
+  ticketBadges?: Record<string, string>;
   happinessProgram?: { heading?: string; body?: string; points?: string[] };
   bulkPasses?: {
     heading?: string;

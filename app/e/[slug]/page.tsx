@@ -241,7 +241,13 @@ export default async function EventPage({ params }: Params) {
           </p>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {event.categories.map((cat, i) => (
-              <div key={cat.id} className={`flex flex-col rounded-2xl bg-white p-7 shadow-xl ${i === event.categories.length - 1 ? "ring-2 ring-orange" : ""}`}>
+              <div key={cat.id} className={`relative flex flex-col rounded-2xl bg-white p-7 ${c.ticketBadges?.[cat.name] ? "shadow-2xl shadow-magenta/50 ring-2 ring-magenta" : i === event.categories.length - 1 ? "shadow-xl ring-2 ring-orange" : "shadow-xl"}`}>
+                {c.ticketBadges?.[cat.name] && (
+                  <span className="absolute -top-4 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-br from-magenta to-orange-2 px-4 py-1.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-lg shadow-magenta/40">
+                    <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-white" aria-hidden />
+                    {c.ticketBadges[cat.name]}
+                  </span>
+                )}
                 <h3 className="text-center font-display text-xl font-bold text-purple">{cat.name}</h3>
                 <div className="mt-3 text-center font-display text-4xl font-extrabold text-ink">
                   <sup className="top-[-0.9rem] text-xl">₹</sup>{rupees(cat.basePrice)}
